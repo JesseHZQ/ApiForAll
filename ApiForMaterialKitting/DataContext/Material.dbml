@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SlotKB" Class="MaterialDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=suznt004;Initial Catalog=SlotKB;Persist Security Info=True;User ID=andy" SettingsObjectName="ApiForMaterialKitting.Properties.Settings" SettingsPropertyName="SlotKBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.SummaryH" Member="SummaryH">
+    <Type Name="SummaryH">
+      <Column Name="SystemSlot" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SystemModel" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Customer" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="VSA" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ShipWeek" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ShipDate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CORC" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Ship" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Pack" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ButtonUp" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="QFAA" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CSW" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TestBU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PV" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CoreBU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="OI" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Launch" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="OpenIssue" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="CloseIssue" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="EngIssue" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Remark" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsMore" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Lock" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Pin" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PSB" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SSB" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Utah" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DCPM" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PAC" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Action" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Owner" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DueDay" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="OTD" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NeedAction" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Crate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="InstallLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Hex" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="VHDVS" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Myone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Mytwo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Mythree" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

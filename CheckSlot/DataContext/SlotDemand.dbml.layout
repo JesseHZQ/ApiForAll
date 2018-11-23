@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="SlotDemand">
+  <DataContextMoniker Name="/SlotDemandDataContext" />
+  <nestedChildShapes>
+    <classShape Id="85070ca1-381b-46b1-a67d-5bf3b86f20cd" absoluteBounds="0.5, 0.5, 2, 4.6554182942708326">
+      <DataClassMoniker Name="/SlotDemandDataContext/SlotDemandRequestDto" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fae7d5ed-87ce-44a6-ae1e-dd8c71cb9188" absoluteBounds="0.515, 0.96, 1.9700000000000002, 4.095418294270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PNINOUT" Class="RackDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=suznt004;Initial Catalog=PNINOUT;Persist Security Info=True;User ID=andy" SettingsObjectName="ApiForRackManage.Properties.Settings" SettingsPropertyName="PNINOUTConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Rack_copy" Member="Rack_copy">
+    <Type Name="Rack_copy">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RackName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ActualQTY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Size" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SNView" Type="System.String" DbType="NVarChar(555)" CanBeNull="true" />
+      <Column Name="TimeView" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SlotView" Type="System.String" DbType="NVarChar(555)" CanBeNull="true" />
+      <Column Name="Command" Type="System.String" DbType="NVarChar(555)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="User">
+    <Type Name="User">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PW" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LV" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rack" Member="Rack">
+    <Type Name="Rack">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RackName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ActualQTY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Size" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SNView" Type="System.String" DbType="NVarChar(555)" CanBeNull="true" />
+      <Column Name="TimeView" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SlotView" Type="System.String" DbType="NVarChar(555)" CanBeNull="true" />
+      <Column Name="Command" Type="System.String" DbType="NVarChar(555)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

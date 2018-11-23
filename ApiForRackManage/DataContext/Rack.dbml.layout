@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Rack">
+  <DataContextMoniker Name="/RackDataContext" />
+  <nestedChildShapes>
+    <classShape Id="5f283587-82c4-42a6-987b-8dbcd9d3716d" absoluteBounds="0.5, 0.5, 2, 2.5401025390625">
+      <DataClassMoniker Name="/RackDataContext/Rack_copy" />
+      <nestedChildShapes>
+        <elementListCompartment Id="69b37b17-9c39-4a08-b7ee-229a73acf37b" absoluteBounds="0.515, 0.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="aee05b09-fd6e-421d-a83d-d7a945eb9d1b" absoluteBounds="0.5, 3.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/RackDataContext/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8b4f4493-35e9-4bee-ac77-a3e6ff2fddb7" absoluteBounds="0.515, 3.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="292b9c7c-7f80-493b-be67-7d6682127507" absoluteBounds="2.75, 0.5, 2, 2.5401025390625">
+      <DataClassMoniker Name="/RackDataContext/Rack" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1ce3b058-51f3-4d91-b5f0-32134fe47762" absoluteBounds="2.765, 0.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DebugAssy" Class="VOPDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=suznt004;Initial Catalog=DebugAssy;Persist Security Info=True;User ID=andy" SettingsObjectName="ApiForVOP.Properties.Settings" SettingsPropertyName="DebugAssyConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.VOP_Result" Member="VOP_Result">
+    <Type Name="VOP_Result">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Detail" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PODetail" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="TotalCost" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
