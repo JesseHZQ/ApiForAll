@@ -18,7 +18,7 @@ namespace ApiForFOL.Controllers
             Resp resp = new Resp();
             resp.Code = "200";
             resp.Data = dt;
-            resp.Message = "查询成功";
+            resp.Message = "查询成功!";
             return resp;
         }
 
