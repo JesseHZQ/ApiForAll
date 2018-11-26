@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace ApiForFOL.Controllers
@@ -69,6 +71,35 @@ namespace ApiForFOL.Controllers
                 resp.Message = "修改失败";
             }
             
+            return resp;
+        }
+
+        /// <summary>
+        /// 接收前端上传单个文件
+        /// </summary>
+        /// <returns></returns>
+        [System.Web.Http.HttpPost]
+        public Resp uploadFile()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            string type = httpRequest.Form["type"];
+            string version = httpRequest.Form["version"];
+            HttpPostedFile file = httpRequest.Files[0];
+            string filePath = Path.Combine(HttpContext.Current.Server.MapPath("../../Uploads"), Path.GetFileName(file.FileName));
+            Resp resp = new Resp();
+            try
+            {
+                file.SaveAs(filePath);
+                resp.Code = "200";
+                resp.Data = null;
+                resp.Message = filePath;
+            }
+            catch (Exception ex)
+            {
+                resp.Code = "10001";
+                resp.Data = null;
+                resp.Message = ex.Message;
+            }
             return resp;
         }
     }
