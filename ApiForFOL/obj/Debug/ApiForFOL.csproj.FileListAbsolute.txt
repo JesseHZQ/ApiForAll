@@ -105,3 +105,8 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFOL\obj\Debug\ApiForFOL.csproj.Co
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFOL\obj\Debug\ApiForFOL.csproj.CopyComplete
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFOL\obj\Debug\ApiForFOL.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFOL\obj\Debug\ApiForFOL.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFOL\bin\App_Licenses.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFOL\bin\Aspose.Cells.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFOL\bin\Aspose.Cells.GridDesktop.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFOL\bin\Aspose.Cells.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFOL\bin\Aspose.Cells.GridDesktop.xml

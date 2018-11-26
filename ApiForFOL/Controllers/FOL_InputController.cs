@@ -7,19 +7,28 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-
+using Aspose.Cells;
 namespace ApiForFOL.Controllers
 {
+
     public class FOL_InputController : ApiController
     {
+        FOLDataClassesDataContext dc = new FOLDataClassesDataContext();
+
         [System.Web.Http.HttpGet]
-        public Resp getTypedList(string version, string type)
+        public RespAll getTypedList(string version, string type)
         {
-            DataTable dt = new DataTable();
-            dt = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_1_1] where version= '" + version + " ' and type like '%" + type + "%'");
-            Resp resp = new Resp();
+            DataTable dt1 = new DataTable();
+            DataTable dt2 = new DataTable();
+            DataTable dt3 = new DataTable();
+            dt1 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_1_1] where version= '" + version + " ' and type like '%" + type + "%'");
+            dt2 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_2_1] where version= '" + version + " ' and type like '%" + type + "%'");
+            dt3 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_3_1] where version= '" + version + " ' and type like '%" + type + "%'");
+            RespAll resp = new RespAll();
             resp.Code = "200";
-            resp.Data = dt;
+            resp.DataForecast = dt1;
+            resp.DataPercent = dt2;
+            resp.DataAmount = dt3;
             resp.Message = "查询成功!";
             return resp;
         }
@@ -64,13 +73,14 @@ namespace ApiForFOL.Controllers
                 resp.Code = "200";
                 resp.Data = null;
                 resp.Message = "修改成功";
-            } else
+            }
+            else
             {
                 resp.Code = "10001";
                 resp.Data = null;
                 resp.Message = "修改失败";
             }
-            
+
             return resp;
         }
 
@@ -84,15 +94,33 @@ namespace ApiForFOL.Controllers
             var httpRequest = HttpContext.Current.Request;
             string type = httpRequest.Form["type"];
             string version = httpRequest.Form["version"];
+            string fileType = httpRequest.Form["fileType"];
             HttpPostedFile file = httpRequest.Files[0];
             string filePath = Path.Combine(HttpContext.Current.Server.MapPath("../../Uploads"), Path.GetFileName(file.FileName));
+            file.SaveAs(filePath);
+            Workbook workbook = new Workbook(filePath);
+            string result;
+            switch (fileType)
+            {
+                case "1":
+                    result = Upload1_1(type, version, workbook);
+                    break;
+                case "2":
+                    result = Upload2_1(type, version, workbook);
+                    break;
+                case "3":
+                    result = Upload3_1(type, version, workbook);
+                    break;
+                default:
+                    result = "";
+                    break;
+            }
             Resp resp = new Resp();
             try
             {
-                file.SaveAs(filePath);
                 resp.Code = "200";
                 resp.Data = null;
-                resp.Message = filePath;
+                resp.Message = result;
             }
             catch (Exception ex)
             {
@@ -101,6 +129,187 @@ namespace ApiForFOL.Controllers
                 resp.Message = ex.Message;
             }
             return resp;
+        }
+        public class RespAll
+        {
+            public string Code { get; set; }
+            public DataTable DataForecast { get; set; }
+            public DataTable DataPercent { get; set; }
+            public DataTable DataAmount { get; set; }
+            public string Message { get; set; }
+        }
+
+        public string Upload1_1(string insertType, string version, Workbook workbook)
+        {
+            Cells cells = workbook.Worksheets[0].Cells;
+            int max = cells.MaxDataRow;
+            int columns = cells.MaxColumn;
+            List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
+            try
+            {
+                for (int i = 1; i <= max; i++)
+                {
+                    FOL_Input_1_1 item = new FOL_Input_1_1
+                    {
+                        GLBPCCode = cells[i, 0].Value == null ? "" : cells[i, 0].Value.ToString(),
+                        GLBPCDescription = cells[i, 1].Value == null ? "" : cells[i, 1].Value.ToString(),
+                        GLOutputCode = cells[i, 2].Value == null ? "" : cells[i, 2].Value.ToString(),
+                        CustomerBPCCode = cells[i, 3].Value == null ? "" : cells[i, 3].Value.ToString(),
+                        DIM1 = cells[i, 4].Value == null ? "" : cells[i, 4].Value.ToString(),
+                        Order = cells[i, 5].Value == null ? "" : cells[i, 5].Value.ToString(),
+                        CustomerOutputCode = cells[i, 6].Value == null ? "" : cells[i, 6].Value.ToString(),
+                        BU = cells[i, 7].Value == null ? "" : cells[i, 7].Value.ToString(),
+                        Segment = cells[i, 8].Value == null ? "" : cells[i, 8].Value.ToString(),
+
+                        Period1 = Convert.ToDouble(cells[i, 9].Value ?? 0),
+                        Period2 = Convert.ToDouble(cells[i, 10].Value ?? 0),
+                        Period3 = Convert.ToDouble(cells[i, 11].Value ?? 0),
+                        Period4 = Convert.ToDouble(cells[i, 12].Value ?? 0),
+                        Period5 = Convert.ToDouble(cells[i, 13].Value ?? 0),
+                        Period6 = Convert.ToDouble(cells[i, 14].Value ?? 0),
+                        Period7 = Convert.ToDouble(cells[i, 15].Value ?? 0),
+                        Period8 = Convert.ToDouble(cells[i, 16].Value ?? 0),
+                        Period9 = Convert.ToDouble(cells[i, 17].Value ?? 0),
+                        Period10 = Convert.ToDouble(cells[i, 18].Value ?? 0),
+                        Period11 = Convert.ToDouble(cells[i, 19].Value ?? 0),
+                        Period12 = Convert.ToDouble(cells[i, 20].Value ?? 0),
+                        Period13 = Convert.ToDouble(cells[i, 21].Value ?? 0),
+                        Period14 = Convert.ToDouble(cells[i, 22].Value ?? 0),
+                        Period15 = Convert.ToDouble(cells[i, 23].Value ?? 0),
+                        Period16 = Convert.ToDouble(cells[i, 24].Value ?? 0),
+
+                        InsertDate = System.DateTime.Now,
+                        InsertUser = "",
+                        Version = version,
+                        Type = insertType,
+                    };
+                    list.Add(item);
+
+                }
+                dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == insertType).ToList());
+                dc.FOL_Input_1_1.InsertAllOnSubmit(list);
+                dc.SubmitChanges();
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        public string Upload2_1(string insertType, string version, Workbook workbook)
+        {
+            Cells cells = workbook.Worksheets[0].Cells;
+            int max = cells.MaxDataRow;
+            int columns = cells.MaxColumn;
+            List<FOL_Input_2_1> list = new List<FOL_Input_2_1>();
+            try
+            {
+                for (int i = 1; i <= cells.MaxDataRow; i++)
+                {
+                    FOL_Input_2_1 item = new FOL_Input_2_1
+                    {
+                        GLBPCCode = cells[i, 0].Value == null ? "" : cells[i, 0].Value.ToString(),
+                        GLBPCDescription = cells[i, 1].Value == null ? "" : cells[i, 1].Value.ToString(),
+                        GLOutputCode = cells[i, 2].Value == null ? "" : cells[i, 2].Value.ToString(),
+                        CustomerBPCCode = cells[i, 3].Value == null ? "" : cells[i, 3].Value.ToString(),
+                        DIM1 = cells[i, 4].Value == null ? "" : cells[i, 4].Value.ToString(),
+                        Order = cells[i, 5].Value == null ? "" : cells[i, 5].Value.ToString(),
+                        CustomerOutputCode = cells[i, 6].Value == null ? "" : cells[i, 6].Value.ToString(),
+                        BU = cells[i, 7].Value == null ? "" : cells[i, 7].Value.ToString(),
+                        Segment = cells[i, 8].Value == null ? "" : cells[i, 8].Value.ToString(),
+
+                        Period1_Percent = Convert.ToDouble(cells[i, 9].Value ?? 0),
+                        Period2_Percent = Convert.ToDouble(cells[i, 10].Value ?? 0),
+                        Period3_Percent = Convert.ToDouble(cells[i, 11].Value ?? 0),
+                        Period4_Percent = Convert.ToDouble(cells[i, 12].Value ?? 0),
+                        Period5_Percent = Convert.ToDouble(cells[i, 13].Value ?? 0),
+                        Period6_Percent = Convert.ToDouble(cells[i, 14].Value ?? 0),
+                        Period7_Percent = Convert.ToDouble(cells[i, 15].Value ?? 0),
+                        Period8_Percent = Convert.ToDouble(cells[i, 16].Value ?? 0),
+                        Period9_Percent = Convert.ToDouble(cells[i, 17].Value ?? 0),
+                        Period10_Percent = Convert.ToDouble(cells[i, 18].Value ?? 0),
+                        Period11_Percent = Convert.ToDouble(cells[i, 19].Value ?? 0),
+                        Period12_Percent = Convert.ToDouble(cells[i, 20].Value ?? 0),
+                        Period13_Percent = Convert.ToDouble(cells[i, 21].Value ?? 0),
+                        Period14_Percent = Convert.ToDouble(cells[i, 22].Value ?? 0),
+                        Period15_Percent = Convert.ToDouble(cells[i, 23].Value ?? 0),
+                        Period16_Percent = Convert.ToDouble(cells[i, 24].Value ?? 0),
+
+                        InsertDate = System.DateTime.Now,
+                        InsertUser = "",
+                        Version = version,
+                        Type = insertType,
+                    };
+                    list.Add(item);
+                }
+
+                dc.FOL_Input_2_1.DeleteAllOnSubmit(dc.FOL_Input_2_1.Where(x => x.Version == version && x.Type == insertType).ToList());
+                dc.FOL_Input_2_1.InsertAllOnSubmit(list);
+                dc.SubmitChanges();
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        public string Upload3_1(string insertType, string version, Workbook workbook)
+        {
+            Cells cells = workbook.Worksheets[0].Cells;
+            int max = cells.MaxDataRow;
+            int columns = cells.MaxColumn;
+            List<FOL_Input_3_1> list = new List<FOL_Input_3_1>();
+            try
+            {
+                for (int i = 1; i <= cells.MaxDataRow; i++)
+                {
+                    FOL_Input_3_1 item = new FOL_Input_3_1
+                    {
+                        GLBPCCode = cells[i, 0].Value == null ? "" : cells[i, 0].Value.ToString(),
+                        GLBPCDescription = cells[i, 1].Value == null ? "" : cells[i, 1].Value.ToString(),
+                        GLOutputCode = cells[i, 2].Value == null ? "" : cells[i, 2].Value.ToString(),
+                        CustomerBPCCode = cells[i, 3].Value == null ? "" : cells[i, 3].Value.ToString(),
+                        DIM1 = cells[i, 4].Value == null ? "" : cells[i, 4].Value.ToString(),
+                        Order = cells[i, 5].Value == null ? "" : cells[i, 5].Value.ToString(),
+                        CustomerOutputCode = cells[i, 6].Value == null ? "" : cells[i, 6].Value.ToString(),
+                        BU = cells[i, 7].Value == null ? "" : cells[i, 7].Value.ToString(),
+                        Segment = cells[i, 8].Value == null ? "" : cells[i, 8].Value.ToString(),
+
+                        Period1_Amount = Convert.ToDouble(cells[i, 9].Value ?? 0),
+                        Period2_Amount = Convert.ToDouble(cells[i, 10].Value ?? 0),
+                        Period3_Amount = Convert.ToDouble(cells[i, 11].Value ?? 0),
+                        Period4_Amount = Convert.ToDouble(cells[i, 12].Value ?? 0),
+                        Period5_Amount = Convert.ToDouble(cells[i, 13].Value ?? 0),
+                        Period6_Amount = Convert.ToDouble(cells[i, 14].Value ?? 0),
+                        Period7_Amount = Convert.ToDouble(cells[i, 15].Value ?? 0),
+                        Period8_Amount = Convert.ToDouble(cells[i, 16].Value ?? 0),
+                        Period9_Amount = Convert.ToDouble(cells[i, 17].Value ?? 0),
+                        Period10_Amount = Convert.ToDouble(cells[i, 18].Value ?? 0),
+                        Period11_Amount = Convert.ToDouble(cells[i, 19].Value ?? 0),
+                        Period12_Amount = Convert.ToDouble(cells[i, 20].Value ?? 0),
+                        Period13_Amount = Convert.ToDouble(cells[i, 21].Value ?? 0),
+                        Period14_Amount = Convert.ToDouble(cells[i, 22].Value ?? 0),
+                        Period15_Amount = Convert.ToDouble(cells[i, 23].Value ?? 0),
+                        Period16_Amount = Convert.ToDouble(cells[i, 24].Value ?? 0),
+
+                        InsertDate = System.DateTime.Now,
+                        InsertUser = "",
+                        Version = version,
+                        Type = insertType,
+                    };
+                    list.Add(item);
+                }
+
+                dc.FOL_Input_3_1.DeleteAllOnSubmit(dc.FOL_Input_3_1.Where(x => x.Version == version && x.Type == insertType).ToList());
+                dc.FOL_Input_3_1.InsertAllOnSubmit(list);
+                dc.SubmitChanges();
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
         }
     }
 
