@@ -103,4 +103,135 @@
       <Column Name="InsertUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.FOL_Input_6_0_TotalMOH" Member="FOL_Input_6_0_TotalMOH">
+    <Type Name="FOL_Input_6_0_TotalMOH">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GLBPCCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="GLBPCDescription" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="GLOutputCode" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PARENTH1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UploadCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BPCOutputCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Segment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsSubtotal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Period1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period3" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period4" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period5" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period6" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period7" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period8" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period9" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period10" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period11" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period13" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period14" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period15" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period16" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Totals" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="InsertDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="InsertUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FOL_CCMapping" Member="FOL_CCMapping">
+    <Type Name="FOL_CCMapping">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CC" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CCDescription" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="DriverSource" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FOL_Input_6_0_SumByType" Member="FOL_Input_6_0_SumByType">
+    <Type Name="FOL_Input_6_0_SumByType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GLBPCCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="GLBPCDescription" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="GLOutputCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PARENTH1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UploadCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BPCOutputCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Segment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Period1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period3" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period4" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period5" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period6" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period7" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period8" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period9" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period10" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period11" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period13" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period14" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period15" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period16" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Totals" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="InsertDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="InsertUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FOL_Input_6_0_SumByTypeModule" Member="FOL_Input_6_0_SumByTypeModule">
+    <Type Name="FOL_Input_6_0_SumByTypeModule">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GLBPCCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="GLBPCDescription" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="GLOutputCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PARENTH1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UploadCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BPCOutputCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Segment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Totals" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="InsertDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="InsertUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FOL_Input_6_1" Member="FOL_Input_6_1">
+    <Type Name="FOL_Input_6_1">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GLBPCCode" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="GLBPCDescription" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="GLOutputCode" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="CustomerBPCCode" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="DIM1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerOutputCode" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="BU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Segment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Period1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period3" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period4" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period5" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period6" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period7" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period8" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period9" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period10" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period11" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period12" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period13" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period14" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period15" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period16" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="InsertDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="InsertUser" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
