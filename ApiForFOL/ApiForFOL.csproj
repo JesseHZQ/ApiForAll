@@ -160,6 +160,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\FOLFormulas.cs" />
+    <Content Include="App_Code\FOL_InputFormulas.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -201,6 +203,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FOLDataClasses.dbml</DependentUpon>
     </Compile>
+    <Compile Include="FOL_InputFormulas.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

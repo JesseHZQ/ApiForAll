@@ -39,6 +39,18 @@ namespace ApiForFOL
     partial void InsertFOL_Input_3_1(FOL_Input_3_1 instance);
     partial void UpdateFOL_Input_3_1(FOL_Input_3_1 instance);
     partial void DeleteFOL_Input_3_1(FOL_Input_3_1 instance);
+    partial void InsertFOL_Input_6_0_TotalMOH(FOL_Input_6_0_TotalMOH instance);
+    partial void UpdateFOL_Input_6_0_TotalMOH(FOL_Input_6_0_TotalMOH instance);
+    partial void DeleteFOL_Input_6_0_TotalMOH(FOL_Input_6_0_TotalMOH instance);
+    partial void InsertFOL_CCMapping(FOL_CCMapping instance);
+    partial void UpdateFOL_CCMapping(FOL_CCMapping instance);
+    partial void DeleteFOL_CCMapping(FOL_CCMapping instance);
+    partial void InsertFOL_Input_6_0_SumByType(FOL_Input_6_0_SumByType instance);
+    partial void UpdateFOL_Input_6_0_SumByType(FOL_Input_6_0_SumByType instance);
+    partial void DeleteFOL_Input_6_0_SumByType(FOL_Input_6_0_SumByType instance);
+    partial void InsertFOL_Input_6_1(FOL_Input_6_1 instance);
+    partial void UpdateFOL_Input_6_1(FOL_Input_6_1 instance);
+    partial void DeleteFOL_Input_6_1(FOL_Input_6_1 instance);
     #endregion
 		
 		public FOLDataClassesDataContext() : 
@@ -92,6 +104,46 @@ namespace ApiForFOL
 			get
 			{
 				return this.GetTable<FOL_Input_3_1>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FOL_Input_6_0_TotalMOH> FOL_Input_6_0_TotalMOH
+		{
+			get
+			{
+				return this.GetTable<FOL_Input_6_0_TotalMOH>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FOL_CCMapping> FOL_CCMapping
+		{
+			get
+			{
+				return this.GetTable<FOL_CCMapping>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FOL_Input_6_0_SumByType> FOL_Input_6_0_SumByType
+		{
+			get
+			{
+				return this.GetTable<FOL_Input_6_0_SumByType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FOL_Input_6_0_SumByTypeModule> FOL_Input_6_0_SumByTypeModule
+		{
+			get
+			{
+				return this.GetTable<FOL_Input_6_0_SumByTypeModule>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FOL_Input_6_1> FOL_Input_6_1
+		{
+			get
+			{
+				return this.GetTable<FOL_Input_6_1>();
 			}
 		}
 	}
@@ -904,37 +956,37 @@ namespace ApiForFOL
 		
 		private string _Segment;
 		
-		private System.Nullable<double> _Period1_Percent;
+		private System.Nullable<double> _Period1;
 		
-		private System.Nullable<double> _Period2_Percent;
+		private System.Nullable<double> _Period2;
 		
-		private System.Nullable<double> _Period3_Percent;
+		private System.Nullable<double> _Period3;
 		
-		private System.Nullable<double> _Period4_Percent;
+		private System.Nullable<double> _Period4;
 		
-		private System.Nullable<double> _Period5_Percent;
+		private System.Nullable<double> _Period5;
 		
-		private System.Nullable<double> _Period6_Percent;
+		private System.Nullable<double> _Period6;
 		
-		private System.Nullable<double> _Period7_Percent;
+		private System.Nullable<double> _Period7;
 		
-		private System.Nullable<double> _Period8_Percent;
+		private System.Nullable<double> _Period8;
 		
-		private System.Nullable<double> _Period9_Percent;
+		private System.Nullable<double> _Period9;
 		
-		private System.Nullable<double> _Period10_Percent;
+		private System.Nullable<double> _Period10;
 		
-		private System.Nullable<double> _Period11_Percent;
+		private System.Nullable<double> _Period11;
 		
-		private System.Nullable<double> _Period12_Percent;
+		private System.Nullable<double> _Period12;
 		
-		private System.Nullable<double> _Period13_Percent;
+		private System.Nullable<double> _Period13;
 		
-		private System.Nullable<double> _Period14_Percent;
+		private System.Nullable<double> _Period14;
 		
-		private System.Nullable<double> _Period15_Percent;
+		private System.Nullable<double> _Period15;
 		
-		private System.Nullable<double> _Period16_Percent;
+		private System.Nullable<double> _Period16;
 		
 		private string _Type;
 		
@@ -968,38 +1020,38 @@ namespace ApiForFOL
     partial void OnBUChanged();
     partial void OnSegmentChanging(string value);
     partial void OnSegmentChanged();
-    partial void OnPeriod1_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod1_PercentChanged();
-    partial void OnPeriod2_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod2_PercentChanged();
-    partial void OnPeriod3_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod3_PercentChanged();
-    partial void OnPeriod4_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod4_PercentChanged();
-    partial void OnPeriod5_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod5_PercentChanged();
-    partial void OnPeriod6_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod6_PercentChanged();
-    partial void OnPeriod7_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod7_PercentChanged();
-    partial void OnPeriod8_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod8_PercentChanged();
-    partial void OnPeriod9_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod9_PercentChanged();
-    partial void OnPeriod10_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod10_PercentChanged();
-    partial void OnPeriod11_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod11_PercentChanged();
-    partial void OnPeriod12_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod12_PercentChanged();
-    partial void OnPeriod13_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod13_PercentChanged();
-    partial void OnPeriod14_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod14_PercentChanged();
-    partial void OnPeriod15_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod15_PercentChanged();
-    partial void OnPeriod16_PercentChanging(System.Nullable<double> value);
-    partial void OnPeriod16_PercentChanged();
+    partial void OnPeriod1Changing(System.Nullable<double> value);
+    partial void OnPeriod1Changed();
+    partial void OnPeriod2Changing(System.Nullable<double> value);
+    partial void OnPeriod2Changed();
+    partial void OnPeriod3Changing(System.Nullable<double> value);
+    partial void OnPeriod3Changed();
+    partial void OnPeriod4Changing(System.Nullable<double> value);
+    partial void OnPeriod4Changed();
+    partial void OnPeriod5Changing(System.Nullable<double> value);
+    partial void OnPeriod5Changed();
+    partial void OnPeriod6Changing(System.Nullable<double> value);
+    partial void OnPeriod6Changed();
+    partial void OnPeriod7Changing(System.Nullable<double> value);
+    partial void OnPeriod7Changed();
+    partial void OnPeriod8Changing(System.Nullable<double> value);
+    partial void OnPeriod8Changed();
+    partial void OnPeriod9Changing(System.Nullable<double> value);
+    partial void OnPeriod9Changed();
+    partial void OnPeriod10Changing(System.Nullable<double> value);
+    partial void OnPeriod10Changed();
+    partial void OnPeriod11Changing(System.Nullable<double> value);
+    partial void OnPeriod11Changed();
+    partial void OnPeriod12Changing(System.Nullable<double> value);
+    partial void OnPeriod12Changed();
+    partial void OnPeriod13Changing(System.Nullable<double> value);
+    partial void OnPeriod13Changed();
+    partial void OnPeriod14Changing(System.Nullable<double> value);
+    partial void OnPeriod14Changed();
+    partial void OnPeriod15Changing(System.Nullable<double> value);
+    partial void OnPeriod15Changed();
+    partial void OnPeriod16Changing(System.Nullable<double> value);
+    partial void OnPeriod16Changed();
     partial void OnTypeChanging(string value);
     partial void OnTypeChanged();
     partial void OnVersionChanging(string value);
@@ -1215,322 +1267,322 @@ namespace ApiForFOL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period1_Percent", DbType="Float")]
-		public System.Nullable<double> Period1_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period1", DbType="Float")]
+		public System.Nullable<double> Period1
 		{
 			get
 			{
-				return this._Period1_Percent;
+				return this._Period1;
 			}
 			set
 			{
-				if ((this._Period1_Percent != value))
+				if ((this._Period1 != value))
 				{
-					this.OnPeriod1_PercentChanging(value);
+					this.OnPeriod1Changing(value);
 					this.SendPropertyChanging();
-					this._Period1_Percent = value;
-					this.SendPropertyChanged("Period1_Percent");
-					this.OnPeriod1_PercentChanged();
+					this._Period1 = value;
+					this.SendPropertyChanged("Period1");
+					this.OnPeriod1Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period2_Percent", DbType="Float")]
-		public System.Nullable<double> Period2_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period2", DbType="Float")]
+		public System.Nullable<double> Period2
 		{
 			get
 			{
-				return this._Period2_Percent;
+				return this._Period2;
 			}
 			set
 			{
-				if ((this._Period2_Percent != value))
+				if ((this._Period2 != value))
 				{
-					this.OnPeriod2_PercentChanging(value);
+					this.OnPeriod2Changing(value);
 					this.SendPropertyChanging();
-					this._Period2_Percent = value;
-					this.SendPropertyChanged("Period2_Percent");
-					this.OnPeriod2_PercentChanged();
+					this._Period2 = value;
+					this.SendPropertyChanged("Period2");
+					this.OnPeriod2Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period3_Percent", DbType="Float")]
-		public System.Nullable<double> Period3_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period3", DbType="Float")]
+		public System.Nullable<double> Period3
 		{
 			get
 			{
-				return this._Period3_Percent;
+				return this._Period3;
 			}
 			set
 			{
-				if ((this._Period3_Percent != value))
+				if ((this._Period3 != value))
 				{
-					this.OnPeriod3_PercentChanging(value);
+					this.OnPeriod3Changing(value);
 					this.SendPropertyChanging();
-					this._Period3_Percent = value;
-					this.SendPropertyChanged("Period3_Percent");
-					this.OnPeriod3_PercentChanged();
+					this._Period3 = value;
+					this.SendPropertyChanged("Period3");
+					this.OnPeriod3Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period4_Percent", DbType="Float")]
-		public System.Nullable<double> Period4_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period4", DbType="Float")]
+		public System.Nullable<double> Period4
 		{
 			get
 			{
-				return this._Period4_Percent;
+				return this._Period4;
 			}
 			set
 			{
-				if ((this._Period4_Percent != value))
+				if ((this._Period4 != value))
 				{
-					this.OnPeriod4_PercentChanging(value);
+					this.OnPeriod4Changing(value);
 					this.SendPropertyChanging();
-					this._Period4_Percent = value;
-					this.SendPropertyChanged("Period4_Percent");
-					this.OnPeriod4_PercentChanged();
+					this._Period4 = value;
+					this.SendPropertyChanged("Period4");
+					this.OnPeriod4Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period5_Percent", DbType="Float")]
-		public System.Nullable<double> Period5_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period5", DbType="Float")]
+		public System.Nullable<double> Period5
 		{
 			get
 			{
-				return this._Period5_Percent;
+				return this._Period5;
 			}
 			set
 			{
-				if ((this._Period5_Percent != value))
+				if ((this._Period5 != value))
 				{
-					this.OnPeriod5_PercentChanging(value);
+					this.OnPeriod5Changing(value);
 					this.SendPropertyChanging();
-					this._Period5_Percent = value;
-					this.SendPropertyChanged("Period5_Percent");
-					this.OnPeriod5_PercentChanged();
+					this._Period5 = value;
+					this.SendPropertyChanged("Period5");
+					this.OnPeriod5Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period6_Percent", DbType="Float")]
-		public System.Nullable<double> Period6_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period6", DbType="Float")]
+		public System.Nullable<double> Period6
 		{
 			get
 			{
-				return this._Period6_Percent;
+				return this._Period6;
 			}
 			set
 			{
-				if ((this._Period6_Percent != value))
+				if ((this._Period6 != value))
 				{
-					this.OnPeriod6_PercentChanging(value);
+					this.OnPeriod6Changing(value);
 					this.SendPropertyChanging();
-					this._Period6_Percent = value;
-					this.SendPropertyChanged("Period6_Percent");
-					this.OnPeriod6_PercentChanged();
+					this._Period6 = value;
+					this.SendPropertyChanged("Period6");
+					this.OnPeriod6Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period7_Percent", DbType="Float")]
-		public System.Nullable<double> Period7_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period7", DbType="Float")]
+		public System.Nullable<double> Period7
 		{
 			get
 			{
-				return this._Period7_Percent;
+				return this._Period7;
 			}
 			set
 			{
-				if ((this._Period7_Percent != value))
+				if ((this._Period7 != value))
 				{
-					this.OnPeriod7_PercentChanging(value);
+					this.OnPeriod7Changing(value);
 					this.SendPropertyChanging();
-					this._Period7_Percent = value;
-					this.SendPropertyChanged("Period7_Percent");
-					this.OnPeriod7_PercentChanged();
+					this._Period7 = value;
+					this.SendPropertyChanged("Period7");
+					this.OnPeriod7Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period8_Percent", DbType="Float")]
-		public System.Nullable<double> Period8_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period8", DbType="Float")]
+		public System.Nullable<double> Period8
 		{
 			get
 			{
-				return this._Period8_Percent;
+				return this._Period8;
 			}
 			set
 			{
-				if ((this._Period8_Percent != value))
+				if ((this._Period8 != value))
 				{
-					this.OnPeriod8_PercentChanging(value);
+					this.OnPeriod8Changing(value);
 					this.SendPropertyChanging();
-					this._Period8_Percent = value;
-					this.SendPropertyChanged("Period8_Percent");
-					this.OnPeriod8_PercentChanged();
+					this._Period8 = value;
+					this.SendPropertyChanged("Period8");
+					this.OnPeriod8Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period9_Percent", DbType="Float")]
-		public System.Nullable<double> Period9_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period9", DbType="Float")]
+		public System.Nullable<double> Period9
 		{
 			get
 			{
-				return this._Period9_Percent;
+				return this._Period9;
 			}
 			set
 			{
-				if ((this._Period9_Percent != value))
+				if ((this._Period9 != value))
 				{
-					this.OnPeriod9_PercentChanging(value);
+					this.OnPeriod9Changing(value);
 					this.SendPropertyChanging();
-					this._Period9_Percent = value;
-					this.SendPropertyChanged("Period9_Percent");
-					this.OnPeriod9_PercentChanged();
+					this._Period9 = value;
+					this.SendPropertyChanged("Period9");
+					this.OnPeriod9Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period10_Percent", DbType="Float")]
-		public System.Nullable<double> Period10_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period10", DbType="Float")]
+		public System.Nullable<double> Period10
 		{
 			get
 			{
-				return this._Period10_Percent;
+				return this._Period10;
 			}
 			set
 			{
-				if ((this._Period10_Percent != value))
+				if ((this._Period10 != value))
 				{
-					this.OnPeriod10_PercentChanging(value);
+					this.OnPeriod10Changing(value);
 					this.SendPropertyChanging();
-					this._Period10_Percent = value;
-					this.SendPropertyChanged("Period10_Percent");
-					this.OnPeriod10_PercentChanged();
+					this._Period10 = value;
+					this.SendPropertyChanged("Period10");
+					this.OnPeriod10Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period11_Percent", DbType="Float")]
-		public System.Nullable<double> Period11_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period11", DbType="Float")]
+		public System.Nullable<double> Period11
 		{
 			get
 			{
-				return this._Period11_Percent;
+				return this._Period11;
 			}
 			set
 			{
-				if ((this._Period11_Percent != value))
+				if ((this._Period11 != value))
 				{
-					this.OnPeriod11_PercentChanging(value);
+					this.OnPeriod11Changing(value);
 					this.SendPropertyChanging();
-					this._Period11_Percent = value;
-					this.SendPropertyChanged("Period11_Percent");
-					this.OnPeriod11_PercentChanged();
+					this._Period11 = value;
+					this.SendPropertyChanged("Period11");
+					this.OnPeriod11Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period12_Percent", DbType="Float")]
-		public System.Nullable<double> Period12_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period12", DbType="Float")]
+		public System.Nullable<double> Period12
 		{
 			get
 			{
-				return this._Period12_Percent;
+				return this._Period12;
 			}
 			set
 			{
-				if ((this._Period12_Percent != value))
+				if ((this._Period12 != value))
 				{
-					this.OnPeriod12_PercentChanging(value);
+					this.OnPeriod12Changing(value);
 					this.SendPropertyChanging();
-					this._Period12_Percent = value;
-					this.SendPropertyChanged("Period12_Percent");
-					this.OnPeriod12_PercentChanged();
+					this._Period12 = value;
+					this.SendPropertyChanged("Period12");
+					this.OnPeriod12Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period13_Percent", DbType="Float")]
-		public System.Nullable<double> Period13_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period13", DbType="Float")]
+		public System.Nullable<double> Period13
 		{
 			get
 			{
-				return this._Period13_Percent;
+				return this._Period13;
 			}
 			set
 			{
-				if ((this._Period13_Percent != value))
+				if ((this._Period13 != value))
 				{
-					this.OnPeriod13_PercentChanging(value);
+					this.OnPeriod13Changing(value);
 					this.SendPropertyChanging();
-					this._Period13_Percent = value;
-					this.SendPropertyChanged("Period13_Percent");
-					this.OnPeriod13_PercentChanged();
+					this._Period13 = value;
+					this.SendPropertyChanged("Period13");
+					this.OnPeriod13Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period14_Percent", DbType="Float")]
-		public System.Nullable<double> Period14_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period14", DbType="Float")]
+		public System.Nullable<double> Period14
 		{
 			get
 			{
-				return this._Period14_Percent;
+				return this._Period14;
 			}
 			set
 			{
-				if ((this._Period14_Percent != value))
+				if ((this._Period14 != value))
 				{
-					this.OnPeriod14_PercentChanging(value);
+					this.OnPeriod14Changing(value);
 					this.SendPropertyChanging();
-					this._Period14_Percent = value;
-					this.SendPropertyChanged("Period14_Percent");
-					this.OnPeriod14_PercentChanged();
+					this._Period14 = value;
+					this.SendPropertyChanged("Period14");
+					this.OnPeriod14Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period15_Percent", DbType="Float")]
-		public System.Nullable<double> Period15_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period15", DbType="Float")]
+		public System.Nullable<double> Period15
 		{
 			get
 			{
-				return this._Period15_Percent;
+				return this._Period15;
 			}
 			set
 			{
-				if ((this._Period15_Percent != value))
+				if ((this._Period15 != value))
 				{
-					this.OnPeriod15_PercentChanging(value);
+					this.OnPeriod15Changing(value);
 					this.SendPropertyChanging();
-					this._Period15_Percent = value;
-					this.SendPropertyChanged("Period15_Percent");
-					this.OnPeriod15_PercentChanged();
+					this._Period15 = value;
+					this.SendPropertyChanged("Period15");
+					this.OnPeriod15Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period16_Percent", DbType="Float")]
-		public System.Nullable<double> Period16_Percent
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period16", DbType="Float")]
+		public System.Nullable<double> Period16
 		{
 			get
 			{
-				return this._Period16_Percent;
+				return this._Period16;
 			}
 			set
 			{
-				if ((this._Period16_Percent != value))
+				if ((this._Period16 != value))
 				{
-					this.OnPeriod16_PercentChanging(value);
+					this.OnPeriod16Changing(value);
 					this.SendPropertyChanging();
-					this._Period16_Percent = value;
-					this.SendPropertyChanged("Period16_Percent");
-					this.OnPeriod16_PercentChanged();
+					this._Period16 = value;
+					this.SendPropertyChanged("Period16");
+					this.OnPeriod16Changed();
 				}
 			}
 		}
@@ -1662,37 +1714,37 @@ namespace ApiForFOL
 		
 		private string _Segment;
 		
-		private System.Nullable<double> _Period1_Amount;
+		private System.Nullable<double> _Period1;
 		
-		private System.Nullable<double> _Period2_Amount;
+		private System.Nullable<double> _Period2;
 		
-		private System.Nullable<double> _Period3_Amount;
+		private System.Nullable<double> _Period3;
 		
-		private System.Nullable<double> _Period4_Amount;
+		private System.Nullable<double> _Period4;
 		
-		private System.Nullable<double> _Period5_Amount;
+		private System.Nullable<double> _Period5;
 		
-		private System.Nullable<double> _Period6_Amount;
+		private System.Nullable<double> _Period6;
 		
-		private System.Nullable<double> _Period7_Amount;
+		private System.Nullable<double> _Period7;
 		
-		private System.Nullable<double> _Period8_Amount;
+		private System.Nullable<double> _Period8;
 		
-		private System.Nullable<double> _Period9_Amount;
+		private System.Nullable<double> _Period9;
 		
-		private System.Nullable<double> _Period10_Amount;
+		private System.Nullable<double> _Period10;
 		
-		private System.Nullable<double> _Period11_Amount;
+		private System.Nullable<double> _Period11;
 		
-		private System.Nullable<double> _Period12_Amount;
+		private System.Nullable<double> _Period12;
 		
-		private System.Nullable<double> _Period13_Amount;
+		private System.Nullable<double> _Period13;
 		
-		private System.Nullable<double> _Period14_Amount;
+		private System.Nullable<double> _Period14;
 		
-		private System.Nullable<double> _Period15_Amount;
+		private System.Nullable<double> _Period15;
 		
-		private System.Nullable<double> _Period16_Amount;
+		private System.Nullable<double> _Period16;
 		
 		private string _Type;
 		
@@ -1726,38 +1778,38 @@ namespace ApiForFOL
     partial void OnBUChanged();
     partial void OnSegmentChanging(string value);
     partial void OnSegmentChanged();
-    partial void OnPeriod1_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod1_AmountChanged();
-    partial void OnPeriod2_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod2_AmountChanged();
-    partial void OnPeriod3_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod3_AmountChanged();
-    partial void OnPeriod4_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod4_AmountChanged();
-    partial void OnPeriod5_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod5_AmountChanged();
-    partial void OnPeriod6_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod6_AmountChanged();
-    partial void OnPeriod7_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod7_AmountChanged();
-    partial void OnPeriod8_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod8_AmountChanged();
-    partial void OnPeriod9_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod9_AmountChanged();
-    partial void OnPeriod10_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod10_AmountChanged();
-    partial void OnPeriod11_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod11_AmountChanged();
-    partial void OnPeriod12_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod12_AmountChanged();
-    partial void OnPeriod13_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod13_AmountChanged();
-    partial void OnPeriod14_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod14_AmountChanged();
-    partial void OnPeriod15_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod15_AmountChanged();
-    partial void OnPeriod16_AmountChanging(System.Nullable<double> value);
-    partial void OnPeriod16_AmountChanged();
+    partial void OnPeriod1Changing(System.Nullable<double> value);
+    partial void OnPeriod1Changed();
+    partial void OnPeriod2Changing(System.Nullable<double> value);
+    partial void OnPeriod2Changed();
+    partial void OnPeriod3Changing(System.Nullable<double> value);
+    partial void OnPeriod3Changed();
+    partial void OnPeriod4Changing(System.Nullable<double> value);
+    partial void OnPeriod4Changed();
+    partial void OnPeriod5Changing(System.Nullable<double> value);
+    partial void OnPeriod5Changed();
+    partial void OnPeriod6Changing(System.Nullable<double> value);
+    partial void OnPeriod6Changed();
+    partial void OnPeriod7Changing(System.Nullable<double> value);
+    partial void OnPeriod7Changed();
+    partial void OnPeriod8Changing(System.Nullable<double> value);
+    partial void OnPeriod8Changed();
+    partial void OnPeriod9Changing(System.Nullable<double> value);
+    partial void OnPeriod9Changed();
+    partial void OnPeriod10Changing(System.Nullable<double> value);
+    partial void OnPeriod10Changed();
+    partial void OnPeriod11Changing(System.Nullable<double> value);
+    partial void OnPeriod11Changed();
+    partial void OnPeriod12Changing(System.Nullable<double> value);
+    partial void OnPeriod12Changed();
+    partial void OnPeriod13Changing(System.Nullable<double> value);
+    partial void OnPeriod13Changed();
+    partial void OnPeriod14Changing(System.Nullable<double> value);
+    partial void OnPeriod14Changed();
+    partial void OnPeriod15Changing(System.Nullable<double> value);
+    partial void OnPeriod15Changed();
+    partial void OnPeriod16Changing(System.Nullable<double> value);
+    partial void OnPeriod16Changed();
     partial void OnTypeChanging(string value);
     partial void OnTypeChanged();
     partial void OnVersionChanging(string value);
@@ -1973,322 +2025,3063 @@ namespace ApiForFOL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period1_Amount", DbType="Float")]
-		public System.Nullable<double> Period1_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period1", DbType="Float")]
+		public System.Nullable<double> Period1
 		{
 			get
 			{
-				return this._Period1_Amount;
+				return this._Period1;
 			}
 			set
 			{
-				if ((this._Period1_Amount != value))
+				if ((this._Period1 != value))
 				{
-					this.OnPeriod1_AmountChanging(value);
+					this.OnPeriod1Changing(value);
 					this.SendPropertyChanging();
-					this._Period1_Amount = value;
-					this.SendPropertyChanged("Period1_Amount");
-					this.OnPeriod1_AmountChanged();
+					this._Period1 = value;
+					this.SendPropertyChanged("Period1");
+					this.OnPeriod1Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period2_Amount", DbType="Float")]
-		public System.Nullable<double> Period2_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period2", DbType="Float")]
+		public System.Nullable<double> Period2
 		{
 			get
 			{
-				return this._Period2_Amount;
+				return this._Period2;
 			}
 			set
 			{
-				if ((this._Period2_Amount != value))
+				if ((this._Period2 != value))
 				{
-					this.OnPeriod2_AmountChanging(value);
+					this.OnPeriod2Changing(value);
 					this.SendPropertyChanging();
-					this._Period2_Amount = value;
-					this.SendPropertyChanged("Period2_Amount");
-					this.OnPeriod2_AmountChanged();
+					this._Period2 = value;
+					this.SendPropertyChanged("Period2");
+					this.OnPeriod2Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period3_Amount", DbType="Float")]
-		public System.Nullable<double> Period3_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period3", DbType="Float")]
+		public System.Nullable<double> Period3
 		{
 			get
 			{
-				return this._Period3_Amount;
+				return this._Period3;
 			}
 			set
 			{
-				if ((this._Period3_Amount != value))
+				if ((this._Period3 != value))
 				{
-					this.OnPeriod3_AmountChanging(value);
+					this.OnPeriod3Changing(value);
 					this.SendPropertyChanging();
-					this._Period3_Amount = value;
-					this.SendPropertyChanged("Period3_Amount");
-					this.OnPeriod3_AmountChanged();
+					this._Period3 = value;
+					this.SendPropertyChanged("Period3");
+					this.OnPeriod3Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period4_Amount", DbType="Float")]
-		public System.Nullable<double> Period4_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period4", DbType="Float")]
+		public System.Nullable<double> Period4
 		{
 			get
 			{
-				return this._Period4_Amount;
+				return this._Period4;
 			}
 			set
 			{
-				if ((this._Period4_Amount != value))
+				if ((this._Period4 != value))
 				{
-					this.OnPeriod4_AmountChanging(value);
+					this.OnPeriod4Changing(value);
 					this.SendPropertyChanging();
-					this._Period4_Amount = value;
-					this.SendPropertyChanged("Period4_Amount");
-					this.OnPeriod4_AmountChanged();
+					this._Period4 = value;
+					this.SendPropertyChanged("Period4");
+					this.OnPeriod4Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period5_Amount", DbType="Float")]
-		public System.Nullable<double> Period5_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period5", DbType="Float")]
+		public System.Nullable<double> Period5
 		{
 			get
 			{
-				return this._Period5_Amount;
+				return this._Period5;
 			}
 			set
 			{
-				if ((this._Period5_Amount != value))
+				if ((this._Period5 != value))
 				{
-					this.OnPeriod5_AmountChanging(value);
+					this.OnPeriod5Changing(value);
 					this.SendPropertyChanging();
-					this._Period5_Amount = value;
-					this.SendPropertyChanged("Period5_Amount");
-					this.OnPeriod5_AmountChanged();
+					this._Period5 = value;
+					this.SendPropertyChanged("Period5");
+					this.OnPeriod5Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period6_Amount", DbType="Float")]
-		public System.Nullable<double> Period6_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period6", DbType="Float")]
+		public System.Nullable<double> Period6
 		{
 			get
 			{
-				return this._Period6_Amount;
+				return this._Period6;
 			}
 			set
 			{
-				if ((this._Period6_Amount != value))
+				if ((this._Period6 != value))
 				{
-					this.OnPeriod6_AmountChanging(value);
+					this.OnPeriod6Changing(value);
 					this.SendPropertyChanging();
-					this._Period6_Amount = value;
-					this.SendPropertyChanged("Period6_Amount");
-					this.OnPeriod6_AmountChanged();
+					this._Period6 = value;
+					this.SendPropertyChanged("Period6");
+					this.OnPeriod6Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period7_Amount", DbType="Float")]
-		public System.Nullable<double> Period7_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period7", DbType="Float")]
+		public System.Nullable<double> Period7
 		{
 			get
 			{
-				return this._Period7_Amount;
+				return this._Period7;
 			}
 			set
 			{
-				if ((this._Period7_Amount != value))
+				if ((this._Period7 != value))
 				{
-					this.OnPeriod7_AmountChanging(value);
+					this.OnPeriod7Changing(value);
 					this.SendPropertyChanging();
-					this._Period7_Amount = value;
-					this.SendPropertyChanged("Period7_Amount");
-					this.OnPeriod7_AmountChanged();
+					this._Period7 = value;
+					this.SendPropertyChanged("Period7");
+					this.OnPeriod7Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period8_Amount", DbType="Float")]
-		public System.Nullable<double> Period8_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period8", DbType="Float")]
+		public System.Nullable<double> Period8
 		{
 			get
 			{
-				return this._Period8_Amount;
+				return this._Period8;
 			}
 			set
 			{
-				if ((this._Period8_Amount != value))
+				if ((this._Period8 != value))
 				{
-					this.OnPeriod8_AmountChanging(value);
+					this.OnPeriod8Changing(value);
 					this.SendPropertyChanging();
-					this._Period8_Amount = value;
-					this.SendPropertyChanged("Period8_Amount");
-					this.OnPeriod8_AmountChanged();
+					this._Period8 = value;
+					this.SendPropertyChanged("Period8");
+					this.OnPeriod8Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period9_Amount", DbType="Float")]
-		public System.Nullable<double> Period9_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period9", DbType="Float")]
+		public System.Nullable<double> Period9
 		{
 			get
 			{
-				return this._Period9_Amount;
+				return this._Period9;
 			}
 			set
 			{
-				if ((this._Period9_Amount != value))
+				if ((this._Period9 != value))
 				{
-					this.OnPeriod9_AmountChanging(value);
+					this.OnPeriod9Changing(value);
 					this.SendPropertyChanging();
-					this._Period9_Amount = value;
-					this.SendPropertyChanged("Period9_Amount");
-					this.OnPeriod9_AmountChanged();
+					this._Period9 = value;
+					this.SendPropertyChanged("Period9");
+					this.OnPeriod9Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period10_Amount", DbType="Float")]
-		public System.Nullable<double> Period10_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period10", DbType="Float")]
+		public System.Nullable<double> Period10
 		{
 			get
 			{
-				return this._Period10_Amount;
+				return this._Period10;
 			}
 			set
 			{
-				if ((this._Period10_Amount != value))
+				if ((this._Period10 != value))
 				{
-					this.OnPeriod10_AmountChanging(value);
+					this.OnPeriod10Changing(value);
 					this.SendPropertyChanging();
-					this._Period10_Amount = value;
-					this.SendPropertyChanged("Period10_Amount");
-					this.OnPeriod10_AmountChanged();
+					this._Period10 = value;
+					this.SendPropertyChanged("Period10");
+					this.OnPeriod10Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period11_Amount", DbType="Float")]
-		public System.Nullable<double> Period11_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period11", DbType="Float")]
+		public System.Nullable<double> Period11
 		{
 			get
 			{
-				return this._Period11_Amount;
+				return this._Period11;
 			}
 			set
 			{
-				if ((this._Period11_Amount != value))
+				if ((this._Period11 != value))
 				{
-					this.OnPeriod11_AmountChanging(value);
+					this.OnPeriod11Changing(value);
 					this.SendPropertyChanging();
-					this._Period11_Amount = value;
-					this.SendPropertyChanged("Period11_Amount");
-					this.OnPeriod11_AmountChanged();
+					this._Period11 = value;
+					this.SendPropertyChanged("Period11");
+					this.OnPeriod11Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period12_Amount", DbType="Float")]
-		public System.Nullable<double> Period12_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period12", DbType="Float")]
+		public System.Nullable<double> Period12
 		{
 			get
 			{
-				return this._Period12_Amount;
+				return this._Period12;
 			}
 			set
 			{
-				if ((this._Period12_Amount != value))
+				if ((this._Period12 != value))
 				{
-					this.OnPeriod12_AmountChanging(value);
+					this.OnPeriod12Changing(value);
 					this.SendPropertyChanging();
-					this._Period12_Amount = value;
-					this.SendPropertyChanged("Period12_Amount");
-					this.OnPeriod12_AmountChanged();
+					this._Period12 = value;
+					this.SendPropertyChanged("Period12");
+					this.OnPeriod12Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period13_Amount", DbType="Float")]
-		public System.Nullable<double> Period13_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period13", DbType="Float")]
+		public System.Nullable<double> Period13
 		{
 			get
 			{
-				return this._Period13_Amount;
+				return this._Period13;
 			}
 			set
 			{
-				if ((this._Period13_Amount != value))
+				if ((this._Period13 != value))
 				{
-					this.OnPeriod13_AmountChanging(value);
+					this.OnPeriod13Changing(value);
 					this.SendPropertyChanging();
-					this._Period13_Amount = value;
-					this.SendPropertyChanged("Period13_Amount");
-					this.OnPeriod13_AmountChanged();
+					this._Period13 = value;
+					this.SendPropertyChanged("Period13");
+					this.OnPeriod13Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period14_Amount", DbType="Float")]
-		public System.Nullable<double> Period14_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period14", DbType="Float")]
+		public System.Nullable<double> Period14
 		{
 			get
 			{
-				return this._Period14_Amount;
+				return this._Period14;
 			}
 			set
 			{
-				if ((this._Period14_Amount != value))
+				if ((this._Period14 != value))
 				{
-					this.OnPeriod14_AmountChanging(value);
+					this.OnPeriod14Changing(value);
 					this.SendPropertyChanging();
-					this._Period14_Amount = value;
-					this.SendPropertyChanged("Period14_Amount");
-					this.OnPeriod14_AmountChanged();
+					this._Period14 = value;
+					this.SendPropertyChanged("Period14");
+					this.OnPeriod14Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period15_Amount", DbType="Float")]
-		public System.Nullable<double> Period15_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period15", DbType="Float")]
+		public System.Nullable<double> Period15
 		{
 			get
 			{
-				return this._Period15_Amount;
+				return this._Period15;
 			}
 			set
 			{
-				if ((this._Period15_Amount != value))
+				if ((this._Period15 != value))
 				{
-					this.OnPeriod15_AmountChanging(value);
+					this.OnPeriod15Changing(value);
 					this.SendPropertyChanging();
-					this._Period15_Amount = value;
-					this.SendPropertyChanged("Period15_Amount");
-					this.OnPeriod15_AmountChanged();
+					this._Period15 = value;
+					this.SendPropertyChanged("Period15");
+					this.OnPeriod15Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period16_Amount", DbType="Float")]
-		public System.Nullable<double> Period16_Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period16", DbType="Float")]
+		public System.Nullable<double> Period16
 		{
 			get
 			{
-				return this._Period16_Amount;
+				return this._Period16;
 			}
 			set
 			{
-				if ((this._Period16_Amount != value))
+				if ((this._Period16 != value))
 				{
-					this.OnPeriod16_AmountChanging(value);
+					this.OnPeriod16Changing(value);
 					this.SendPropertyChanging();
-					this._Period16_Amount = value;
-					this.SendPropertyChanged("Period16_Amount");
-					this.OnPeriod16_AmountChanged();
+					this._Period16 = value;
+					this.SendPropertyChanged("Period16");
+					this.OnPeriod16Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Version", DbType="VarChar(50)")]
+		public string Version
+		{
+			get
+			{
+				return this._Version;
+			}
+			set
+			{
+				if ((this._Version != value))
+				{
+					this.OnVersionChanging(value);
+					this.SendPropertyChanging();
+					this._Version = value;
+					this.SendPropertyChanged("Version");
+					this.OnVersionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> InsertDate
+		{
+			get
+			{
+				return this._InsertDate;
+			}
+			set
+			{
+				if ((this._InsertDate != value))
+				{
+					this.OnInsertDateChanging(value);
+					this.SendPropertyChanging();
+					this._InsertDate = value;
+					this.SendPropertyChanged("InsertDate");
+					this.OnInsertDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertUser", DbType="VarChar(50)")]
+		public string InsertUser
+		{
+			get
+			{
+				return this._InsertUser;
+			}
+			set
+			{
+				if ((this._InsertUser != value))
+				{
+					this.OnInsertUserChanging(value);
+					this.SendPropertyChanging();
+					this._InsertUser = value;
+					this.SendPropertyChanged("InsertUser");
+					this.OnInsertUserChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FOL_Input_6_0_TotalMOH")]
+	public partial class FOL_Input_6_0_TotalMOH : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _GLBPCCode;
+		
+		private string _GLBPCDescription;
+		
+		private string _GLOutputCode;
+		
+		private string _PARENTH1;
+		
+		private string _UploadCode;
+		
+		private string _BPCOutputCode;
+		
+		private string _BU;
+		
+		private string _Segment;
+		
+		private System.Nullable<int> _IsSubtotal;
+		
+		private string _Department;
+		
+		private System.Nullable<double> _Period1;
+		
+		private System.Nullable<double> _Period2;
+		
+		private System.Nullable<double> _Period3;
+		
+		private System.Nullable<double> _Period4;
+		
+		private System.Nullable<double> _Period5;
+		
+		private System.Nullable<double> _Period6;
+		
+		private System.Nullable<double> _Period7;
+		
+		private System.Nullable<double> _Period8;
+		
+		private System.Nullable<double> _Period9;
+		
+		private System.Nullable<double> _Period10;
+		
+		private System.Nullable<double> _Period11;
+		
+		private System.Nullable<double> _Period12;
+		
+		private System.Nullable<double> _Period13;
+		
+		private System.Nullable<double> _Period14;
+		
+		private System.Nullable<double> _Period15;
+		
+		private System.Nullable<double> _Period16;
+		
+		private System.Nullable<double> _Totals;
+		
+		private string _Type;
+		
+		private string _Version;
+		
+		private System.Nullable<System.DateTime> _InsertDate;
+		
+		private string _InsertUser;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnGLBPCCodeChanging(string value);
+    partial void OnGLBPCCodeChanged();
+    partial void OnGLBPCDescriptionChanging(string value);
+    partial void OnGLBPCDescriptionChanged();
+    partial void OnGLOutputCodeChanging(string value);
+    partial void OnGLOutputCodeChanged();
+    partial void OnPARENTH1Changing(string value);
+    partial void OnPARENTH1Changed();
+    partial void OnUploadCodeChanging(string value);
+    partial void OnUploadCodeChanged();
+    partial void OnBPCOutputCodeChanging(string value);
+    partial void OnBPCOutputCodeChanged();
+    partial void OnBUChanging(string value);
+    partial void OnBUChanged();
+    partial void OnSegmentChanging(string value);
+    partial void OnSegmentChanged();
+    partial void OnIsSubtotalChanging(System.Nullable<int> value);
+    partial void OnIsSubtotalChanged();
+    partial void OnDepartmentChanging(string value);
+    partial void OnDepartmentChanged();
+    partial void OnPeriod1Changing(System.Nullable<double> value);
+    partial void OnPeriod1Changed();
+    partial void OnPeriod2Changing(System.Nullable<double> value);
+    partial void OnPeriod2Changed();
+    partial void OnPeriod3Changing(System.Nullable<double> value);
+    partial void OnPeriod3Changed();
+    partial void OnPeriod4Changing(System.Nullable<double> value);
+    partial void OnPeriod4Changed();
+    partial void OnPeriod5Changing(System.Nullable<double> value);
+    partial void OnPeriod5Changed();
+    partial void OnPeriod6Changing(System.Nullable<double> value);
+    partial void OnPeriod6Changed();
+    partial void OnPeriod7Changing(System.Nullable<double> value);
+    partial void OnPeriod7Changed();
+    partial void OnPeriod8Changing(System.Nullable<double> value);
+    partial void OnPeriod8Changed();
+    partial void OnPeriod9Changing(System.Nullable<double> value);
+    partial void OnPeriod9Changed();
+    partial void OnPeriod10Changing(System.Nullable<double> value);
+    partial void OnPeriod10Changed();
+    partial void OnPeriod11Changing(System.Nullable<double> value);
+    partial void OnPeriod11Changed();
+    partial void OnPeriod12Changing(System.Nullable<double> value);
+    partial void OnPeriod12Changed();
+    partial void OnPeriod13Changing(System.Nullable<double> value);
+    partial void OnPeriod13Changed();
+    partial void OnPeriod14Changing(System.Nullable<double> value);
+    partial void OnPeriod14Changed();
+    partial void OnPeriod15Changing(System.Nullable<double> value);
+    partial void OnPeriod15Changed();
+    partial void OnPeriod16Changing(System.Nullable<double> value);
+    partial void OnPeriod16Changed();
+    partial void OnTotalsChanging(System.Nullable<double> value);
+    partial void OnTotalsChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnVersionChanging(string value);
+    partial void OnVersionChanged();
+    partial void OnInsertDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnInsertDateChanged();
+    partial void OnInsertUserChanging(string value);
+    partial void OnInsertUserChanged();
+    #endregion
+		
+		public FOL_Input_6_0_TotalMOH()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLBPCCode", DbType="VarChar(50)")]
+		public string GLBPCCode
+		{
+			get
+			{
+				return this._GLBPCCode;
+			}
+			set
+			{
+				if ((this._GLBPCCode != value))
+				{
+					this.OnGLBPCCodeChanging(value);
+					this.SendPropertyChanging();
+					this._GLBPCCode = value;
+					this.SendPropertyChanged("GLBPCCode");
+					this.OnGLBPCCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLBPCDescription", DbType="VarChar(500)")]
+		public string GLBPCDescription
+		{
+			get
+			{
+				return this._GLBPCDescription;
+			}
+			set
+			{
+				if ((this._GLBPCDescription != value))
+				{
+					this.OnGLBPCDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._GLBPCDescription = value;
+					this.SendPropertyChanged("GLBPCDescription");
+					this.OnGLBPCDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLOutputCode", DbType="VarChar(MAX)")]
+		public string GLOutputCode
+		{
+			get
+			{
+				return this._GLOutputCode;
+			}
+			set
+			{
+				if ((this._GLOutputCode != value))
+				{
+					this.OnGLOutputCodeChanging(value);
+					this.SendPropertyChanging();
+					this._GLOutputCode = value;
+					this.SendPropertyChanged("GLOutputCode");
+					this.OnGLOutputCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PARENTH1", DbType="VarChar(50)")]
+		public string PARENTH1
+		{
+			get
+			{
+				return this._PARENTH1;
+			}
+			set
+			{
+				if ((this._PARENTH1 != value))
+				{
+					this.OnPARENTH1Changing(value);
+					this.SendPropertyChanging();
+					this._PARENTH1 = value;
+					this.SendPropertyChanged("PARENTH1");
+					this.OnPARENTH1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UploadCode", DbType="VarChar(50)")]
+		public string UploadCode
+		{
+			get
+			{
+				return this._UploadCode;
+			}
+			set
+			{
+				if ((this._UploadCode != value))
+				{
+					this.OnUploadCodeChanging(value);
+					this.SendPropertyChanging();
+					this._UploadCode = value;
+					this.SendPropertyChanged("UploadCode");
+					this.OnUploadCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPCOutputCode", DbType="VarChar(50)")]
+		public string BPCOutputCode
+		{
+			get
+			{
+				return this._BPCOutputCode;
+			}
+			set
+			{
+				if ((this._BPCOutputCode != value))
+				{
+					this.OnBPCOutputCodeChanging(value);
+					this.SendPropertyChanging();
+					this._BPCOutputCode = value;
+					this.SendPropertyChanged("BPCOutputCode");
+					this.OnBPCOutputCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BU", DbType="VarChar(50)")]
+		public string BU
+		{
+			get
+			{
+				return this._BU;
+			}
+			set
+			{
+				if ((this._BU != value))
+				{
+					this.OnBUChanging(value);
+					this.SendPropertyChanging();
+					this._BU = value;
+					this.SendPropertyChanged("BU");
+					this.OnBUChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Segment", DbType="VarChar(50)")]
+		public string Segment
+		{
+			get
+			{
+				return this._Segment;
+			}
+			set
+			{
+				if ((this._Segment != value))
+				{
+					this.OnSegmentChanging(value);
+					this.SendPropertyChanging();
+					this._Segment = value;
+					this.SendPropertyChanged("Segment");
+					this.OnSegmentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSubtotal", DbType="Int")]
+		public System.Nullable<int> IsSubtotal
+		{
+			get
+			{
+				return this._IsSubtotal;
+			}
+			set
+			{
+				if ((this._IsSubtotal != value))
+				{
+					this.OnIsSubtotalChanging(value);
+					this.SendPropertyChanging();
+					this._IsSubtotal = value;
+					this.SendPropertyChanged("IsSubtotal");
+					this.OnIsSubtotalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Department", DbType="VarChar(50)")]
+		public string Department
+		{
+			get
+			{
+				return this._Department;
+			}
+			set
+			{
+				if ((this._Department != value))
+				{
+					this.OnDepartmentChanging(value);
+					this.SendPropertyChanging();
+					this._Department = value;
+					this.SendPropertyChanged("Department");
+					this.OnDepartmentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period1", DbType="Float")]
+		public System.Nullable<double> Period1
+		{
+			get
+			{
+				return this._Period1;
+			}
+			set
+			{
+				if ((this._Period1 != value))
+				{
+					this.OnPeriod1Changing(value);
+					this.SendPropertyChanging();
+					this._Period1 = value;
+					this.SendPropertyChanged("Period1");
+					this.OnPeriod1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period2", DbType="Float")]
+		public System.Nullable<double> Period2
+		{
+			get
+			{
+				return this._Period2;
+			}
+			set
+			{
+				if ((this._Period2 != value))
+				{
+					this.OnPeriod2Changing(value);
+					this.SendPropertyChanging();
+					this._Period2 = value;
+					this.SendPropertyChanged("Period2");
+					this.OnPeriod2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period3", DbType="Float")]
+		public System.Nullable<double> Period3
+		{
+			get
+			{
+				return this._Period3;
+			}
+			set
+			{
+				if ((this._Period3 != value))
+				{
+					this.OnPeriod3Changing(value);
+					this.SendPropertyChanging();
+					this._Period3 = value;
+					this.SendPropertyChanged("Period3");
+					this.OnPeriod3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period4", DbType="Float")]
+		public System.Nullable<double> Period4
+		{
+			get
+			{
+				return this._Period4;
+			}
+			set
+			{
+				if ((this._Period4 != value))
+				{
+					this.OnPeriod4Changing(value);
+					this.SendPropertyChanging();
+					this._Period4 = value;
+					this.SendPropertyChanged("Period4");
+					this.OnPeriod4Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period5", DbType="Float")]
+		public System.Nullable<double> Period5
+		{
+			get
+			{
+				return this._Period5;
+			}
+			set
+			{
+				if ((this._Period5 != value))
+				{
+					this.OnPeriod5Changing(value);
+					this.SendPropertyChanging();
+					this._Period5 = value;
+					this.SendPropertyChanged("Period5");
+					this.OnPeriod5Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period6", DbType="Float")]
+		public System.Nullable<double> Period6
+		{
+			get
+			{
+				return this._Period6;
+			}
+			set
+			{
+				if ((this._Period6 != value))
+				{
+					this.OnPeriod6Changing(value);
+					this.SendPropertyChanging();
+					this._Period6 = value;
+					this.SendPropertyChanged("Period6");
+					this.OnPeriod6Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period7", DbType="Float")]
+		public System.Nullable<double> Period7
+		{
+			get
+			{
+				return this._Period7;
+			}
+			set
+			{
+				if ((this._Period7 != value))
+				{
+					this.OnPeriod7Changing(value);
+					this.SendPropertyChanging();
+					this._Period7 = value;
+					this.SendPropertyChanged("Period7");
+					this.OnPeriod7Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period8", DbType="Float")]
+		public System.Nullable<double> Period8
+		{
+			get
+			{
+				return this._Period8;
+			}
+			set
+			{
+				if ((this._Period8 != value))
+				{
+					this.OnPeriod8Changing(value);
+					this.SendPropertyChanging();
+					this._Period8 = value;
+					this.SendPropertyChanged("Period8");
+					this.OnPeriod8Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period9", DbType="Float")]
+		public System.Nullable<double> Period9
+		{
+			get
+			{
+				return this._Period9;
+			}
+			set
+			{
+				if ((this._Period9 != value))
+				{
+					this.OnPeriod9Changing(value);
+					this.SendPropertyChanging();
+					this._Period9 = value;
+					this.SendPropertyChanged("Period9");
+					this.OnPeriod9Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period10", DbType="Float")]
+		public System.Nullable<double> Period10
+		{
+			get
+			{
+				return this._Period10;
+			}
+			set
+			{
+				if ((this._Period10 != value))
+				{
+					this.OnPeriod10Changing(value);
+					this.SendPropertyChanging();
+					this._Period10 = value;
+					this.SendPropertyChanged("Period10");
+					this.OnPeriod10Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period11", DbType="Float")]
+		public System.Nullable<double> Period11
+		{
+			get
+			{
+				return this._Period11;
+			}
+			set
+			{
+				if ((this._Period11 != value))
+				{
+					this.OnPeriod11Changing(value);
+					this.SendPropertyChanging();
+					this._Period11 = value;
+					this.SendPropertyChanged("Period11");
+					this.OnPeriod11Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period12", DbType="Float")]
+		public System.Nullable<double> Period12
+		{
+			get
+			{
+				return this._Period12;
+			}
+			set
+			{
+				if ((this._Period12 != value))
+				{
+					this.OnPeriod12Changing(value);
+					this.SendPropertyChanging();
+					this._Period12 = value;
+					this.SendPropertyChanged("Period12");
+					this.OnPeriod12Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period13", DbType="Float")]
+		public System.Nullable<double> Period13
+		{
+			get
+			{
+				return this._Period13;
+			}
+			set
+			{
+				if ((this._Period13 != value))
+				{
+					this.OnPeriod13Changing(value);
+					this.SendPropertyChanging();
+					this._Period13 = value;
+					this.SendPropertyChanged("Period13");
+					this.OnPeriod13Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period14", DbType="Float")]
+		public System.Nullable<double> Period14
+		{
+			get
+			{
+				return this._Period14;
+			}
+			set
+			{
+				if ((this._Period14 != value))
+				{
+					this.OnPeriod14Changing(value);
+					this.SendPropertyChanging();
+					this._Period14 = value;
+					this.SendPropertyChanged("Period14");
+					this.OnPeriod14Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period15", DbType="Float")]
+		public System.Nullable<double> Period15
+		{
+			get
+			{
+				return this._Period15;
+			}
+			set
+			{
+				if ((this._Period15 != value))
+				{
+					this.OnPeriod15Changing(value);
+					this.SendPropertyChanging();
+					this._Period15 = value;
+					this.SendPropertyChanged("Period15");
+					this.OnPeriod15Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period16", DbType="Float")]
+		public System.Nullable<double> Period16
+		{
+			get
+			{
+				return this._Period16;
+			}
+			set
+			{
+				if ((this._Period16 != value))
+				{
+					this.OnPeriod16Changing(value);
+					this.SendPropertyChanging();
+					this._Period16 = value;
+					this.SendPropertyChanged("Period16");
+					this.OnPeriod16Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Totals", DbType="Float")]
+		public System.Nullable<double> Totals
+		{
+			get
+			{
+				return this._Totals;
+			}
+			set
+			{
+				if ((this._Totals != value))
+				{
+					this.OnTotalsChanging(value);
+					this.SendPropertyChanging();
+					this._Totals = value;
+					this.SendPropertyChanged("Totals");
+					this.OnTotalsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(50)")]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Version", DbType="VarChar(50)")]
+		public string Version
+		{
+			get
+			{
+				return this._Version;
+			}
+			set
+			{
+				if ((this._Version != value))
+				{
+					this.OnVersionChanging(value);
+					this.SendPropertyChanging();
+					this._Version = value;
+					this.SendPropertyChanged("Version");
+					this.OnVersionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> InsertDate
+		{
+			get
+			{
+				return this._InsertDate;
+			}
+			set
+			{
+				if ((this._InsertDate != value))
+				{
+					this.OnInsertDateChanging(value);
+					this.SendPropertyChanging();
+					this._InsertDate = value;
+					this.SendPropertyChanged("InsertDate");
+					this.OnInsertDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertUser", DbType="VarChar(50)")]
+		public string InsertUser
+		{
+			get
+			{
+				return this._InsertUser;
+			}
+			set
+			{
+				if ((this._InsertUser != value))
+				{
+					this.OnInsertUserChanging(value);
+					this.SendPropertyChanging();
+					this._InsertUser = value;
+					this.SendPropertyChanged("InsertUser");
+					this.OnInsertUserChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FOL_CCMapping")]
+	public partial class FOL_CCMapping : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _CC;
+		
+		private string _CCDescription;
+		
+		private string _DriverSource;
+		
+		private string _Type;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnCCChanging(string value);
+    partial void OnCCChanged();
+    partial void OnCCDescriptionChanging(string value);
+    partial void OnCCDescriptionChanged();
+    partial void OnDriverSourceChanging(string value);
+    partial void OnDriverSourceChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    #endregion
+		
+		public FOL_CCMapping()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CC", DbType="VarChar(50)")]
+		public string CC
+		{
+			get
+			{
+				return this._CC;
+			}
+			set
+			{
+				if ((this._CC != value))
+				{
+					this.OnCCChanging(value);
+					this.SendPropertyChanging();
+					this._CC = value;
+					this.SendPropertyChanged("CC");
+					this.OnCCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CCDescription", DbType="VarChar(500)")]
+		public string CCDescription
+		{
+			get
+			{
+				return this._CCDescription;
+			}
+			set
+			{
+				if ((this._CCDescription != value))
+				{
+					this.OnCCDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._CCDescription = value;
+					this.SendPropertyChanged("CCDescription");
+					this.OnCCDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DriverSource", DbType="VarChar(50)")]
+		public string DriverSource
+		{
+			get
+			{
+				return this._DriverSource;
+			}
+			set
+			{
+				if ((this._DriverSource != value))
+				{
+					this.OnDriverSourceChanging(value);
+					this.SendPropertyChanging();
+					this._DriverSource = value;
+					this.SendPropertyChanged("DriverSource");
+					this.OnDriverSourceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(50)")]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FOL_Input_6_0_SumByType")]
+	public partial class FOL_Input_6_0_SumByType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _GLBPCCode;
+		
+		private string _GLBPCDescription;
+		
+		private string _GLOutputCode;
+		
+		private string _PARENTH1;
+		
+		private string _UploadCode;
+		
+		private string _BPCOutputCode;
+		
+		private string _BU;
+		
+		private string _Segment;
+		
+		private System.Nullable<double> _Period1;
+		
+		private System.Nullable<double> _Period2;
+		
+		private System.Nullable<double> _Period3;
+		
+		private System.Nullable<double> _Period4;
+		
+		private System.Nullable<double> _Period5;
+		
+		private System.Nullable<double> _Period6;
+		
+		private System.Nullable<double> _Period7;
+		
+		private System.Nullable<double> _Period8;
+		
+		private System.Nullable<double> _Period9;
+		
+		private System.Nullable<double> _Period10;
+		
+		private System.Nullable<double> _Period11;
+		
+		private System.Nullable<double> _Period12;
+		
+		private System.Nullable<double> _Period13;
+		
+		private System.Nullable<double> _Period14;
+		
+		private System.Nullable<double> _Period15;
+		
+		private System.Nullable<double> _Period16;
+		
+		private System.Nullable<double> _Totals;
+		
+		private string _Type;
+		
+		private string _Version;
+		
+		private System.Nullable<System.DateTime> _InsertDate;
+		
+		private string _InsertUser;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnGLBPCCodeChanging(string value);
+    partial void OnGLBPCCodeChanged();
+    partial void OnGLBPCDescriptionChanging(string value);
+    partial void OnGLBPCDescriptionChanged();
+    partial void OnGLOutputCodeChanging(string value);
+    partial void OnGLOutputCodeChanged();
+    partial void OnPARENTH1Changing(string value);
+    partial void OnPARENTH1Changed();
+    partial void OnUploadCodeChanging(string value);
+    partial void OnUploadCodeChanged();
+    partial void OnBPCOutputCodeChanging(string value);
+    partial void OnBPCOutputCodeChanged();
+    partial void OnBUChanging(string value);
+    partial void OnBUChanged();
+    partial void OnSegmentChanging(string value);
+    partial void OnSegmentChanged();
+    partial void OnPeriod1Changing(System.Nullable<double> value);
+    partial void OnPeriod1Changed();
+    partial void OnPeriod2Changing(System.Nullable<double> value);
+    partial void OnPeriod2Changed();
+    partial void OnPeriod3Changing(System.Nullable<double> value);
+    partial void OnPeriod3Changed();
+    partial void OnPeriod4Changing(System.Nullable<double> value);
+    partial void OnPeriod4Changed();
+    partial void OnPeriod5Changing(System.Nullable<double> value);
+    partial void OnPeriod5Changed();
+    partial void OnPeriod6Changing(System.Nullable<double> value);
+    partial void OnPeriod6Changed();
+    partial void OnPeriod7Changing(System.Nullable<double> value);
+    partial void OnPeriod7Changed();
+    partial void OnPeriod8Changing(System.Nullable<double> value);
+    partial void OnPeriod8Changed();
+    partial void OnPeriod9Changing(System.Nullable<double> value);
+    partial void OnPeriod9Changed();
+    partial void OnPeriod10Changing(System.Nullable<double> value);
+    partial void OnPeriod10Changed();
+    partial void OnPeriod11Changing(System.Nullable<double> value);
+    partial void OnPeriod11Changed();
+    partial void OnPeriod12Changing(System.Nullable<double> value);
+    partial void OnPeriod12Changed();
+    partial void OnPeriod13Changing(System.Nullable<double> value);
+    partial void OnPeriod13Changed();
+    partial void OnPeriod14Changing(System.Nullable<double> value);
+    partial void OnPeriod14Changed();
+    partial void OnPeriod15Changing(System.Nullable<double> value);
+    partial void OnPeriod15Changed();
+    partial void OnPeriod16Changing(System.Nullable<double> value);
+    partial void OnPeriod16Changed();
+    partial void OnTotalsChanging(System.Nullable<double> value);
+    partial void OnTotalsChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnVersionChanging(string value);
+    partial void OnVersionChanged();
+    partial void OnInsertDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnInsertDateChanged();
+    partial void OnInsertUserChanging(string value);
+    partial void OnInsertUserChanged();
+    #endregion
+		
+		public FOL_Input_6_0_SumByType()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLBPCCode", DbType="VarChar(50)")]
+		public string GLBPCCode
+		{
+			get
+			{
+				return this._GLBPCCode;
+			}
+			set
+			{
+				if ((this._GLBPCCode != value))
+				{
+					this.OnGLBPCCodeChanging(value);
+					this.SendPropertyChanging();
+					this._GLBPCCode = value;
+					this.SendPropertyChanged("GLBPCCode");
+					this.OnGLBPCCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLBPCDescription", DbType="VarChar(MAX)")]
+		public string GLBPCDescription
+		{
+			get
+			{
+				return this._GLBPCDescription;
+			}
+			set
+			{
+				if ((this._GLBPCDescription != value))
+				{
+					this.OnGLBPCDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._GLBPCDescription = value;
+					this.SendPropertyChanged("GLBPCDescription");
+					this.OnGLBPCDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLOutputCode", DbType="VarChar(50)")]
+		public string GLOutputCode
+		{
+			get
+			{
+				return this._GLOutputCode;
+			}
+			set
+			{
+				if ((this._GLOutputCode != value))
+				{
+					this.OnGLOutputCodeChanging(value);
+					this.SendPropertyChanging();
+					this._GLOutputCode = value;
+					this.SendPropertyChanged("GLOutputCode");
+					this.OnGLOutputCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PARENTH1", DbType="VarChar(50)")]
+		public string PARENTH1
+		{
+			get
+			{
+				return this._PARENTH1;
+			}
+			set
+			{
+				if ((this._PARENTH1 != value))
+				{
+					this.OnPARENTH1Changing(value);
+					this.SendPropertyChanging();
+					this._PARENTH1 = value;
+					this.SendPropertyChanged("PARENTH1");
+					this.OnPARENTH1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UploadCode", DbType="VarChar(50)")]
+		public string UploadCode
+		{
+			get
+			{
+				return this._UploadCode;
+			}
+			set
+			{
+				if ((this._UploadCode != value))
+				{
+					this.OnUploadCodeChanging(value);
+					this.SendPropertyChanging();
+					this._UploadCode = value;
+					this.SendPropertyChanged("UploadCode");
+					this.OnUploadCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPCOutputCode", DbType="VarChar(50)")]
+		public string BPCOutputCode
+		{
+			get
+			{
+				return this._BPCOutputCode;
+			}
+			set
+			{
+				if ((this._BPCOutputCode != value))
+				{
+					this.OnBPCOutputCodeChanging(value);
+					this.SendPropertyChanging();
+					this._BPCOutputCode = value;
+					this.SendPropertyChanged("BPCOutputCode");
+					this.OnBPCOutputCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BU", DbType="VarChar(50)")]
+		public string BU
+		{
+			get
+			{
+				return this._BU;
+			}
+			set
+			{
+				if ((this._BU != value))
+				{
+					this.OnBUChanging(value);
+					this.SendPropertyChanging();
+					this._BU = value;
+					this.SendPropertyChanged("BU");
+					this.OnBUChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Segment", DbType="VarChar(50)")]
+		public string Segment
+		{
+			get
+			{
+				return this._Segment;
+			}
+			set
+			{
+				if ((this._Segment != value))
+				{
+					this.OnSegmentChanging(value);
+					this.SendPropertyChanging();
+					this._Segment = value;
+					this.SendPropertyChanged("Segment");
+					this.OnSegmentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period1", DbType="Float")]
+		public System.Nullable<double> Period1
+		{
+			get
+			{
+				return this._Period1;
+			}
+			set
+			{
+				if ((this._Period1 != value))
+				{
+					this.OnPeriod1Changing(value);
+					this.SendPropertyChanging();
+					this._Period1 = value;
+					this.SendPropertyChanged("Period1");
+					this.OnPeriod1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period2", DbType="Float")]
+		public System.Nullable<double> Period2
+		{
+			get
+			{
+				return this._Period2;
+			}
+			set
+			{
+				if ((this._Period2 != value))
+				{
+					this.OnPeriod2Changing(value);
+					this.SendPropertyChanging();
+					this._Period2 = value;
+					this.SendPropertyChanged("Period2");
+					this.OnPeriod2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period3", DbType="Float")]
+		public System.Nullable<double> Period3
+		{
+			get
+			{
+				return this._Period3;
+			}
+			set
+			{
+				if ((this._Period3 != value))
+				{
+					this.OnPeriod3Changing(value);
+					this.SendPropertyChanging();
+					this._Period3 = value;
+					this.SendPropertyChanged("Period3");
+					this.OnPeriod3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period4", DbType="Float")]
+		public System.Nullable<double> Period4
+		{
+			get
+			{
+				return this._Period4;
+			}
+			set
+			{
+				if ((this._Period4 != value))
+				{
+					this.OnPeriod4Changing(value);
+					this.SendPropertyChanging();
+					this._Period4 = value;
+					this.SendPropertyChanged("Period4");
+					this.OnPeriod4Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period5", DbType="Float")]
+		public System.Nullable<double> Period5
+		{
+			get
+			{
+				return this._Period5;
+			}
+			set
+			{
+				if ((this._Period5 != value))
+				{
+					this.OnPeriod5Changing(value);
+					this.SendPropertyChanging();
+					this._Period5 = value;
+					this.SendPropertyChanged("Period5");
+					this.OnPeriod5Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period6", DbType="Float")]
+		public System.Nullable<double> Period6
+		{
+			get
+			{
+				return this._Period6;
+			}
+			set
+			{
+				if ((this._Period6 != value))
+				{
+					this.OnPeriod6Changing(value);
+					this.SendPropertyChanging();
+					this._Period6 = value;
+					this.SendPropertyChanged("Period6");
+					this.OnPeriod6Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period7", DbType="Float")]
+		public System.Nullable<double> Period7
+		{
+			get
+			{
+				return this._Period7;
+			}
+			set
+			{
+				if ((this._Period7 != value))
+				{
+					this.OnPeriod7Changing(value);
+					this.SendPropertyChanging();
+					this._Period7 = value;
+					this.SendPropertyChanged("Period7");
+					this.OnPeriod7Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period8", DbType="Float")]
+		public System.Nullable<double> Period8
+		{
+			get
+			{
+				return this._Period8;
+			}
+			set
+			{
+				if ((this._Period8 != value))
+				{
+					this.OnPeriod8Changing(value);
+					this.SendPropertyChanging();
+					this._Period8 = value;
+					this.SendPropertyChanged("Period8");
+					this.OnPeriod8Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period9", DbType="Float")]
+		public System.Nullable<double> Period9
+		{
+			get
+			{
+				return this._Period9;
+			}
+			set
+			{
+				if ((this._Period9 != value))
+				{
+					this.OnPeriod9Changing(value);
+					this.SendPropertyChanging();
+					this._Period9 = value;
+					this.SendPropertyChanged("Period9");
+					this.OnPeriod9Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period10", DbType="Float")]
+		public System.Nullable<double> Period10
+		{
+			get
+			{
+				return this._Period10;
+			}
+			set
+			{
+				if ((this._Period10 != value))
+				{
+					this.OnPeriod10Changing(value);
+					this.SendPropertyChanging();
+					this._Period10 = value;
+					this.SendPropertyChanged("Period10");
+					this.OnPeriod10Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period11", DbType="Float")]
+		public System.Nullable<double> Period11
+		{
+			get
+			{
+				return this._Period11;
+			}
+			set
+			{
+				if ((this._Period11 != value))
+				{
+					this.OnPeriod11Changing(value);
+					this.SendPropertyChanging();
+					this._Period11 = value;
+					this.SendPropertyChanged("Period11");
+					this.OnPeriod11Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period12", DbType="Float")]
+		public System.Nullable<double> Period12
+		{
+			get
+			{
+				return this._Period12;
+			}
+			set
+			{
+				if ((this._Period12 != value))
+				{
+					this.OnPeriod12Changing(value);
+					this.SendPropertyChanging();
+					this._Period12 = value;
+					this.SendPropertyChanged("Period12");
+					this.OnPeriod12Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period13", DbType="Float")]
+		public System.Nullable<double> Period13
+		{
+			get
+			{
+				return this._Period13;
+			}
+			set
+			{
+				if ((this._Period13 != value))
+				{
+					this.OnPeriod13Changing(value);
+					this.SendPropertyChanging();
+					this._Period13 = value;
+					this.SendPropertyChanged("Period13");
+					this.OnPeriod13Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period14", DbType="Float")]
+		public System.Nullable<double> Period14
+		{
+			get
+			{
+				return this._Period14;
+			}
+			set
+			{
+				if ((this._Period14 != value))
+				{
+					this.OnPeriod14Changing(value);
+					this.SendPropertyChanging();
+					this._Period14 = value;
+					this.SendPropertyChanged("Period14");
+					this.OnPeriod14Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period15", DbType="Float")]
+		public System.Nullable<double> Period15
+		{
+			get
+			{
+				return this._Period15;
+			}
+			set
+			{
+				if ((this._Period15 != value))
+				{
+					this.OnPeriod15Changing(value);
+					this.SendPropertyChanging();
+					this._Period15 = value;
+					this.SendPropertyChanged("Period15");
+					this.OnPeriod15Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period16", DbType="Float")]
+		public System.Nullable<double> Period16
+		{
+			get
+			{
+				return this._Period16;
+			}
+			set
+			{
+				if ((this._Period16 != value))
+				{
+					this.OnPeriod16Changing(value);
+					this.SendPropertyChanging();
+					this._Period16 = value;
+					this.SendPropertyChanged("Period16");
+					this.OnPeriod16Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Totals", DbType="Float")]
+		public System.Nullable<double> Totals
+		{
+			get
+			{
+				return this._Totals;
+			}
+			set
+			{
+				if ((this._Totals != value))
+				{
+					this.OnTotalsChanging(value);
+					this.SendPropertyChanging();
+					this._Totals = value;
+					this.SendPropertyChanged("Totals");
+					this.OnTotalsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(50)")]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Version", DbType="VarChar(50)")]
+		public string Version
+		{
+			get
+			{
+				return this._Version;
+			}
+			set
+			{
+				if ((this._Version != value))
+				{
+					this.OnVersionChanging(value);
+					this.SendPropertyChanging();
+					this._Version = value;
+					this.SendPropertyChanged("Version");
+					this.OnVersionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> InsertDate
+		{
+			get
+			{
+				return this._InsertDate;
+			}
+			set
+			{
+				if ((this._InsertDate != value))
+				{
+					this.OnInsertDateChanging(value);
+					this.SendPropertyChanging();
+					this._InsertDate = value;
+					this.SendPropertyChanged("InsertDate");
+					this.OnInsertDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertUser", DbType="VarChar(50)")]
+		public string InsertUser
+		{
+			get
+			{
+				return this._InsertUser;
+			}
+			set
+			{
+				if ((this._InsertUser != value))
+				{
+					this.OnInsertUserChanging(value);
+					this.SendPropertyChanging();
+					this._InsertUser = value;
+					this.SendPropertyChanged("InsertUser");
+					this.OnInsertUserChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FOL_Input_6_0_SumByTypeModule")]
+	public partial class FOL_Input_6_0_SumByTypeModule
+	{
+		
+		private int _ID;
+		
+		private string _GLBPCCode;
+		
+		private string _GLBPCDescription;
+		
+		private string _GLOutputCode;
+		
+		private string _PARENTH1;
+		
+		private string _UploadCode;
+		
+		private string _BPCOutputCode;
+		
+		private string _BU;
+		
+		private string _Segment;
+		
+		private System.Nullable<double> _Totals;
+		
+		private string _Type;
+		
+		private string _Version;
+		
+		private System.Nullable<System.DateTime> _InsertDate;
+		
+		private string _InsertUser;
+		
+		public FOL_Input_6_0_SumByTypeModule()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLBPCCode", DbType="VarChar(50)")]
+		public string GLBPCCode
+		{
+			get
+			{
+				return this._GLBPCCode;
+			}
+			set
+			{
+				if ((this._GLBPCCode != value))
+				{
+					this._GLBPCCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLBPCDescription", DbType="VarChar(MAX)")]
+		public string GLBPCDescription
+		{
+			get
+			{
+				return this._GLBPCDescription;
+			}
+			set
+			{
+				if ((this._GLBPCDescription != value))
+				{
+					this._GLBPCDescription = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLOutputCode", DbType="VarChar(50)")]
+		public string GLOutputCode
+		{
+			get
+			{
+				return this._GLOutputCode;
+			}
+			set
+			{
+				if ((this._GLOutputCode != value))
+				{
+					this._GLOutputCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PARENTH1", DbType="VarChar(50)")]
+		public string PARENTH1
+		{
+			get
+			{
+				return this._PARENTH1;
+			}
+			set
+			{
+				if ((this._PARENTH1 != value))
+				{
+					this._PARENTH1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UploadCode", DbType="VarChar(50)")]
+		public string UploadCode
+		{
+			get
+			{
+				return this._UploadCode;
+			}
+			set
+			{
+				if ((this._UploadCode != value))
+				{
+					this._UploadCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPCOutputCode", DbType="VarChar(50)")]
+		public string BPCOutputCode
+		{
+			get
+			{
+				return this._BPCOutputCode;
+			}
+			set
+			{
+				if ((this._BPCOutputCode != value))
+				{
+					this._BPCOutputCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BU", DbType="VarChar(50)")]
+		public string BU
+		{
+			get
+			{
+				return this._BU;
+			}
+			set
+			{
+				if ((this._BU != value))
+				{
+					this._BU = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Segment", DbType="VarChar(50)")]
+		public string Segment
+		{
+			get
+			{
+				return this._Segment;
+			}
+			set
+			{
+				if ((this._Segment != value))
+				{
+					this._Segment = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Totals", DbType="Float")]
+		public System.Nullable<double> Totals
+		{
+			get
+			{
+				return this._Totals;
+			}
+			set
+			{
+				if ((this._Totals != value))
+				{
+					this._Totals = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(50)")]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this._Type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Version", DbType="VarChar(50)")]
+		public string Version
+		{
+			get
+			{
+				return this._Version;
+			}
+			set
+			{
+				if ((this._Version != value))
+				{
+					this._Version = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> InsertDate
+		{
+			get
+			{
+				return this._InsertDate;
+			}
+			set
+			{
+				if ((this._InsertDate != value))
+				{
+					this._InsertDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertUser", DbType="VarChar(50)")]
+		public string InsertUser
+		{
+			get
+			{
+				return this._InsertUser;
+			}
+			set
+			{
+				if ((this._InsertUser != value))
+				{
+					this._InsertUser = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FOL_Input_6_1")]
+	public partial class FOL_Input_6_1 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _GLBPCCode;
+		
+		private string _GLBPCDescription;
+		
+		private string _GLOutputCode;
+		
+		private string _CustomerBPCCode;
+		
+		private string _DIM1;
+		
+		private string _Order;
+		
+		private string _CustomerOutputCode;
+		
+		private string _BU;
+		
+		private string _Segment;
+		
+		private System.Nullable<double> _Period1;
+		
+		private System.Nullable<double> _Period2;
+		
+		private System.Nullable<double> _Period3;
+		
+		private System.Nullable<double> _Period4;
+		
+		private System.Nullable<double> _Period5;
+		
+		private System.Nullable<double> _Period6;
+		
+		private System.Nullable<double> _Period7;
+		
+		private System.Nullable<double> _Period8;
+		
+		private System.Nullable<double> _Period9;
+		
+		private System.Nullable<double> _Period10;
+		
+		private System.Nullable<double> _Period11;
+		
+		private System.Nullable<double> _Period12;
+		
+		private System.Nullable<double> _Period13;
+		
+		private System.Nullable<double> _Period14;
+		
+		private System.Nullable<double> _Period15;
+		
+		private System.Nullable<double> _Period16;
+		
+		private string _Type;
+		
+		private string _Version;
+		
+		private System.Nullable<System.DateTime> _InsertDate;
+		
+		private string _InsertUser;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnGLBPCCodeChanging(string value);
+    partial void OnGLBPCCodeChanged();
+    partial void OnGLBPCDescriptionChanging(string value);
+    partial void OnGLBPCDescriptionChanged();
+    partial void OnGLOutputCodeChanging(string value);
+    partial void OnGLOutputCodeChanged();
+    partial void OnCustomerBPCCodeChanging(string value);
+    partial void OnCustomerBPCCodeChanged();
+    partial void OnDIM1Changing(string value);
+    partial void OnDIM1Changed();
+    partial void OnOrderChanging(string value);
+    partial void OnOrderChanged();
+    partial void OnCustomerOutputCodeChanging(string value);
+    partial void OnCustomerOutputCodeChanged();
+    partial void OnBUChanging(string value);
+    partial void OnBUChanged();
+    partial void OnSegmentChanging(string value);
+    partial void OnSegmentChanged();
+    partial void OnPeriod1Changing(System.Nullable<double> value);
+    partial void OnPeriod1Changed();
+    partial void OnPeriod2Changing(System.Nullable<double> value);
+    partial void OnPeriod2Changed();
+    partial void OnPeriod3Changing(System.Nullable<double> value);
+    partial void OnPeriod3Changed();
+    partial void OnPeriod4Changing(System.Nullable<double> value);
+    partial void OnPeriod4Changed();
+    partial void OnPeriod5Changing(System.Nullable<double> value);
+    partial void OnPeriod5Changed();
+    partial void OnPeriod6Changing(System.Nullable<double> value);
+    partial void OnPeriod6Changed();
+    partial void OnPeriod7Changing(System.Nullable<double> value);
+    partial void OnPeriod7Changed();
+    partial void OnPeriod8Changing(System.Nullable<double> value);
+    partial void OnPeriod8Changed();
+    partial void OnPeriod9Changing(System.Nullable<double> value);
+    partial void OnPeriod9Changed();
+    partial void OnPeriod10Changing(System.Nullable<double> value);
+    partial void OnPeriod10Changed();
+    partial void OnPeriod11Changing(System.Nullable<double> value);
+    partial void OnPeriod11Changed();
+    partial void OnPeriod12Changing(System.Nullable<double> value);
+    partial void OnPeriod12Changed();
+    partial void OnPeriod13Changing(System.Nullable<double> value);
+    partial void OnPeriod13Changed();
+    partial void OnPeriod14Changing(System.Nullable<double> value);
+    partial void OnPeriod14Changed();
+    partial void OnPeriod15Changing(System.Nullable<double> value);
+    partial void OnPeriod15Changed();
+    partial void OnPeriod16Changing(System.Nullable<double> value);
+    partial void OnPeriod16Changed();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnVersionChanging(string value);
+    partial void OnVersionChanged();
+    partial void OnInsertDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnInsertDateChanged();
+    partial void OnInsertUserChanging(string value);
+    partial void OnInsertUserChanged();
+    #endregion
+		
+		public FOL_Input_6_1()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLBPCCode", DbType="VarChar(500)")]
+		public string GLBPCCode
+		{
+			get
+			{
+				return this._GLBPCCode;
+			}
+			set
+			{
+				if ((this._GLBPCCode != value))
+				{
+					this.OnGLBPCCodeChanging(value);
+					this.SendPropertyChanging();
+					this._GLBPCCode = value;
+					this.SendPropertyChanged("GLBPCCode");
+					this.OnGLBPCCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLBPCDescription", DbType="VarChar(500)")]
+		public string GLBPCDescription
+		{
+			get
+			{
+				return this._GLBPCDescription;
+			}
+			set
+			{
+				if ((this._GLBPCDescription != value))
+				{
+					this.OnGLBPCDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._GLBPCDescription = value;
+					this.SendPropertyChanged("GLBPCDescription");
+					this.OnGLBPCDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GLOutputCode", DbType="VarChar(500)")]
+		public string GLOutputCode
+		{
+			get
+			{
+				return this._GLOutputCode;
+			}
+			set
+			{
+				if ((this._GLOutputCode != value))
+				{
+					this.OnGLOutputCodeChanging(value);
+					this.SendPropertyChanging();
+					this._GLOutputCode = value;
+					this.SendPropertyChanged("GLOutputCode");
+					this.OnGLOutputCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerBPCCode", DbType="VarChar(500)")]
+		public string CustomerBPCCode
+		{
+			get
+			{
+				return this._CustomerBPCCode;
+			}
+			set
+			{
+				if ((this._CustomerBPCCode != value))
+				{
+					this.OnCustomerBPCCodeChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerBPCCode = value;
+					this.SendPropertyChanged("CustomerBPCCode");
+					this.OnCustomerBPCCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DIM1", DbType="VarChar(50)")]
+		public string DIM1
+		{
+			get
+			{
+				return this._DIM1;
+			}
+			set
+			{
+				if ((this._DIM1 != value))
+				{
+					this.OnDIM1Changing(value);
+					this.SendPropertyChanging();
+					this._DIM1 = value;
+					this.SendPropertyChanged("DIM1");
+					this.OnDIM1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Order]", Storage="_Order", DbType="VarChar(50)")]
+		public string Order
+		{
+			get
+			{
+				return this._Order;
+			}
+			set
+			{
+				if ((this._Order != value))
+				{
+					this.OnOrderChanging(value);
+					this.SendPropertyChanging();
+					this._Order = value;
+					this.SendPropertyChanged("Order");
+					this.OnOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerOutputCode", DbType="VarChar(500)")]
+		public string CustomerOutputCode
+		{
+			get
+			{
+				return this._CustomerOutputCode;
+			}
+			set
+			{
+				if ((this._CustomerOutputCode != value))
+				{
+					this.OnCustomerOutputCodeChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerOutputCode = value;
+					this.SendPropertyChanged("CustomerOutputCode");
+					this.OnCustomerOutputCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BU", DbType="VarChar(50)")]
+		public string BU
+		{
+			get
+			{
+				return this._BU;
+			}
+			set
+			{
+				if ((this._BU != value))
+				{
+					this.OnBUChanging(value);
+					this.SendPropertyChanging();
+					this._BU = value;
+					this.SendPropertyChanged("BU");
+					this.OnBUChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Segment", DbType="VarChar(50)")]
+		public string Segment
+		{
+			get
+			{
+				return this._Segment;
+			}
+			set
+			{
+				if ((this._Segment != value))
+				{
+					this.OnSegmentChanging(value);
+					this.SendPropertyChanging();
+					this._Segment = value;
+					this.SendPropertyChanged("Segment");
+					this.OnSegmentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period1", DbType="Float")]
+		public System.Nullable<double> Period1
+		{
+			get
+			{
+				return this._Period1;
+			}
+			set
+			{
+				if ((this._Period1 != value))
+				{
+					this.OnPeriod1Changing(value);
+					this.SendPropertyChanging();
+					this._Period1 = value;
+					this.SendPropertyChanged("Period1");
+					this.OnPeriod1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period2", DbType="Float")]
+		public System.Nullable<double> Period2
+		{
+			get
+			{
+				return this._Period2;
+			}
+			set
+			{
+				if ((this._Period2 != value))
+				{
+					this.OnPeriod2Changing(value);
+					this.SendPropertyChanging();
+					this._Period2 = value;
+					this.SendPropertyChanged("Period2");
+					this.OnPeriod2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period3", DbType="Float")]
+		public System.Nullable<double> Period3
+		{
+			get
+			{
+				return this._Period3;
+			}
+			set
+			{
+				if ((this._Period3 != value))
+				{
+					this.OnPeriod3Changing(value);
+					this.SendPropertyChanging();
+					this._Period3 = value;
+					this.SendPropertyChanged("Period3");
+					this.OnPeriod3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period4", DbType="Float")]
+		public System.Nullable<double> Period4
+		{
+			get
+			{
+				return this._Period4;
+			}
+			set
+			{
+				if ((this._Period4 != value))
+				{
+					this.OnPeriod4Changing(value);
+					this.SendPropertyChanging();
+					this._Period4 = value;
+					this.SendPropertyChanged("Period4");
+					this.OnPeriod4Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period5", DbType="Float")]
+		public System.Nullable<double> Period5
+		{
+			get
+			{
+				return this._Period5;
+			}
+			set
+			{
+				if ((this._Period5 != value))
+				{
+					this.OnPeriod5Changing(value);
+					this.SendPropertyChanging();
+					this._Period5 = value;
+					this.SendPropertyChanged("Period5");
+					this.OnPeriod5Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period6", DbType="Float")]
+		public System.Nullable<double> Period6
+		{
+			get
+			{
+				return this._Period6;
+			}
+			set
+			{
+				if ((this._Period6 != value))
+				{
+					this.OnPeriod6Changing(value);
+					this.SendPropertyChanging();
+					this._Period6 = value;
+					this.SendPropertyChanged("Period6");
+					this.OnPeriod6Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period7", DbType="Float")]
+		public System.Nullable<double> Period7
+		{
+			get
+			{
+				return this._Period7;
+			}
+			set
+			{
+				if ((this._Period7 != value))
+				{
+					this.OnPeriod7Changing(value);
+					this.SendPropertyChanging();
+					this._Period7 = value;
+					this.SendPropertyChanged("Period7");
+					this.OnPeriod7Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period8", DbType="Float")]
+		public System.Nullable<double> Period8
+		{
+			get
+			{
+				return this._Period8;
+			}
+			set
+			{
+				if ((this._Period8 != value))
+				{
+					this.OnPeriod8Changing(value);
+					this.SendPropertyChanging();
+					this._Period8 = value;
+					this.SendPropertyChanged("Period8");
+					this.OnPeriod8Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period9", DbType="Float")]
+		public System.Nullable<double> Period9
+		{
+			get
+			{
+				return this._Period9;
+			}
+			set
+			{
+				if ((this._Period9 != value))
+				{
+					this.OnPeriod9Changing(value);
+					this.SendPropertyChanging();
+					this._Period9 = value;
+					this.SendPropertyChanged("Period9");
+					this.OnPeriod9Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period10", DbType="Float")]
+		public System.Nullable<double> Period10
+		{
+			get
+			{
+				return this._Period10;
+			}
+			set
+			{
+				if ((this._Period10 != value))
+				{
+					this.OnPeriod10Changing(value);
+					this.SendPropertyChanging();
+					this._Period10 = value;
+					this.SendPropertyChanged("Period10");
+					this.OnPeriod10Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period11", DbType="Float")]
+		public System.Nullable<double> Period11
+		{
+			get
+			{
+				return this._Period11;
+			}
+			set
+			{
+				if ((this._Period11 != value))
+				{
+					this.OnPeriod11Changing(value);
+					this.SendPropertyChanging();
+					this._Period11 = value;
+					this.SendPropertyChanged("Period11");
+					this.OnPeriod11Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period12", DbType="Float")]
+		public System.Nullable<double> Period12
+		{
+			get
+			{
+				return this._Period12;
+			}
+			set
+			{
+				if ((this._Period12 != value))
+				{
+					this.OnPeriod12Changing(value);
+					this.SendPropertyChanging();
+					this._Period12 = value;
+					this.SendPropertyChanged("Period12");
+					this.OnPeriod12Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period13", DbType="Float")]
+		public System.Nullable<double> Period13
+		{
+			get
+			{
+				return this._Period13;
+			}
+			set
+			{
+				if ((this._Period13 != value))
+				{
+					this.OnPeriod13Changing(value);
+					this.SendPropertyChanging();
+					this._Period13 = value;
+					this.SendPropertyChanged("Period13");
+					this.OnPeriod13Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period14", DbType="Float")]
+		public System.Nullable<double> Period14
+		{
+			get
+			{
+				return this._Period14;
+			}
+			set
+			{
+				if ((this._Period14 != value))
+				{
+					this.OnPeriod14Changing(value);
+					this.SendPropertyChanging();
+					this._Period14 = value;
+					this.SendPropertyChanged("Period14");
+					this.OnPeriod14Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period15", DbType="Float")]
+		public System.Nullable<double> Period15
+		{
+			get
+			{
+				return this._Period15;
+			}
+			set
+			{
+				if ((this._Period15 != value))
+				{
+					this.OnPeriod15Changing(value);
+					this.SendPropertyChanging();
+					this._Period15 = value;
+					this.SendPropertyChanged("Period15");
+					this.OnPeriod15Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period16", DbType="Float")]
+		public System.Nullable<double> Period16
+		{
+			get
+			{
+				return this._Period16;
+			}
+			set
+			{
+				if ((this._Period16 != value))
+				{
+					this.OnPeriod16Changing(value);
+					this.SendPropertyChanging();
+					this._Period16 = value;
+					this.SendPropertyChanged("Period16");
+					this.OnPeriod16Changed();
 				}
 			}
 		}

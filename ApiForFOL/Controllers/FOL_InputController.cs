@@ -34,10 +34,26 @@ namespace ApiForFOL.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public Resp getItemById(int id)
+        public Resp getItemById(int id, string type)
         {
+            string tableName = "";
+            switch (type)
+            {
+                case "forecast":
+                    tableName = "FOL_Input_1_1";
+                    break;
+                case "percent":
+                    tableName = "FOL_Input_2_1";
+                    break;
+                case "amount":
+                    tableName = "FOL_Input_3_1";
+                    break;
+                default:
+                    tableName = "";
+                    break;
+            }
             DataTable dt = new DataTable();
-            dt = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_1_1] where id = " + id);
+            dt = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[" + tableName + "] where id = " + id);
             Resp resp = new Resp();
             resp.Code = "200";
             resp.Data = dt;
@@ -49,7 +65,23 @@ namespace ApiForFOL.Controllers
         public Resp updateItemById(Input model)
         {
             int index;
-            index = SqlHelper.ExecuteNonQuery("update FOL_Input_1_1 set " +
+            string tableName = "";
+            switch (model.DataType)
+            {
+                case "forecast":
+                    tableName = "FOL_Input_1_1";
+                    break;
+                case "percent":
+                    tableName = "FOL_Input_2_1";
+                    break;
+                case "amount":
+                    tableName = "FOL_Input_3_1";
+                    break;
+                default:
+                    tableName = "";
+                    break;
+            }
+            index = SqlHelper.ExecuteNonQuery("update " + tableName + " set " +
             "Period1 = " + model.Period1 + ", " +
             "Period2 = " + model.Period2 + ", " +
             "Period3 = " + model.Period3 + ", " +
@@ -82,6 +114,31 @@ namespace ApiForFOL.Controllers
             }
 
             return resp;
+        }
+
+        [System.Web.Http.HttpGet]
+        public Resp calculateByType(string type, string version)
+        {
+            FOL_InputFormulas fi = new FOL_InputFormulas();
+            Resp resp = new Resp();
+            switch (type)
+            {
+                case "2.1 Std VAM % from Ops(%)":
+                    List<FOL_Input_1_1> list1 = new List<FOL_Input_1_1>();
+                    List<FOL_Input_1_1> list2 = new List<FOL_Input_1_1>();
+                    // TODO:是否为空的判断还没有写
+                    list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
+                    list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
+                    List<FOL_Input_2_1> list_percent = new List<FOL_Input_2_1>();
+                    list_percent = dc.FOL_Input_2_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
+                    fi.Calculate2_1(version, list1, list2, list_percent);
+                    
+                    break;
+                default:
+                    break;
+            }
+            return resp;
+            
         }
 
         /// <summary>
@@ -130,6 +187,7 @@ namespace ApiForFOL.Controllers
             }
             return resp;
         }
+
         public class RespAll
         {
             public string Code { get; set; }
@@ -218,22 +276,22 @@ namespace ApiForFOL.Controllers
                         BU = cells[i, 7].Value == null ? "" : cells[i, 7].Value.ToString(),
                         Segment = cells[i, 8].Value == null ? "" : cells[i, 8].Value.ToString(),
 
-                        Period1_Percent = Convert.ToDouble(cells[i, 9].Value ?? 0),
-                        Period2_Percent = Convert.ToDouble(cells[i, 10].Value ?? 0),
-                        Period3_Percent = Convert.ToDouble(cells[i, 11].Value ?? 0),
-                        Period4_Percent = Convert.ToDouble(cells[i, 12].Value ?? 0),
-                        Period5_Percent = Convert.ToDouble(cells[i, 13].Value ?? 0),
-                        Period6_Percent = Convert.ToDouble(cells[i, 14].Value ?? 0),
-                        Period7_Percent = Convert.ToDouble(cells[i, 15].Value ?? 0),
-                        Period8_Percent = Convert.ToDouble(cells[i, 16].Value ?? 0),
-                        Period9_Percent = Convert.ToDouble(cells[i, 17].Value ?? 0),
-                        Period10_Percent = Convert.ToDouble(cells[i, 18].Value ?? 0),
-                        Period11_Percent = Convert.ToDouble(cells[i, 19].Value ?? 0),
-                        Period12_Percent = Convert.ToDouble(cells[i, 20].Value ?? 0),
-                        Period13_Percent = Convert.ToDouble(cells[i, 21].Value ?? 0),
-                        Period14_Percent = Convert.ToDouble(cells[i, 22].Value ?? 0),
-                        Period15_Percent = Convert.ToDouble(cells[i, 23].Value ?? 0),
-                        Period16_Percent = Convert.ToDouble(cells[i, 24].Value ?? 0),
+                        Period1 = Convert.ToDouble(cells[i, 9].Value ?? 0),
+                        Period2 = Convert.ToDouble(cells[i, 10].Value ?? 0),
+                        Period3 = Convert.ToDouble(cells[i, 11].Value ?? 0),
+                        Period4 = Convert.ToDouble(cells[i, 12].Value ?? 0),
+                        Period5 = Convert.ToDouble(cells[i, 13].Value ?? 0),
+                        Period6 = Convert.ToDouble(cells[i, 14].Value ?? 0),
+                        Period7 = Convert.ToDouble(cells[i, 15].Value ?? 0),
+                        Period8 = Convert.ToDouble(cells[i, 16].Value ?? 0),
+                        Period9 = Convert.ToDouble(cells[i, 17].Value ?? 0),
+                        Period10 = Convert.ToDouble(cells[i, 18].Value ?? 0),
+                        Period11 = Convert.ToDouble(cells[i, 19].Value ?? 0),
+                        Period12 = Convert.ToDouble(cells[i, 20].Value ?? 0),
+                        Period13 = Convert.ToDouble(cells[i, 21].Value ?? 0),
+                        Period14 = Convert.ToDouble(cells[i, 22].Value ?? 0),
+                        Period15 = Convert.ToDouble(cells[i, 23].Value ?? 0),
+                        Period16 = Convert.ToDouble(cells[i, 24].Value ?? 0),
 
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
@@ -275,22 +333,22 @@ namespace ApiForFOL.Controllers
                         BU = cells[i, 7].Value == null ? "" : cells[i, 7].Value.ToString(),
                         Segment = cells[i, 8].Value == null ? "" : cells[i, 8].Value.ToString(),
 
-                        Period1_Amount = Convert.ToDouble(cells[i, 9].Value ?? 0),
-                        Period2_Amount = Convert.ToDouble(cells[i, 10].Value ?? 0),
-                        Period3_Amount = Convert.ToDouble(cells[i, 11].Value ?? 0),
-                        Period4_Amount = Convert.ToDouble(cells[i, 12].Value ?? 0),
-                        Period5_Amount = Convert.ToDouble(cells[i, 13].Value ?? 0),
-                        Period6_Amount = Convert.ToDouble(cells[i, 14].Value ?? 0),
-                        Period7_Amount = Convert.ToDouble(cells[i, 15].Value ?? 0),
-                        Period8_Amount = Convert.ToDouble(cells[i, 16].Value ?? 0),
-                        Period9_Amount = Convert.ToDouble(cells[i, 17].Value ?? 0),
-                        Period10_Amount = Convert.ToDouble(cells[i, 18].Value ?? 0),
-                        Period11_Amount = Convert.ToDouble(cells[i, 19].Value ?? 0),
-                        Period12_Amount = Convert.ToDouble(cells[i, 20].Value ?? 0),
-                        Period13_Amount = Convert.ToDouble(cells[i, 21].Value ?? 0),
-                        Period14_Amount = Convert.ToDouble(cells[i, 22].Value ?? 0),
-                        Period15_Amount = Convert.ToDouble(cells[i, 23].Value ?? 0),
-                        Period16_Amount = Convert.ToDouble(cells[i, 24].Value ?? 0),
+                        Period1 = Convert.ToDouble(cells[i, 9].Value ?? 0),
+                        Period2 = Convert.ToDouble(cells[i, 10].Value ?? 0),
+                        Period3 = Convert.ToDouble(cells[i, 11].Value ?? 0),
+                        Period4 = Convert.ToDouble(cells[i, 12].Value ?? 0),
+                        Period5 = Convert.ToDouble(cells[i, 13].Value ?? 0),
+                        Period6 = Convert.ToDouble(cells[i, 14].Value ?? 0),
+                        Period7 = Convert.ToDouble(cells[i, 15].Value ?? 0),
+                        Period8 = Convert.ToDouble(cells[i, 16].Value ?? 0),
+                        Period9 = Convert.ToDouble(cells[i, 17].Value ?? 0),
+                        Period10 = Convert.ToDouble(cells[i, 18].Value ?? 0),
+                        Period11 = Convert.ToDouble(cells[i, 19].Value ?? 0),
+                        Period12 = Convert.ToDouble(cells[i, 20].Value ?? 0),
+                        Period13 = Convert.ToDouble(cells[i, 21].Value ?? 0),
+                        Period14 = Convert.ToDouble(cells[i, 22].Value ?? 0),
+                        Period15 = Convert.ToDouble(cells[i, 23].Value ?? 0),
+                        Period16 = Convert.ToDouble(cells[i, 24].Value ?? 0),
 
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
@@ -323,6 +381,7 @@ namespace ApiForFOL.Controllers
     public class Input
     {
         public int Id { get; set; }
+        public string DataType { get; set; }
         public float Period1 { get; set; }
         public float Period2 { get; set; }
         public float Period3 { get; set; }
