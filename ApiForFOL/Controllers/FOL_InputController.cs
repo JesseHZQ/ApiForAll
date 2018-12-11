@@ -124,16 +124,15 @@ namespace ApiForFOL.Controllers
             switch (type)
             {
                 case "2.1 Std VAM % from Ops(%)":
-                    List<FOL_Input_1_1> list1 = new List<FOL_Input_1_1>();
-                    List<FOL_Input_1_1> list2 = new List<FOL_Input_1_1>();
-                    // TODO:是否为空的判断还没有写
-                    list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
-                    list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
-                    List<FOL_Input_2_1> list_percent = new List<FOL_Input_2_1>();
-                    list_percent = dc.FOL_Input_2_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
-                    fi.Calculate2_1(version, list1, list2, list_percent);
-                    
+                    fi.Calculate2_1(version, type);
                     break;
+                case "6.0 Total MOH($)":
+                    fi.Calculate6_0(version);
+                    break;
+                case "6.1 IDL (%&#)":
+                    List<FOL_Input_6_1> list_amount = dc.FOL_Input_6_1.Where(x => x.Type == type && x.Version == version).ToList();
+                    fi.Calculate6_1(version, list_amount);
+                    break; 
                 default:
                     break;
             }

@@ -14,13 +14,28 @@ namespace ApiForFOL
         }
 
         //1.0
-        public List<FOL_Input_1_1> CalculateTotalSales(string version, List<FOL_Input_1_1> list1, List<FOL_Input_1_1> list2, List<FOL_Input_1_1> list3, List<FOL_Input_1_1> list4, List<FOL_Input_1_1> list5)
+        public string Calculate1_0(string version,string type)
         {
+            string message = "";
+            List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list3 = dc.FOL_Input_1_1.Where(x => x.Type == "1.3 Gross Sales - Recoveries($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list4 = dc.FOL_Input_1_1.Where(x => x.Type == "1.4 Rev Recog - OT Contract" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list5 = dc.FOL_Input_1_1.Where(x => x.Type == "1.5 Rev Reversal - OT Contract" && x.Version == version).ToList();
+            if(list1==null)
+            {message = "该月份的1.1 Gross Sales - External($)数据为空;";  }
+            if (list2 == null)
+            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;";  }
+            if (list3 == null)
+            {message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;";  }
+            if (list4 == null)
+            {message = message + "该月份的1.4 Rev Recog - OT Contract数据为空;";  }
+            if (list5 == null)
+            {message = message + "该月份的1.5 Rev Reversal - OT Contract数据为空;";  }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
             try
             {
-
                 foreach (var item in list1)
                 {
                     FOL_Input_1_1 newItem = new FOL_Input_1_1
@@ -50,8 +65,7 @@ namespace ApiForFOL
                         Period14 = item.Period14 + list2[i].Period14 + list3[i].Period14 + (list4[i].Period14 == null ? 0 : list4[i].Period14) + (list5[i].Period14 ?? 0),
                         Period15 = item.Period15 + list2[i].Period15 + list3[i].Period15 + (list4[i].Period15 == null ? 0 : list4[i].Period15) + (list5[i].Period15 ?? 0),
                         Period16 = item.Period16 + list2[i].Period16 + list3[i].Period16 + (list4[i].Period16 == null ? 0 : list4[i].Period16) + (list5[i].Period16 ?? 0),
-
-                        Type = "1.0 Total Sales($)",
+                        Type = type,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
                         Version = version,
@@ -63,17 +77,35 @@ namespace ApiForFOL
                 dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "1.0 Total Sales($)").ToList());
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
+                message = "Success";
             }
             catch (Exception ex)
             {
-
+                message = message + ex.Message;
             }
-            return list;
+            return message;
         }
 
         //2.0
-        public List<FOL_Input_1_1> Calculate2_0(string version, List<FOL_Input_1_1> list1, List<FOL_Input_1_1> list2, List<FOL_Input_1_1> list3, List<FOL_Input_1_1> list4, List<FOL_Input_1_1> list_TotalSales)
+        public string Calculate2_0(string version,string type )
         {
+            string message = "";
+            List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "2.2 MCOS Recoveries($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list3 = dc.FOL_Input_1_1.Where(x => x.Type == "2.3 COGS Recog - OT Contract" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list4 = dc.FOL_Input_1_1.Where(x => x.Type == "2.4 COGS Reversal - OT Contract" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list_TotalSales = dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "1.0 Total Sales($)").ToList();
+            if (list1 == null)
+            { message = message + "该月份的2.1 Std VAM % from Ops(%)数据为空"; }
+            if (list2 == null)
+            { message = message + "该月份的2.2 MCOS Recoveries($)数据为空"; }
+            if (list3 == null)
+            { message = message + "该月份的2.3 COGS Recog - OT Contract数据为空"; }
+            if (list4 == null)
+            { message = message + "该月份的2.4 COGS Reversal - OT Contract数据为空"; }
+            if (list_TotalSales == null)
+            { message = message + "该月份的1.0 Total Sales($)数据为空"; }
+
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
             #region
@@ -108,7 +140,6 @@ namespace ApiForFOL
                         Period14 = item.Period14 + list2[i].Period14 + list3[i].Period14 + (list4[i].Period14 == null ? 0 : list4[i].Period14),
                         Period15 = item.Period15 + list2[i].Period15 + list3[i].Period15 + (list4[i].Period15 == null ? 0 : list4[i].Period15),
                         Period16 = item.Period16 + list2[i].Period16 + list3[i].Period16 + (list4[i].Period16 == null ? 0 : list4[i].Period16),
-
                         Type = "2.0 MCOS($)",
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
@@ -120,10 +151,11 @@ namespace ApiForFOL
                 dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "2.0 MCOS($)").ToList());
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
+                message = "Success";
             }
             catch (Exception ex)
             {
-
+                message = message + ex.Message;
             }
             #endregion
 
@@ -132,7 +164,6 @@ namespace ApiForFOL
             try
             {
                 i = 0;
-
                 foreach (var item in list)
                 {
                     FOL_Input_2_1 newItem = new FOL_Input_2_1
@@ -174,23 +205,34 @@ namespace ApiForFOL
                 dc.FOL_Input_2_1.DeleteAllOnSubmit(dc.FOL_Input_2_1.Where(x => x.Version == version && x.Type == "2.0 MCOS($)").ToList());
                 dc.FOL_Input_2_1.InsertAllOnSubmit(list2_1);
                 dc.SubmitChanges();
+                message = "Success";
             }
             catch (Exception ex)
             {
-
+                message = message + ex.Message;
             }
             #endregion
-            return list;
+            return message;
         }
 
         //2.1
-        public List<FOL_Input_1_1> Calculate2_1(string version, List<FOL_Input_1_1> list1, List<FOL_Input_1_1> list2, List<FOL_Input_2_1> list3)
+        public string Calculate2_1(string version, string type)
         {
+            string message = "";
+            List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
+            List<FOL_Input_2_1> list3 = dc.FOL_Input_2_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
+            if (list1 == null)
+            { message = message + "该月份的1.1 Gross Sales - External($)数据为空"; }
+            if (list2 == null)
+            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空"; }
+            if (list3 == null)
+            { message = message + "该月份的2.1 Std VAM % from Ops(%)的百分比数据为空"; }
+
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
             try
             {
-
                 foreach (var item in list1)
                 {
                     FOL_Input_1_1 newItem = new FOL_Input_1_1
@@ -232,62 +274,88 @@ namespace ApiForFOL
                 dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "2.1 Std VAM % from Ops(%)").ToList());
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
+                message = "Success";
             }
             catch (Exception ex)
             {
-
+                message = message + ex.Message;
             }
-            return list;
+            return message;
         }
 
         //2.4 
-        public List<FOL_Input_1_1> Calculate2_4(string version, List<FOL_Input_1_1> list1)
+        public string Calculate2_4(string version,string type)
         {
+            string message = "";
+            List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "2.3 COGS Recog - OT Contract" && x.Version == version).ToList();
+            if (list1 == null)
+            { message = "该月份的2.3 COGS Recog - OT Contract数据为空;"; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
-            foreach (FOL_Input_1_1 item in list1)
+            try
             {
-                FOL_Input_1_1 newItem = new FOL_Input_1_1
+                foreach (FOL_Input_1_1 item in list1)
                 {
-                    GLBPCCode = "4040",
-                    GLBPCDescription = "COGS Reversed from OT Contracts",
-                    GLOutputCode = "4040" + " - " + item.DIM1.Substring(0, 3),
-                    CustomerBPCCode = item.CustomerBPCCode,
-                    DIM1 = item.DIM1,
-                    Order = item.Order,
-                    CustomerOutputCode = item.CustomerOutputCode,
-                    BU = item.BU,
-                    Segment = item.Segment,
-                    Period2 = -item.Period1,
-                    Period3 = -item.Period2,
-                    Period4 = -item.Period3,
-                    Period5 = -item.Period4,
-                    Period6 = -item.Period5,
-                    Period7 = -item.Period6,
-                    Period8 = -item.Period7,
-                    Period9 = -item.Period8,
-                    Period10 = -item.Period9,
-                    Period11 = -item.Period10,
-                    Period12 = -item.Period11,
-                    Period13 = -item.Period12,
-                    Period14 = -item.Period13,
-                    Period15 = -item.Period14,
-                    Period16 = -item.Period15,
-                    Type = "2.4 COGS Reversal - OT Contract",
-                    Version = item.Version,
-                    InsertDate = System.DateTime.Now,
-                    InsertUser = "",
-                };
-                list.Add(newItem);
+                    FOL_Input_1_1 newItem = new FOL_Input_1_1
+                    {
+                        GLBPCCode = "4040",
+                        GLBPCDescription = "COGS Reversed from OT Contracts",
+                        GLOutputCode = "4040" + " - " + item.DIM1.Substring(0, 3),
+                        CustomerBPCCode = item.CustomerBPCCode,
+                        DIM1 = item.DIM1,
+                        Order = item.Order,
+                        CustomerOutputCode = item.CustomerOutputCode,
+                        BU = item.BU,
+                        Segment = item.Segment,
+                        Period2 = -item.Period1,
+                        Period3 = -item.Period2,
+                        Period4 = -item.Period3,
+                        Period5 = -item.Period4,
+                        Period6 = -item.Period5,
+                        Period7 = -item.Period6,
+                        Period8 = -item.Period7,
+                        Period9 = -item.Period8,
+                        Period10 = -item.Period9,
+                        Period11 = -item.Period10,
+                        Period12 = -item.Period11,
+                        Period13 = -item.Period12,
+                        Period14 = -item.Period13,
+                        Period15 = -item.Period14,
+                        Period16 = -item.Period15,
+                        Type = "2.4 COGS Reversal - OT Contract",
+                        Version = item.Version,
+                        InsertDate = System.DateTime.Now,
+                        InsertUser = "",
+                    };
+                    list.Add(newItem);
+                }
+                dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "2.4 COGS Reversal - OT Contract").ToList());
+                dc.FOL_Input_1_1.InsertAllOnSubmit(list);
+                dc.SubmitChanges();
+                message = "Success";
             }
-            dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "2.4 COGS Reversal - OT Contract").ToList());
-            dc.FOL_Input_1_1.InsertAllOnSubmit(list);
-            dc.SubmitChanges();
-            return list;
+            catch (Exception ex)
+            {
+                message = message + ex.Message;
+            }
+            return message;
         }
 
         //3.0 
-        public List<FOL_Input_1_1> Calculate3_0(string version, List<FOL_Input_1_1> list1, List<FOL_Input_1_1> list2, List<FOL_Input_1_1> list3, List<FOL_Input_1_1> list_percent)
+        public string Calculate3_0(string version,string type)
         {
+            string message = "";
+            List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "3.1 PPV(%&$)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "3.2 FCP-PPV($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list3 = dc.FOL_Input_1_1.Where(x => x.Type == "3.3 Alloc-PPV($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list_percent = dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "1.0 Total Sales($)").ToList();
+            if (list1 == null)
+            { message = "该月份的3.1 PPV(%&$)数据为空;"; }
+            if (list2 == null)
+            { message = message + "该月份的3.2 FCP-PPV($)数据为空;"; }
+            if (list3 == null)
+            { message = message + "该月份的3.3 Alloc-PPV($)数据为空;"; }
+            if (list_percent == null)
+            { message = message + "该月份的1.0 Total Sales($)数据为空;"; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
             try
@@ -334,10 +402,11 @@ namespace ApiForFOL
                 dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "3.0 Material Margin ($)").ToList());
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
+                message = "Success";
             }
             catch (Exception ex)
             {
-
+                message = message + ex.Message;
             }
 
             #region
@@ -345,8 +414,6 @@ namespace ApiForFOL
             try
             {
                 i = 0;
-
-
                 foreach (var item in list)
                 {
                     FOL_Input_2_1 newItem = new FOL_Input_2_1
@@ -387,19 +454,44 @@ namespace ApiForFOL
                 dc.FOL_Input_2_1.DeleteAllOnSubmit(dc.FOL_Input_2_1.Where(x => x.Version == version && x.Type == "3.0 Material Margin ($)").ToList());
                 dc.FOL_Input_2_1.InsertAllOnSubmit(list2_1);
                 dc.SubmitChanges();
+                message = "Success";
             }
             catch (Exception ex)
             {
-
+                message = message + ex.Message;
             }
             #endregion
 
-            return list;
+            return message;
         }
 
         //3.1, 4.2-4.7
-        public List<FOL_Input_1_1> Calculate3_1(string version, string type, List<FOL_Input_1_1> list1, List<FOL_Input_1_1> list2, List<FOL_Input_1_1> list3, List<FOL_Input_2_1> list4, List<FOL_Input_3_1> list5)
+        public string  Calculate3_1(string version, string type)
         {
+            string message = "";
+            List<FOL_Input_1_1> list1 = new List<FOL_Input_1_1>();
+            List<FOL_Input_1_1> list2 = new List<FOL_Input_1_1>();
+            List<FOL_Input_1_1> list3 = new List<FOL_Input_1_1>();
+            List<FOL_Input_2_1> list_percent = new List<FOL_Input_2_1>();
+            List<FOL_Input_3_1> list_amount = new List<FOL_Input_3_1>();
+
+            list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
+            list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
+            list3 = dc.FOL_Input_1_1.Where(x => x.Type == "1.3 Gross Sales - Recoveries($)" && x.Version == version).ToList();
+
+            list_percent = dc.FOL_Input_2_1.Where(x => x.Type == type && x.Version == version).ToList();
+            list_amount = dc.FOL_Input_3_1.Where(x => x.Type == type && x.Version == version).ToList();
+
+            if (list1 == null)
+            { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
+            if (list2 == null)
+            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
+            if (list3 == null)
+            { message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;"; }
+            if (list_percent == null)
+            { message = message + "该月份的" + type + "百分比数据为空;"; }
+            if (list_amount == null)
+            { message = message + "该月份的" + type + "Amount数据为空;"; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
             try
@@ -408,30 +500,30 @@ namespace ApiForFOL
                 {
                     FOL_Input_1_1 newItem = new FOL_Input_1_1
                     {
-                        GLBPCCode = list4[i].GLBPCCode,
-                        GLBPCDescription = list4[i].GLBPCDescription,
-                        GLOutputCode = list4[i].GLOutputCode,
-                        CustomerBPCCode = list4[i].CustomerBPCCode,
-                        DIM1 = list4[i].DIM1,
-                        Order = list4[i].Order,
-                        CustomerOutputCode = list4[i].CustomerOutputCode,
-                        BU = list4[i].BU,
-                        Segment = list4[i].Segment,
-                        Period1 = (item.Period1 + list2[i].Period1 + list3[i].Period1) * list4[i].Period1 + list5[i].Period1,
-                        Period2 = (item.Period2 + list2[i].Period2 + list3[i].Period2) * list4[i].Period2 + list5[i].Period2,
-                        Period3 = (item.Period3 + list2[i].Period3 + list3[i].Period3) * list4[i].Period3 + list5[i].Period3,
-                        Period4 = (item.Period4 + list2[i].Period4 + list3[i].Period4) * list4[i].Period4 + list5[i].Period4,
-                        Period5 = (item.Period5 + list2[i].Period5 + list3[i].Period5) * list4[i].Period5 + list5[i].Period5,
-                        Period6 = (item.Period6 + list2[i].Period6 + list3[i].Period6) * list4[i].Period6 + list5[i].Period6,
-                        Period7 = (item.Period7 + list2[i].Period7 + list3[i].Period7) * list4[i].Period7 + list5[i].Period7,
-                        Period8 = (item.Period8 + list2[i].Period8 + list3[i].Period8) * list4[i].Period8 + list5[i].Period8,
-                        Period9 = (item.Period9 + list2[i].Period9 + list3[i].Period9) * list4[i].Period9 + list5[i].Period9,
-                        Period10 = (item.Period10 + list2[i].Period10 + list3[i].Period10) * list4[i].Period10 + list5[i].Period10,
-                        Period11 = (item.Period11 + list2[i].Period11 + list3[i].Period11) * list4[i].Period11 + list5[i].Period11,
-                        Period12 = (item.Period12 + list2[i].Period12 + list3[i].Period12) * list4[i].Period12 + list5[i].Period12,
-                        Period13 = (item.Period13 + list2[i].Period13 + list3[i].Period13) * list4[i].Period13 + list5[i].Period13,
-                        Period14 = (item.Period14 + list2[i].Period14 + list3[i].Period14) * list4[i].Period14 + list5[i].Period14,
-                        Period15 = (item.Period15 + list2[i].Period15 + list3[i].Period15) * list4[i].Period15 + list5[i].Period15,
+                        GLBPCCode = list_percent[i].GLBPCCode,
+                        GLBPCDescription = list_percent[i].GLBPCDescription,
+                        GLOutputCode = list_percent[i].GLOutputCode,
+                        CustomerBPCCode = list_percent[i].CustomerBPCCode,
+                        DIM1 = list_percent[i].DIM1,
+                        Order = list_percent[i].Order,
+                        CustomerOutputCode = list_percent[i].CustomerOutputCode,
+                        BU = list_percent[i].BU,
+                        Segment = list_percent[i].Segment,
+                        Period1 = (item.Period1 + list2[i].Period1 + list3[i].Period1) * list_percent[i].Period1 + list_amount[i].Period1,
+                        Period2 = (item.Period2 + list2[i].Period2 + list3[i].Period2) * list_percent[i].Period2 + list_amount[i].Period2,
+                        Period3 = (item.Period3 + list2[i].Period3 + list3[i].Period3) * list_percent[i].Period3 + list_amount[i].Period3,
+                        Period4 = (item.Period4 + list2[i].Period4 + list3[i].Period4) * list_percent[i].Period4 + list_amount[i].Period4,
+                        Period5 = (item.Period5 + list2[i].Period5 + list3[i].Period5) * list_percent[i].Period5 + list_amount[i].Period5,
+                        Period6 = (item.Period6 + list2[i].Period6 + list3[i].Period6) * list_percent[i].Period6 + list_amount[i].Period6,
+                        Period7 = (item.Period7 + list2[i].Period7 + list3[i].Period7) * list_percent[i].Period7 + list_amount[i].Period7,
+                        Period8 = (item.Period8 + list2[i].Period8 + list3[i].Period8) * list_percent[i].Period8 + list_amount[i].Period8,
+                        Period9 = (item.Period9 + list2[i].Period9 + list3[i].Period9) * list_percent[i].Period9 + list_amount[i].Period9,
+                        Period10 = (item.Period10 + list2[i].Period10 + list3[i].Period10) * list_percent[i].Period10 + list_amount[i].Period10,
+                        Period11 = (item.Period11 + list2[i].Period11 + list3[i].Period11) * list_percent[i].Period11 + list_amount[i].Period11,
+                        Period12 = (item.Period12 + list2[i].Period12 + list3[i].Period12) * list_percent[i].Period12 + list_amount[i].Period12,
+                        Period13 = (item.Period13 + list2[i].Period13 + list3[i].Period13) * list_percent[i].Period13 + list_amount[i].Period13,
+                        Period14 = (item.Period14 + list2[i].Period14 + list3[i].Period14) * list_percent[i].Period14 + list_amount[i].Period14,
+                        Period15 = (item.Period15 + list2[i].Period15 + list3[i].Period15) * list_percent[i].Period15 + list_amount[i].Period15,
                         Type = type,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
@@ -443,72 +535,115 @@ namespace ApiForFOL
                 dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == type).ToList());
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
+                message = "Success";
             }
             catch (Exception ex)
             {
-
+                message = message + ex.Message;
             }
-            return list;
+            return message ;
         }
 
         //4.1
-        public List<FOL_Input_1_1> Calculate4_1(string version, string type, List<FOL_Input_1_1> list1, List<FOL_Input_1_1> list2, List<FOL_Input_1_1> list3, List<FOL_Input_2_1> list_percent, List<FOL_Input_3_1> list_amount)
+        public string Calculate4_1(string version, string type)
         {
+            List<FOL_Input_1_1> list1 = new List<FOL_Input_1_1>();
+            List<FOL_Input_1_1> list2 = new List<FOL_Input_1_1>();
+            List<FOL_Input_1_1> list3 = new List<FOL_Input_1_1>();
+            list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
+            list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
+            list3 = dc.FOL_Input_1_1.Where(x => x.Type == "1.3 Gross Sales - Recoveries($)" && x.Version == version).ToList();
+            List<FOL_Input_2_1> list_percent = dc.FOL_Input_2_1.Where(x => x.Type.Contains(type) && x.Version == version).ToList();
+            List<FOL_Input_3_1> list_amount = dc.FOL_Input_3_1.Where(x => x.Type.Contains(type) && x.Version == version).ToList();
+            string message = "";
+            if (list1 == null)
+            { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
+            if (list2 == null)
+            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
+            if (list3 == null)
+            { message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;"; }
+            if (list_percent == null)
+            { message = message + "该月份的4.1 Material Loss (%)百分比数据为空;"; }
+            if (list_amount == null)
+            { message = message + "该月份的4.1 Material Loss (%) Amount数据为空;"; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int j = 0;
-            for (int i = 0; i < list_percent.Count; i++)
+            try
             {
-                if (list_percent[i].GLOutputCode.Length > 15)
+                for (int i = 0; i < list_percent.Count; i++)
                 {
-                    j = 0;
-                    continue;
-                }
-                else
-                {
-                    if (list_percent[i].GLOutputCode.Contains("AGI"))
+                    if (list_percent[i].GLOutputCode.Length > 15)
+                    {
                         j = 0;
+                        continue;
+                    }
+                    else
+                    {
+                        if (list_percent[i].GLOutputCode.Contains("AGI"))
+                            j = 0;
+                    }
+                    FOL_Input_1_1 newItem = new FOL_Input_1_1();
+                    newItem.GLBPCCode = list_percent[i].GLBPCCode;
+                    newItem.GLBPCDescription = list_percent[i].GLBPCDescription;
+                    newItem.GLOutputCode = list_percent[i].GLOutputCode;
+                    newItem.CustomerBPCCode = list_percent[i].CustomerBPCCode;
+                    newItem.DIM1 = list_percent[i].DIM1;
+                    newItem.Order = list_percent[i].Order;
+                    newItem.CustomerOutputCode = list_percent[i].CustomerOutputCode;
+                    newItem.BU = list_percent[i].BU;
+                    newItem.Segment = list_percent[i].Segment;
+                    newItem.Period1 = (list1[j].Period1 + list2[j].Period1 + list3[j].Period1) * list_percent[i].Period1 + list_amount[i].Period1 ?? 0;
+                    newItem.Period2 = (list1[j].Period2 + list2[j].Period2 + list3[j].Period2) * list_percent[i].Period2 + list_amount[i].Period2 ?? 0;
+                    newItem.Period3 = (list1[j].Period3 + list2[j].Period3 + list3[j].Period3) * list_percent[i].Period3 + list_amount[i].Period3 ?? 0;
+                    newItem.Period4 = (list1[j].Period4 + list2[j].Period4 + list3[j].Period4) * list_percent[i].Period4 + list_amount[i].Period4 ?? 0;
+                    newItem.Period5 = (list1[j].Period5 + list2[j].Period5 + list3[j].Period5) * list_percent[i].Period5 + list_amount[i].Period5 ?? 0;
+                    newItem.Period6 = (list1[j].Period6 + list2[j].Period6 + list3[j].Period6) * list_percent[i].Period6 + list_amount[i].Period6 ?? 0;
+                    newItem.Period7 = (list1[j].Period7 + list2[j].Period7 + list3[j].Period7) * list_percent[i].Period7 + list_amount[i].Period7 ?? 0;
+                    newItem.Period8 = (list1[j].Period8 + list2[j].Period8 + list3[j].Period8) * list_percent[i].Period8 + list_amount[i].Period8 ?? 0;
+                    newItem.Period9 = (list1[j].Period9 + list2[j].Period9 + list3[j].Period9) * list_percent[i].Period9 + list_amount[i].Period9 ?? 0;
+                    newItem.Period10 = (list1[j].Period10 + list2[j].Period10 + list3[j].Period10) * list_percent[i].Period10 + list_amount[i].Period10 ?? 0;
+                    newItem.Period11 = (list1[j].Period11 + list2[j].Period11 + list3[j].Period11) * list_percent[i].Period11 + list_amount[i].Period11 ?? 0;
+                    newItem.Period12 = (list1[j].Period12 + list2[j].Period12 + list3[j].Period12) * list_percent[i].Period12 + list_amount[i].Period12 ?? 0;
+                    newItem.Period13 = (list1[j].Period13 + list2[j].Period13 + list3[j].Period13) * list_percent[i].Period13 + list_amount[i].Period13 ?? 0;
+                    newItem.Period14 = (list1[j].Period14 + list2[j].Period14 + list3[j].Period14) * list_percent[i].Period14 + list_amount[i].Period14 ?? 0;
+                    newItem.Period15 = (list1[j].Period15 + list2[j].Period15 + list3[j].Period15) * list_percent[i].Period15 + list_amount[i].Period15 ?? 0;
+                    newItem.Period16 = (list1[j].Period16 + list2[j].Period16 + list3[j].Period16) * list_percent[i].Period16 + list_amount[i].Period16 ?? 0;
+                    newItem.Type = type;
+                    newItem.InsertDate = System.DateTime.Now;
+                    newItem.InsertUser = "";
+                    newItem.Version = version;
+                    j++;
+                    list.Add(newItem);
                 }
-                FOL_Input_1_1 newItem = new FOL_Input_1_1();
-                newItem.GLBPCCode = list_percent[i].GLBPCCode;
-                newItem.GLBPCDescription = list_percent[i].GLBPCDescription;
-                newItem.GLOutputCode = list_percent[i].GLOutputCode;
-                newItem.CustomerBPCCode = list_percent[i].CustomerBPCCode;
-                newItem.DIM1 = list_percent[i].DIM1;
-                newItem.Order = list_percent[i].Order;
-                newItem.CustomerOutputCode = list_percent[i].CustomerOutputCode;
-                newItem.BU = list_percent[i].BU;
-                newItem.Segment = list_percent[i].Segment;
-                newItem.Period1 = (list1[j].Period1 + list2[j].Period1 + list3[j].Period1) * list_percent[i].Period1 + list_amount[i].Period1 ?? 0;
-                newItem.Period2 = (list1[j].Period2 + list2[j].Period2 + list3[j].Period2) * list_percent[i].Period2 + list_amount[i].Period2 ?? 0;
-                newItem.Period3 = (list1[j].Period3 + list2[j].Period3 + list3[j].Period3) * list_percent[i].Period3 + list_amount[i].Period3 ?? 0;
-                newItem.Period4 = (list1[j].Period4 + list2[j].Period4 + list3[j].Period4) * list_percent[i].Period4 + list_amount[i].Period4 ?? 0;
-                newItem.Period5 = (list1[j].Period5 + list2[j].Period5 + list3[j].Period5) * list_percent[i].Period5 + list_amount[i].Period5 ?? 0;
-                newItem.Period6 = (list1[j].Period6 + list2[j].Period6 + list3[j].Period6) * list_percent[i].Period6 + list_amount[i].Period6 ?? 0;
-                newItem.Period7 = (list1[j].Period7 + list2[j].Period7 + list3[j].Period7) * list_percent[i].Period7 + list_amount[i].Period7 ?? 0;
-                newItem.Period8 = (list1[j].Period8 + list2[j].Period8 + list3[j].Period8) * list_percent[i].Period8 + list_amount[i].Period8 ?? 0;
-                newItem.Period9 = (list1[j].Period9 + list2[j].Period9 + list3[j].Period9) * list_percent[i].Period9 + list_amount[i].Period9 ?? 0;
-                newItem.Period10 = (list1[j].Period10 + list2[j].Period10 + list3[j].Period10) * list_percent[i].Period10 + list_amount[i].Period10 ?? 0;
-                newItem.Period11 = (list1[j].Period11 + list2[j].Period11 + list3[j].Period11) * list_percent[i].Period11 + list_amount[i].Period11 ?? 0;
-                newItem.Period12 = (list1[j].Period12 + list2[j].Period12 + list3[j].Period12) * list_percent[i].Period12 + list_amount[i].Period12 ?? 0;
-                newItem.Period13 = (list1[j].Period13 + list2[j].Period13 + list3[j].Period13) * list_percent[i].Period13 + list_amount[i].Period13 ?? 0;
-                newItem.Period14 = (list1[j].Period14 + list2[j].Period14 + list3[j].Period14) * list_percent[i].Period14 + list_amount[i].Period14 ?? 0;
-                newItem.Period15 = (list1[j].Period15 + list2[j].Period15 + list3[j].Period15) * list_percent[i].Period15 + list_amount[i].Period15 ?? 0;
-                newItem.Period16 = (list1[j].Period16 + list2[j].Period16 + list3[j].Period16) * list_percent[i].Period16 + list_amount[i].Period16 ?? 0;
-                newItem.Type = type;
-                newItem.InsertDate = System.DateTime.Now;
-                newItem.InsertUser = "";
-                newItem.Version = version;
-                j++;
-                list.Add(newItem);
+                dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == type).ToList());
+                dc.FOL_Input_1_1.InsertAllOnSubmit(list);
+                dc.SubmitChanges();
+                message = "Success";
+
             }
-            dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == type).ToList());
-            dc.FOL_Input_1_1.InsertAllOnSubmit(list);
-            dc.SubmitChanges();
-            return list;
+            catch (Exception ex)
+            {
+                message = message + ex.Message;
+            }
+            return message;
         }
         //5.1
-        public List<FOL_Input_1_1> Calculate5_1(string version, List<FOL_Input_1_1> list1, List<FOL_Input_1_1> list2, List<FOL_Input_2_1> list3, List<FOL_Input_3_1> list4)
+        public string Calculate5_1(string version, string type)
         {
+            string message = "";
+            List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
+            List<FOL_Input_2_1> list3 = dc.FOL_Input_2_1.Where(x => x.Type == type && x.Version == version).ToList();
+            List<FOL_Input_3_1> list4 = dc.FOL_Input_3_1.Where(x => x.Type == type && x.Version == version).ToList();
+            if(list1 == null)
+            { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
+            if (list2 == null)
+            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
+            if (list3 == null)
+            { message = message + "该月份的5.1 DL (%)百分比数据为空;"; }
+            if (list4 == null)
+            { message = message + "该月份的5.1 DL (%)Amount数据为空;"; }
+
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
             int j = 0;
@@ -521,7 +656,6 @@ namespace ApiForFOL
                         j = 0;
                         continue;
                     }
-
                     FOL_Input_1_1 newItem = new FOL_Input_1_1
                     {
                         GLBPCCode = item.GLBPCCode,
@@ -559,13 +693,14 @@ namespace ApiForFOL
                 dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "5.1 DL (%)").ToList());
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
+                message = "Success";
             }
             catch (Exception ex)
             {
-
+                message = message + ex.Message;
             }
 
-            return list;
+            return message;
         }
 
         //6.0
@@ -575,6 +710,7 @@ namespace ApiForFOL
             List<string> list_department = dc.FOL_CCMapping.Where(x => x.Type == "MOH").Select(x => x.CCDescription).ToList();
             List<FOL_Input_6_0_SumByTypeModule> list_SumByTypeModule = dc.FOL_Input_6_0_SumByTypeModule.ToList();
             List<FOL_Input_6_0_SumByType> list_SumByType = new List<FOL_Input_6_0_SumByType>();
+
             for (int n = 0; n < list_SumByTypeModule.Count; n++)
             {
                 FOL_Input_6_0_SumByType newItem_SumByType = new FOL_Input_6_0_SumByType();
@@ -608,7 +744,6 @@ namespace ApiForFOL
                 newItem_SumByType.InsertUser = "";
                 list_SumByType.Add(newItem_SumByType);
             }
-
             for (int i = 0; i < list_department.Count; i++)
             {
                 string department = list_department[i];
@@ -890,7 +1025,6 @@ namespace ApiForFOL
             }
             dc.FOL_Input_6_0_SumByType.DeleteAllOnSubmit(dc.FOL_Input_6_0_SumByType.Where(x => x.Type == "6.0 Total MOH($)" && x.Version == version).ToList());
             dc.FOL_Input_6_0_SumByType.InsertAllOnSubmit(list_SumByType);
-
             dc.SubmitChanges();
 
             return list;
@@ -1981,8 +2115,6 @@ namespace ApiForFOL
 
             return listResult;
         }
-
-        //1.1, 1.2, 1.3
 
         //8.0
         public List<FOL_Input_1_1> Calculate8_0(string version, List<FOL_Input_1_1> list1, List<FOL_Input_1_1> list2, List<FOL_Input_1_1> list3, List<FOL_Input_1_1> list4, List<FOL_Input_1_1> list5, List<FOL_Input_2_1> list6)

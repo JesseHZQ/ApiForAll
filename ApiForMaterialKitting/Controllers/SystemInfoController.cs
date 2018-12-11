@@ -22,11 +22,27 @@ namespace ApiForMaterialKitting.Controllers
             int wk = GetWeekOfYear(DateTime.Now.AddDays(14));
             if (wk > wknow)
             {
-                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " and ShipWeek >= " + wknow + ")a left join (select * from MaterialKitting where IsDel = 0)b on a.SystemSlot = b.Slot order by a.ShipWeek");
+                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from" +
+                    "(SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryHHM where Lock = 0 and ShipWeek <= " + wk + " and ShipWeek >= " + wknow + " " +
+                    "union SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " and ShipWeek >= " + wknow + " " +
+                    "union Select SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate from SummaryHIM where Lock = 0 and ShipWeek <= " + wk + " and ShipWeek >= " + wknow + ")" +
+                    "a left join " +
+                    "(select * from MaterialKitting where IsDel = 0)b " +
+                    "on a.SystemSlot = b.Slot " +
+                    "order by a.ShipWeek");
             } 
             else
             {
-                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ")a left join (select * from MaterialKitting where IsDel = 0)b on a.SystemSlot = b.Slot order by a.ShipWeek");
+                //dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ")a left join (select * from MaterialKitting where IsDel = 0)b on a.SystemSlot = b.Slot order by a.ShipWeek");
+
+                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from" +
+                    "(SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryHHM where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + " " +
+                    "union SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + " " +
+                    "union Select SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate from SummaryHIM where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ")" +
+                    "a left join " +
+                    "(select * from MaterialKitting where IsDel = 0)b " +
+                    "on a.SystemSlot = b.Slot " +
+                    "order by a.ShipWeek");
             }
             Resp resp = new Resp();
             resp.Code = 200;
@@ -206,7 +222,7 @@ namespace ApiForMaterialKitting.Controllers
             str += "<tr style='font-size: 14px; height: 24px; text-align: center;'>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.SystemSlot + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + "UF" + "</td>";
-            str += "<td style='border-style: solid; border-width: 1px'>" + "Teradyne" + "</td>";
+            str += "<td style='border-style: solid; border-width: 1px'>" + model.Customer + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.PO + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.Station.ToUpper() + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + dt.ToLocalTime() + "</td>";
@@ -346,6 +362,7 @@ namespace ApiForMaterialKitting.Controllers
             public string SystemSlot { get; set; }
             public string PO { get; set; }
             public string Station { get; set; }
+            public string Customer { get; set; }
             public string RequireDate { get; set; }
             public string RequestorId { get; set; }
             public string Remark { get; set; }

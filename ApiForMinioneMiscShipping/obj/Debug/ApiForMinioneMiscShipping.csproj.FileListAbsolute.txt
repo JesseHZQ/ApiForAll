@@ -105,3 +105,4 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\obj\Debug\Api
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\obj\Debug\ApiForMinioneMiscShipping.csproj.CopyComplete
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\obj\Debug\ApiForMinioneMiscShipping.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\obj\Debug\ApiForMinioneMiscShipping.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\AipSdk.dll

@@ -85,10 +85,10 @@
       <publishTime>10/08/2018 15:58:48</publishTime>
     </File>
     <File Include="bin/CheckSlot.dll">
-      <publishTime>11/21/2018 18:07:36</publishTime>
+      <publishTime>11/29/2018 08:55:01</publishTime>
     </File>
     <File Include="bin/CheckSlot.pdb">
-      <publishTime>11/21/2018 18:07:36</publishTime>
+      <publishTime>11/29/2018 08:55:01</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>06/27/2017 12:59:34</publishTime>

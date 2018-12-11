@@ -82,10 +82,10 @@
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiForFOL.dll">
-      <publishTime>11/27/2018 15:26:01</publishTime>
+      <publishTime>11/27/2018 15:57:30</publishTime>
     </File>
     <File Include="bin/ApiForFOL.pdb">
-      <publishTime>11/27/2018 15:26:01</publishTime>
+      <publishTime>11/27/2018 15:57:30</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>11/19/2018 09:50:27</publishTime>
