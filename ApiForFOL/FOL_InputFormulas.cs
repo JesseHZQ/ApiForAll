@@ -14,7 +14,7 @@ namespace ApiForFOL
         }
 
         //1.0
-        public string Calculate1_0(string version,string type)
+        public string Calculate1_0(string version, string type)
         {
             string message = "";
             List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
@@ -22,16 +22,16 @@ namespace ApiForFOL
             List<FOL_Input_1_1> list3 = dc.FOL_Input_1_1.Where(x => x.Type == "1.3 Gross Sales - Recoveries($)" && x.Version == version).ToList();
             List<FOL_Input_1_1> list4 = dc.FOL_Input_1_1.Where(x => x.Type == "1.4 Rev Recog - OT Contract" && x.Version == version).ToList();
             List<FOL_Input_1_1> list5 = dc.FOL_Input_1_1.Where(x => x.Type == "1.5 Rev Reversal - OT Contract" && x.Version == version).ToList();
-            if(list1==null)
-            {message = "该月份的1.1 Gross Sales - External($)数据为空;";  }
+            if (list1 == null)
+            { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
             if (list2 == null)
-            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;";  }
+            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
             if (list3 == null)
-            {message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;";  }
+            { message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;"; }
             if (list4 == null)
-            {message = message + "该月份的1.4 Rev Recog - OT Contract数据为空;";  }
+            { message = message + "该月份的1.4 Rev Recog - OT Contract数据为空;"; }
             if (list5 == null)
-            {message = message + "该月份的1.5 Rev Reversal - OT Contract数据为空;";  }
+            { message = message + "该月份的1.5 Rev Reversal - OT Contract数据为空;"; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
             try
@@ -87,7 +87,7 @@ namespace ApiForFOL
         }
 
         //2.0
-        public string Calculate2_0(string version,string type )
+        public string Calculate2_0(string version, string type)
         {
             string message = "";
             List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
@@ -284,7 +284,7 @@ namespace ApiForFOL
         }
 
         //2.4 
-        public string Calculate2_4(string version,string type)
+        public string Calculate2_4(string version, string type)
         {
             string message = "";
             List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "2.3 COGS Recog - OT Contract" && x.Version == version).ToList();
@@ -341,7 +341,7 @@ namespace ApiForFOL
         }
 
         //3.0 
-        public string Calculate3_0(string version,string type)
+        public string Calculate3_0(string version, string type)
         {
             string message = "";
             List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "3.1 PPV(%&$)" && x.Version == version).ToList();
@@ -466,7 +466,7 @@ namespace ApiForFOL
         }
 
         //3.1, 4.2-4.7
-        public string  Calculate3_1(string version, string type)
+        public string Calculate3_1(string version, string type)
         {
             string message = "";
             List<FOL_Input_1_1> list1 = new List<FOL_Input_1_1>();
@@ -541,7 +541,7 @@ namespace ApiForFOL
             {
                 message = message + ex.Message;
             }
-            return message ;
+            return message;
         }
 
         //4.1
@@ -635,7 +635,7 @@ namespace ApiForFOL
             List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
             List<FOL_Input_2_1> list3 = dc.FOL_Input_2_1.Where(x => x.Type == type && x.Version == version).ToList();
             List<FOL_Input_3_1> list4 = dc.FOL_Input_3_1.Where(x => x.Type == type && x.Version == version).ToList();
-            if(list1 == null)
+            if (list1 == null)
             { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
             if (list2 == null)
             { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
