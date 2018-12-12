@@ -159,6 +159,8 @@ namespace ApiForFOL.Controllers
                     message = "Default";
                     break;
             }
+            resp.Code = "200";
+            resp.Message = message;
             return resp;
 
         }
