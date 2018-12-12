@@ -47,6 +47,7 @@ namespace ApiForMinioneMiscShipping.Controllers
             HttpPostedFile file = httpRequest.Files[0];
             string filePath = Path.Combine(HttpContext.Current.Server.MapPath("../../Uploads"), Path.GetFileName(file.FileName));
             file.SaveAs(filePath);
+
             Resp resp = new Resp();
             string token = "24.af28dd056f4ec0d136df87cf5b266037.2592000.1545982236.282335-14817751";
             string strbaser64 = ImgToBase64String(filePath);
