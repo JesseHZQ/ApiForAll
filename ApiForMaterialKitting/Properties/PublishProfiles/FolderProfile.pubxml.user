@@ -85,10 +85,10 @@
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiForMaterialKitting.dll">
-      <publishTime>12/12/2018 10:10:27</publishTime>
+      <publishTime>12/07/2018 14:39:03</publishTime>
     </File>
     <File Include="bin/ApiForMaterialKitting.pdb">
-      <publishTime>12/12/2018 10:10:27</publishTime>
+      <publishTime>12/07/2018 14:39:03</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>10/09/2018 16:46:25</publishTime>
