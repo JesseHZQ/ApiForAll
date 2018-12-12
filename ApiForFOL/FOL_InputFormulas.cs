@@ -22,16 +22,16 @@ namespace ApiForFOL
             List<FOL_Input_1_1> list3 = dc.FOL_Input_1_1.Where(x => x.Type == "1.3 Gross Sales - Recoveries($)" && x.Version == version).ToList();
             List<FOL_Input_1_1> list4 = dc.FOL_Input_1_1.Where(x => x.Type == "1.4 Rev Recog - OT Contract" && x.Version == version).ToList();
             List<FOL_Input_1_1> list5 = dc.FOL_Input_1_1.Where(x => x.Type == "1.5 Rev Reversal - OT Contract" && x.Version == version).ToList();
-            if (list1 == null)
-            { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
-            if (list2 == null)
-            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
-            if (list3 == null)
-            { message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;"; }
-            if (list4 == null)
-            { message = message + "该月份的1.4 Rev Recog - OT Contract数据为空;"; }
-            if (list5 == null)
-            { message = message + "该月份的1.5 Rev Reversal - OT Contract数据为空;"; }
+            if (list1.Count==0)
+            { message = "该月份的1.1 Gross Sales - External($)数据为空;"; return message; }
+            if (list2.Count==0)
+            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; return message; }
+            if (list3.Count==0)
+            { message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;"; return message; }
+            if (list4.Count==0)
+            { message = message + "该月份的1.4 Rev Recog - OT Contract数据为空;"; return message; }
+            if (list5.Count==0)
+            { message = message + "该月份的1.5 Rev Reversal - OT Contract数据为空;"; return message; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
             try
@@ -95,15 +95,15 @@ namespace ApiForFOL
             List<FOL_Input_1_1> list3 = dc.FOL_Input_1_1.Where(x => x.Type == "2.3 COGS Recog - OT Contract" && x.Version == version).ToList();
             List<FOL_Input_1_1> list4 = dc.FOL_Input_1_1.Where(x => x.Type == "2.4 COGS Reversal - OT Contract" && x.Version == version).ToList();
             List<FOL_Input_1_1> list_TotalSales = dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "1.0 Total Sales($)").ToList();
-            if (list1 == null)
+            if (list1.Count==0)
             { message = message + "该月份的2.1 Std VAM % from Ops(%)数据为空"; }
-            if (list2 == null)
+            if (list2.Count==0)
             { message = message + "该月份的2.2 MCOS Recoveries($)数据为空"; }
-            if (list3 == null)
+            if (list3.Count==0)
             { message = message + "该月份的2.3 COGS Recog - OT Contract数据为空"; }
-            if (list4 == null)
+            if (list4.Count==0)
             { message = message + "该月份的2.4 COGS Reversal - OT Contract数据为空"; }
-            if (list_TotalSales == null)
+            if (list_TotalSales.Count==0)
             { message = message + "该月份的1.0 Total Sales($)数据为空"; }
 
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
@@ -222,11 +222,11 @@ namespace ApiForFOL
             List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
             List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
             List<FOL_Input_2_1> list3 = dc.FOL_Input_2_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
-            if (list1 == null)
+            if (list1.Count==0)
             { message = message + "该月份的1.1 Gross Sales - External($)数据为空"; }
-            if (list2 == null)
+            if (list2.Count==0)
             { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空"; }
-            if (list3 == null)
+            if (list3.Count==0)
             { message = message + "该月份的2.1 Std VAM % from Ops(%)的百分比数据为空"; }
 
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
@@ -288,7 +288,7 @@ namespace ApiForFOL
         {
             string message = "";
             List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "2.3 COGS Recog - OT Contract" && x.Version == version).ToList();
-            if (list1 == null)
+            if (list1.Count==0)
             { message = "该月份的2.3 COGS Recog - OT Contract数据为空;"; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             try
@@ -348,13 +348,13 @@ namespace ApiForFOL
             List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "3.2 FCP-PPV($)" && x.Version == version).ToList();
             List<FOL_Input_1_1> list3 = dc.FOL_Input_1_1.Where(x => x.Type == "3.3 Alloc-PPV($)" && x.Version == version).ToList();
             List<FOL_Input_1_1> list_percent = dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "1.0 Total Sales($)").ToList();
-            if (list1 == null)
+            if (list1.Count==0)
             { message = "该月份的3.1 PPV(%&$)数据为空;"; }
-            if (list2 == null)
+            if (list2.Count==0)
             { message = message + "该月份的3.2 FCP-PPV($)数据为空;"; }
-            if (list3 == null)
+            if (list3.Count==0)
             { message = message + "该月份的3.3 Alloc-PPV($)数据为空;"; }
-            if (list_percent == null)
+            if (list_percent.Count==0)
             { message = message + "该月份的1.0 Total Sales($)数据为空;"; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
@@ -482,15 +482,15 @@ namespace ApiForFOL
             list_percent = dc.FOL_Input_2_1.Where(x => x.Type == type && x.Version == version).ToList();
             list_amount = dc.FOL_Input_3_1.Where(x => x.Type == type && x.Version == version).ToList();
 
-            if (list1 == null)
+            if (list1.Count==0)
             { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
-            if (list2 == null)
+            if (list2.Count==0)
             { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
-            if (list3 == null)
+            if (list3.Count==0)
             { message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;"; }
-            if (list_percent == null)
+            if (list_percent.Count==0)
             { message = message + "该月份的" + type + "百分比数据为空;"; }
-            if (list_amount == null)
+            if (list_amount.Count==0)
             { message = message + "该月份的" + type + "Amount数据为空;"; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
@@ -556,15 +556,15 @@ namespace ApiForFOL
             List<FOL_Input_2_1> list_percent = dc.FOL_Input_2_1.Where(x => x.Type.Contains(type) && x.Version == version).ToList();
             List<FOL_Input_3_1> list_amount = dc.FOL_Input_3_1.Where(x => x.Type.Contains(type) && x.Version == version).ToList();
             string message = "";
-            if (list1 == null)
+            if (list1.Count==0)
             { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
-            if (list2 == null)
+            if (list2.Count==0)
             { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
-            if (list3 == null)
+            if (list3.Count==0)
             { message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;"; }
-            if (list_percent == null)
+            if (list_percent.Count==0)
             { message = message + "该月份的4.1 Material Loss (%)百分比数据为空;"; }
-            if (list_amount == null)
+            if (list_amount.Count==0)
             { message = message + "该月份的4.1 Material Loss (%) Amount数据为空;"; }
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int j = 0;
@@ -635,13 +635,13 @@ namespace ApiForFOL
             List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
             List<FOL_Input_2_1> list3 = dc.FOL_Input_2_1.Where(x => x.Type == type && x.Version == version).ToList();
             List<FOL_Input_3_1> list4 = dc.FOL_Input_3_1.Where(x => x.Type == type && x.Version == version).ToList();
-            if (list1 == null)
+            if (list1.Count==0)
             { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
-            if (list2 == null)
+            if (list2.Count==0)
             { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
-            if (list3 == null)
+            if (list3.Count==0)
             { message = message + "该月份的5.1 DL (%)百分比数据为空;"; }
-            if (list4 == null)
+            if (list4.Count==0)
             { message = message + "该月份的5.1 DL (%)Amount数据为空;"; }
 
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
@@ -2177,17 +2177,17 @@ namespace ApiForFOL
             List<FOL_Input_1_1> list4 = dc.FOL_Input_1_1.Where(x => x.Type == "1.4 Rev Recog - OT Contract" && x.Version == version).ToList();
             List<FOL_Input_1_1> list5 = dc.FOL_Input_1_1.Where(x => x.Type == "1.5 Rev Reversal - OT Contract" && x.Version == version).ToList();
             List<FOL_Input_2_1> list6 = dc.FOL_Input_2_1.Where(x => x.Type == "8.0 Corp. Alloc. (%)" && x.Version == version).ToList();
-            if (list1 == null)
+            if (list1.Count==0)
             { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
-            if (list2 == null)
+            if (list2.Count==0)
             { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
-            if (list3 == null)
+            if (list3.Count==0)
             { message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;"; }
-            if (list4 == null)
+            if (list4.Count==0)
             { message = message + "该月份的1.4 Rev Recog - OT Contract数据为空;"; }
-            if (list5 == null)
+            if (list5.Count==0)
             { message = message + "该月份的1.5 Rev Reversal - OT Contract数据为空;"; }
-            if (list6 == null)
+            if (list6.Count==0)
             { message = message + "该月份的8.0 Corp. Alloc. (%)的百分比数据为空;"; }
 
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
