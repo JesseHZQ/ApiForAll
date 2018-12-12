@@ -704,339 +704,347 @@ namespace ApiForFOL
         }
 
         //6.0
-        public List<FOL_Input_6_0_TotalMOH> Calculate6_0(string version)
+        public string Calculate6_0(string version)
         {
+            string message = "";
             List<FOL_Input_6_0_TotalMOH> list = new List<FOL_Input_6_0_TotalMOH>();
             List<string> list_department = dc.FOL_CCMapping.Where(x => x.Type == "MOH").Select(x => x.CCDescription).ToList();
             List<FOL_Input_6_0_SumByTypeModule> list_SumByTypeModule = dc.FOL_Input_6_0_SumByTypeModule.ToList();
             List<FOL_Input_6_0_SumByType> list_SumByType = new List<FOL_Input_6_0_SumByType>();
-
-            for (int n = 0; n < list_SumByTypeModule.Count; n++)
+            try
             {
-                FOL_Input_6_0_SumByType newItem_SumByType = new FOL_Input_6_0_SumByType();
-                newItem_SumByType.GLBPCCode = list_SumByTypeModule[n].GLBPCCode;
-                newItem_SumByType.GLBPCDescription = list_SumByTypeModule[n].GLBPCDescription;
-                newItem_SumByType.GLOutputCode = list_SumByTypeModule[n].GLOutputCode;
-                newItem_SumByType.PARENTH1 = list_SumByTypeModule[n].PARENTH1;
-                newItem_SumByType.UploadCode = list_SumByTypeModule[n].UploadCode;
-                newItem_SumByType.BPCOutputCode = list_SumByTypeModule[n].BPCOutputCode;
-                newItem_SumByType.BU = list_SumByTypeModule[n].BU;
-                newItem_SumByType.Segment = list_SumByTypeModule[n].Segment;
-                newItem_SumByType.Period1 = 0;
-                newItem_SumByType.Period2 = 0;
-                newItem_SumByType.Period3 = 0;
-                newItem_SumByType.Period4 = 0;
-                newItem_SumByType.Period5 = 0;
-                newItem_SumByType.Period6 = 0;
-                newItem_SumByType.Period7 = 0;
-                newItem_SumByType.Period8 = 0;
-                newItem_SumByType.Period9 = 0;
-                newItem_SumByType.Period10 = 0;
-                newItem_SumByType.Period11 = 0;
-                newItem_SumByType.Period12 = 0;
-                newItem_SumByType.Period13 = 0;
-                newItem_SumByType.Period14 = 0;
-                newItem_SumByType.Period15 = 0;
-                newItem_SumByType.Period16 = 0;
-                newItem_SumByType.Type = "6.0 Total MOH($)";
-                newItem_SumByType.Version = version;
-                newItem_SumByType.InsertDate = System.DateTime.Now;
-                newItem_SumByType.InsertUser = "";
-                list_SumByType.Add(newItem_SumByType);
-            }
-            for (int i = 0; i < list_department.Count; i++)
-            {
-                string department = list_department[i];
-                List<FOL_Input_6_0_TotalMOH> list_new = dc.FOL_Input_6_0_TotalMOH.Where(x => x.Department.Contains(department) && x.IsSubtotal != 11).ToList();
-                List<FOL_Input_6_0_TotalMOH> list_byDepAndBPCCode = dc.FOL_Input_6_0_TotalMOH.Where(x => x.Department.Contains(department) && x.IsSubtotal == 11).ToList();
-
-                FOL_Input_6_0_TotalMOH newItem = new FOL_Input_6_0_TotalMOH();
-
-                for (int j = 0; j < list_new.Count; j++)
+                for (int n = 0; n < list_SumByTypeModule.Count; n++)
                 {
-                    //计算总和By BPCCode By Dep
-                    #region
-                    if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[0].PARENTH1)
-                    {
-                        list_byDepAndBPCCode[0].Period1 = (list_byDepAndBPCCode[0].Period1 ?? 0) + list_new[j].Period1;
-                        list_byDepAndBPCCode[0].Period2 = (list_byDepAndBPCCode[0].Period2 ?? 0) + list_new[j].Period2;
-                        list_byDepAndBPCCode[0].Period3 = (list_byDepAndBPCCode[0].Period3 ?? 0) + list_new[j].Period3;
-                        list_byDepAndBPCCode[0].Period4 = (list_byDepAndBPCCode[0].Period4 ?? 0) + list_new[j].Period4;
-                        list_byDepAndBPCCode[0].Period5 = (list_byDepAndBPCCode[0].Period5 ?? 0) + list_new[j].Period5;
-                        list_byDepAndBPCCode[0].Period6 = (list_byDepAndBPCCode[0].Period6 ?? 0) + list_new[j].Period6;
-                        list_byDepAndBPCCode[0].Period7 = (list_byDepAndBPCCode[0].Period7 ?? 0) + list_new[j].Period7;
-                        list_byDepAndBPCCode[0].Period8 = (list_byDepAndBPCCode[0].Period8 ?? 0) + list_new[j].Period8;
-                        list_byDepAndBPCCode[0].Period9 = (list_byDepAndBPCCode[0].Period9 ?? 0) + list_new[j].Period9;
-                        list_byDepAndBPCCode[0].Period10 = (list_byDepAndBPCCode[0].Period10 ?? 0) + list_new[j].Period10;
-                        list_byDepAndBPCCode[0].Period11 = (list_byDepAndBPCCode[0].Period11 ?? 0) + list_new[j].Period11;
-                        list_byDepAndBPCCode[0].Period12 = (list_byDepAndBPCCode[0].Period12 ?? 0) + list_new[j].Period12;
-                        list_byDepAndBPCCode[0].Period13 = (list_byDepAndBPCCode[0].Period13 ?? 0) + list_new[j].Period13;
-                        list_byDepAndBPCCode[0].Period14 = (list_byDepAndBPCCode[0].Period14 ?? 0) + list_new[j].Period14;
-                        list_byDepAndBPCCode[0].Period15 = (list_byDepAndBPCCode[0].Period15 ?? 0) + list_new[j].Period15;
-                        list_byDepAndBPCCode[0].Period16 = (list_byDepAndBPCCode[0].Period16 ?? 0) + list_new[j].Period16;
-
-                        list_SumByType[0].Period1 = (list_SumByType[0].Period1 ?? 0) + list_new[j].Period1;
-                        list_SumByType[0].Period2 = (list_SumByType[0].Period2 ?? 0) + list_new[j].Period2;
-                        list_SumByType[0].Period3 = (list_SumByType[0].Period3 ?? 0) + list_new[j].Period3;
-                        list_SumByType[0].Period4 = (list_SumByType[0].Period4 ?? 0) + list_new[j].Period4;
-                        list_SumByType[0].Period5 = (list_SumByType[0].Period5 ?? 0) + list_new[j].Period5;
-                        list_SumByType[0].Period6 = (list_SumByType[0].Period6 ?? 0) + list_new[j].Period6;
-                        list_SumByType[0].Period7 = (list_SumByType[0].Period7 ?? 0) + list_new[j].Period7;
-                        list_SumByType[0].Period8 = (list_SumByType[0].Period8 ?? 0) + list_new[j].Period8;
-                        list_SumByType[0].Period9 = (list_SumByType[0].Period9 ?? 0) + list_new[j].Period9;
-                        list_SumByType[0].Period10 = (list_SumByType[0].Period10 ?? 0) + list_new[j].Period10;
-                        list_SumByType[0].Period11 = (list_SumByType[0].Period11 ?? 0) + list_new[j].Period11;
-                        list_SumByType[0].Period12 = (list_SumByType[0].Period12 ?? 0) + list_new[j].Period12;
-                        list_SumByType[0].Period13 = (list_SumByType[0].Period13 ?? 0) + list_new[j].Period13;
-                        list_SumByType[0].Period14 = (list_SumByType[0].Period14 ?? 0) + list_new[j].Period14;
-                        list_SumByType[0].Period15 = (list_SumByType[0].Period15 ?? 0) + list_new[j].Period15;
-                        list_SumByType[0].Period16 = (list_SumByType[0].Period16 ?? 0) + list_new[j].Period16;
-                    }
-                    else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[1].PARENTH1)
-                    {
-                        list_byDepAndBPCCode[1].Period1 = (list_byDepAndBPCCode[1].Period1 ?? 0) + list_new[j].Period1;
-                        list_byDepAndBPCCode[1].Period2 = (list_byDepAndBPCCode[1].Period2 ?? 0) + list_new[j].Period2;
-                        list_byDepAndBPCCode[1].Period3 = (list_byDepAndBPCCode[1].Period3 ?? 0) + list_new[j].Period3;
-                        list_byDepAndBPCCode[1].Period4 = (list_byDepAndBPCCode[1].Period4 ?? 0) + list_new[j].Period4;
-                        list_byDepAndBPCCode[1].Period5 = (list_byDepAndBPCCode[1].Period5 ?? 0) + list_new[j].Period5;
-                        list_byDepAndBPCCode[1].Period6 = (list_byDepAndBPCCode[1].Period6 ?? 0) + list_new[j].Period6;
-                        list_byDepAndBPCCode[1].Period7 = (list_byDepAndBPCCode[1].Period7 ?? 0) + list_new[j].Period7;
-                        list_byDepAndBPCCode[1].Period8 = (list_byDepAndBPCCode[1].Period8 ?? 0) + list_new[j].Period8;
-                        list_byDepAndBPCCode[1].Period9 = (list_byDepAndBPCCode[1].Period9 ?? 0) + list_new[j].Period9;
-                        list_byDepAndBPCCode[1].Period10 = (list_byDepAndBPCCode[1].Period10 ?? 0) + list_new[j].Period10;
-                        list_byDepAndBPCCode[1].Period11 = (list_byDepAndBPCCode[1].Period11 ?? 0) + list_new[j].Period11;
-                        list_byDepAndBPCCode[1].Period12 = (list_byDepAndBPCCode[1].Period12 ?? 0) + list_new[j].Period12;
-                        list_byDepAndBPCCode[1].Period13 = (list_byDepAndBPCCode[1].Period13 ?? 0) + list_new[j].Period13;
-                        list_byDepAndBPCCode[1].Period14 = (list_byDepAndBPCCode[1].Period14 ?? 0) + list_new[j].Period14;
-                        list_byDepAndBPCCode[1].Period15 = (list_byDepAndBPCCode[1].Period15 ?? 0) + list_new[j].Period15;
-                        list_byDepAndBPCCode[1].Period16 = (list_byDepAndBPCCode[1].Period16 ?? 0) + list_new[j].Period16;
-
-                        list_SumByType[1].Period1 = (list_SumByType[1].Period1 ?? 0) + list_new[j].Period1;
-                        list_SumByType[1].Period2 = (list_SumByType[1].Period2 ?? 0) + list_new[j].Period2;
-                        list_SumByType[1].Period3 = (list_SumByType[1].Period3 ?? 0) + list_new[j].Period3;
-                        list_SumByType[1].Period4 = (list_SumByType[1].Period4 ?? 0) + list_new[j].Period4;
-                        list_SumByType[1].Period5 = (list_SumByType[1].Period5 ?? 0) + list_new[j].Period5;
-                        list_SumByType[1].Period6 = (list_SumByType[1].Period6 ?? 0) + list_new[j].Period6;
-                        list_SumByType[1].Period7 = (list_SumByType[1].Period7 ?? 0) + list_new[j].Period7;
-                        list_SumByType[1].Period8 = (list_SumByType[1].Period8 ?? 0) + list_new[j].Period8;
-                        list_SumByType[1].Period9 = (list_SumByType[1].Period9 ?? 0) + list_new[j].Period9;
-                        list_SumByType[1].Period10 = (list_SumByType[1].Period10 ?? 0) + list_new[j].Period10;
-                        list_SumByType[1].Period11 = (list_SumByType[1].Period11 ?? 0) + list_new[j].Period11;
-                        list_SumByType[1].Period12 = (list_SumByType[1].Period12 ?? 0) + list_new[j].Period12;
-                        list_SumByType[1].Period13 = (list_SumByType[1].Period13 ?? 0) + list_new[j].Period13;
-                        list_SumByType[1].Period14 = (list_SumByType[1].Period14 ?? 0) + list_new[j].Period14;
-                        list_SumByType[1].Period15 = (list_SumByType[1].Period15 ?? 0) + list_new[j].Period15;
-                        list_SumByType[1].Period16 = (list_SumByType[1].Period16 ?? 0) + list_new[j].Period16;
-                    }
-                    else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[2].PARENTH1)
-                    {
-                        list_byDepAndBPCCode[2].Period1 = (list_byDepAndBPCCode[2].Period1 ?? 0) + list_new[j].Period1;
-                        list_byDepAndBPCCode[2].Period2 = (list_byDepAndBPCCode[2].Period2 ?? 0) + list_new[j].Period2;
-                        list_byDepAndBPCCode[2].Period3 = (list_byDepAndBPCCode[2].Period3 ?? 0) + list_new[j].Period3;
-                        list_byDepAndBPCCode[2].Period4 = (list_byDepAndBPCCode[2].Period4 ?? 0) + list_new[j].Period4;
-                        list_byDepAndBPCCode[2].Period5 = (list_byDepAndBPCCode[2].Period5 ?? 0) + list_new[j].Period5;
-                        list_byDepAndBPCCode[2].Period6 = (list_byDepAndBPCCode[2].Period6 ?? 0) + list_new[j].Period6;
-                        list_byDepAndBPCCode[2].Period7 = (list_byDepAndBPCCode[2].Period7 ?? 0) + list_new[j].Period7;
-                        list_byDepAndBPCCode[2].Period8 = (list_byDepAndBPCCode[2].Period8 ?? 0) + list_new[j].Period8;
-                        list_byDepAndBPCCode[2].Period9 = (list_byDepAndBPCCode[2].Period9 ?? 0) + list_new[j].Period9;
-                        list_byDepAndBPCCode[2].Period10 = (list_byDepAndBPCCode[2].Period10 ?? 0) + list_new[j].Period10;
-                        list_byDepAndBPCCode[2].Period11 = (list_byDepAndBPCCode[2].Period11 ?? 0) + list_new[j].Period11;
-                        list_byDepAndBPCCode[2].Period12 = (list_byDepAndBPCCode[2].Period12 ?? 0) + list_new[j].Period12;
-                        list_byDepAndBPCCode[2].Period13 = (list_byDepAndBPCCode[2].Period13 ?? 0) + list_new[j].Period13;
-                        list_byDepAndBPCCode[2].Period14 = (list_byDepAndBPCCode[2].Period14 ?? 0) + list_new[j].Period14;
-                        list_byDepAndBPCCode[2].Period15 = (list_byDepAndBPCCode[2].Period15 ?? 0) + list_new[j].Period15;
-                        list_byDepAndBPCCode[2].Period16 = (list_byDepAndBPCCode[2].Period16 ?? 0) + list_new[j].Period16;
-
-                        list_SumByType[2].Period1 = (list_SumByType[2].Period1 ?? 0) + list_new[j].Period1;
-                        list_SumByType[2].Period2 = (list_SumByType[2].Period2 ?? 0) + list_new[j].Period2;
-                        list_SumByType[2].Period3 = (list_SumByType[2].Period3 ?? 0) + list_new[j].Period3;
-                        list_SumByType[2].Period4 = (list_SumByType[2].Period4 ?? 0) + list_new[j].Period4;
-                        list_SumByType[2].Period5 = (list_SumByType[2].Period5 ?? 0) + list_new[j].Period5;
-                        list_SumByType[2].Period6 = (list_SumByType[2].Period6 ?? 0) + list_new[j].Period6;
-                        list_SumByType[2].Period7 = (list_SumByType[2].Period7 ?? 0) + list_new[j].Period7;
-                        list_SumByType[2].Period8 = (list_SumByType[2].Period8 ?? 0) + list_new[j].Period8;
-                        list_SumByType[2].Period9 = (list_SumByType[2].Period9 ?? 0) + list_new[j].Period9;
-                        list_SumByType[2].Period10 = (list_SumByType[2].Period10 ?? 0) + list_new[j].Period10;
-                        list_SumByType[2].Period11 = (list_SumByType[2].Period11 ?? 0) + list_new[j].Period11;
-                        list_SumByType[2].Period12 = (list_SumByType[2].Period12 ?? 0) + list_new[j].Period12;
-                        list_SumByType[2].Period13 = (list_SumByType[2].Period13 ?? 0) + list_new[j].Period13;
-                        list_SumByType[2].Period14 = (list_SumByType[2].Period14 ?? 0) + list_new[j].Period14;
-                        list_SumByType[2].Period15 = (list_SumByType[2].Period15 ?? 0) + list_new[j].Period15;
-                        list_SumByType[2].Period16 = (list_SumByType[2].Period16 ?? 0) + list_new[j].Period16;
-                    }
-                    else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[3].PARENTH1)
-                    {
-                        list_byDepAndBPCCode[3].Period1 = (list_byDepAndBPCCode[3].Period1 ?? 0) + list_new[j].Period1;
-                        list_byDepAndBPCCode[3].Period2 = (list_byDepAndBPCCode[3].Period2 ?? 0) + list_new[j].Period2;
-                        list_byDepAndBPCCode[3].Period3 = (list_byDepAndBPCCode[3].Period3 ?? 0) + list_new[j].Period3;
-                        list_byDepAndBPCCode[3].Period4 = (list_byDepAndBPCCode[3].Period4 ?? 0) + list_new[j].Period4;
-                        list_byDepAndBPCCode[3].Period5 = (list_byDepAndBPCCode[3].Period5 ?? 0) + list_new[j].Period5;
-                        list_byDepAndBPCCode[3].Period6 = (list_byDepAndBPCCode[3].Period6 ?? 0) + list_new[j].Period6;
-                        list_byDepAndBPCCode[3].Period7 = (list_byDepAndBPCCode[3].Period7 ?? 0) + list_new[j].Period7;
-                        list_byDepAndBPCCode[3].Period8 = (list_byDepAndBPCCode[3].Period8 ?? 0) + list_new[j].Period8;
-                        list_byDepAndBPCCode[3].Period9 = (list_byDepAndBPCCode[3].Period9 ?? 0) + list_new[j].Period9;
-                        list_byDepAndBPCCode[3].Period10 = (list_byDepAndBPCCode[3].Period10 ?? 0) + list_new[j].Period10;
-                        list_byDepAndBPCCode[3].Period11 = (list_byDepAndBPCCode[3].Period11 ?? 0) + list_new[j].Period11;
-                        list_byDepAndBPCCode[3].Period12 = (list_byDepAndBPCCode[3].Period12 ?? 0) + list_new[j].Period12;
-                        list_byDepAndBPCCode[3].Period13 = (list_byDepAndBPCCode[3].Period13 ?? 0) + list_new[j].Period13;
-                        list_byDepAndBPCCode[3].Period14 = (list_byDepAndBPCCode[3].Period14 ?? 0) + list_new[j].Period14;
-                        list_byDepAndBPCCode[3].Period15 = (list_byDepAndBPCCode[3].Period15 ?? 0) + list_new[j].Period15;
-                        list_byDepAndBPCCode[3].Period16 = (list_byDepAndBPCCode[3].Period16 ?? 0) + list_new[j].Period16;
-
-                        list_SumByType[3].Period1 = (list_SumByType[3].Period1 ?? 0) + list_new[j].Period1;
-                        list_SumByType[3].Period2 = (list_SumByType[3].Period2 ?? 0) + list_new[j].Period2;
-                        list_SumByType[3].Period3 = (list_SumByType[3].Period3 ?? 0) + list_new[j].Period3;
-                        list_SumByType[3].Period4 = (list_SumByType[3].Period4 ?? 0) + list_new[j].Period4;
-                        list_SumByType[3].Period5 = (list_SumByType[3].Period5 ?? 0) + list_new[j].Period5;
-                        list_SumByType[3].Period6 = (list_SumByType[3].Period6 ?? 0) + list_new[j].Period6;
-                        list_SumByType[3].Period7 = (list_SumByType[3].Period7 ?? 0) + list_new[j].Period7;
-                        list_SumByType[3].Period8 = (list_SumByType[3].Period8 ?? 0) + list_new[j].Period8;
-                        list_SumByType[3].Period9 = (list_SumByType[3].Period9 ?? 0) + list_new[j].Period9;
-                        list_SumByType[3].Period10 = (list_SumByType[3].Period10 ?? 0) + list_new[j].Period10;
-                        list_SumByType[3].Period11 = (list_SumByType[3].Period11 ?? 0) + list_new[j].Period11;
-                        list_SumByType[3].Period12 = (list_SumByType[3].Period12 ?? 0) + list_new[j].Period12;
-                        list_SumByType[3].Period13 = (list_SumByType[3].Period13 ?? 0) + list_new[j].Period13;
-                        list_SumByType[3].Period14 = (list_SumByType[3].Period14 ?? 0) + list_new[j].Period14;
-                        list_SumByType[3].Period15 = (list_SumByType[3].Period15 ?? 0) + list_new[j].Period15;
-                        list_SumByType[3].Period16 = (list_SumByType[3].Period16 ?? 0) + list_new[j].Period16;
-                    }
-                    else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[4].PARENTH1)
-                    {
-                        list_byDepAndBPCCode[4].Period1 = (list_byDepAndBPCCode[4].Period1 ?? 0) + list_new[j].Period1;
-                        list_byDepAndBPCCode[4].Period2 = (list_byDepAndBPCCode[4].Period2 ?? 0) + list_new[j].Period2;
-                        list_byDepAndBPCCode[4].Period3 = (list_byDepAndBPCCode[4].Period3 ?? 0) + list_new[j].Period3;
-                        list_byDepAndBPCCode[4].Period4 = (list_byDepAndBPCCode[4].Period4 ?? 0) + list_new[j].Period4;
-                        list_byDepAndBPCCode[4].Period5 = (list_byDepAndBPCCode[4].Period5 ?? 0) + list_new[j].Period5;
-                        list_byDepAndBPCCode[4].Period6 = (list_byDepAndBPCCode[4].Period6 ?? 0) + list_new[j].Period6;
-                        list_byDepAndBPCCode[4].Period7 = (list_byDepAndBPCCode[4].Period7 ?? 0) + list_new[j].Period7;
-                        list_byDepAndBPCCode[4].Period8 = (list_byDepAndBPCCode[4].Period8 ?? 0) + list_new[j].Period8;
-                        list_byDepAndBPCCode[4].Period9 = (list_byDepAndBPCCode[4].Period9 ?? 0) + list_new[j].Period9;
-                        list_byDepAndBPCCode[4].Period10 = (list_byDepAndBPCCode[4].Period10 ?? 0) + list_new[j].Period10;
-                        list_byDepAndBPCCode[4].Period11 = (list_byDepAndBPCCode[4].Period11 ?? 0) + list_new[j].Period11;
-                        list_byDepAndBPCCode[4].Period12 = (list_byDepAndBPCCode[4].Period12 ?? 0) + list_new[j].Period12;
-                        list_byDepAndBPCCode[4].Period13 = (list_byDepAndBPCCode[4].Period13 ?? 0) + list_new[j].Period13;
-                        list_byDepAndBPCCode[4].Period14 = (list_byDepAndBPCCode[4].Period14 ?? 0) + list_new[j].Period14;
-                        list_byDepAndBPCCode[4].Period15 = (list_byDepAndBPCCode[4].Period15 ?? 0) + list_new[j].Period15;
-                        list_byDepAndBPCCode[4].Period16 = (list_byDepAndBPCCode[4].Period16 ?? 0) + list_new[j].Period16;
-
-                        list_SumByType[4].Period1 = (list_SumByType[4].Period1 ?? 0) + list_new[j].Period1;
-                        list_SumByType[4].Period2 = (list_SumByType[4].Period2 ?? 0) + list_new[j].Period2;
-                        list_SumByType[4].Period3 = (list_SumByType[4].Period3 ?? 0) + list_new[j].Period3;
-                        list_SumByType[4].Period4 = (list_SumByType[4].Period4 ?? 0) + list_new[j].Period4;
-                        list_SumByType[4].Period5 = (list_SumByType[4].Period5 ?? 0) + list_new[j].Period5;
-                        list_SumByType[4].Period6 = (list_SumByType[4].Period6 ?? 0) + list_new[j].Period6;
-                        list_SumByType[4].Period7 = (list_SumByType[4].Period7 ?? 0) + list_new[j].Period7;
-                        list_SumByType[4].Period8 = (list_SumByType[4].Period8 ?? 0) + list_new[j].Period8;
-                        list_SumByType[4].Period9 = (list_SumByType[4].Period9 ?? 0) + list_new[j].Period9;
-                        list_SumByType[4].Period10 = (list_SumByType[4].Period10 ?? 0) + list_new[j].Period10;
-                        list_SumByType[4].Period11 = (list_SumByType[4].Period11 ?? 0) + list_new[j].Period11;
-                        list_SumByType[4].Period12 = (list_SumByType[4].Period12 ?? 0) + list_new[j].Period12;
-                        list_SumByType[4].Period13 = (list_SumByType[4].Period13 ?? 0) + list_new[j].Period13;
-                        list_SumByType[4].Period14 = (list_SumByType[4].Period14 ?? 0) + list_new[j].Period14;
-                        list_SumByType[4].Period15 = (list_SumByType[4].Period15 ?? 0) + list_new[j].Period15;
-                        list_SumByType[4].Period16 = (list_SumByType[1].Period16 ?? 0) + list_new[j].Period16;
-                    }
-                    else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[5].PARENTH1)
-                    {
-                        list_byDepAndBPCCode[5].Period1 = (list_byDepAndBPCCode[5].Period1 ?? 0) + list_new[j].Period1;
-                        list_byDepAndBPCCode[5].Period2 = (list_byDepAndBPCCode[5].Period2 ?? 0) + list_new[j].Period2;
-                        list_byDepAndBPCCode[5].Period3 = (list_byDepAndBPCCode[5].Period3 ?? 0) + list_new[j].Period3;
-                        list_byDepAndBPCCode[5].Period4 = (list_byDepAndBPCCode[5].Period4 ?? 0) + list_new[j].Period4;
-                        list_byDepAndBPCCode[5].Period5 = (list_byDepAndBPCCode[5].Period5 ?? 0) + list_new[j].Period5;
-                        list_byDepAndBPCCode[5].Period6 = (list_byDepAndBPCCode[5].Period6 ?? 0) + list_new[j].Period6;
-                        list_byDepAndBPCCode[5].Period7 = (list_byDepAndBPCCode[5].Period7 ?? 0) + list_new[j].Period7;
-                        list_byDepAndBPCCode[5].Period8 = (list_byDepAndBPCCode[5].Period8 ?? 0) + list_new[j].Period8;
-                        list_byDepAndBPCCode[5].Period9 = (list_byDepAndBPCCode[5].Period9 ?? 0) + list_new[j].Period9;
-                        list_byDepAndBPCCode[5].Period10 = (list_byDepAndBPCCode[5].Period10 ?? 0) + list_new[j].Period10;
-                        list_byDepAndBPCCode[5].Period11 = (list_byDepAndBPCCode[5].Period11 ?? 0) + list_new[j].Period11;
-                        list_byDepAndBPCCode[5].Period12 = (list_byDepAndBPCCode[5].Period12 ?? 0) + list_new[j].Period12;
-                        list_byDepAndBPCCode[5].Period13 = (list_byDepAndBPCCode[5].Period13 ?? 0) + list_new[j].Period13;
-                        list_byDepAndBPCCode[5].Period14 = (list_byDepAndBPCCode[5].Period14 ?? 0) + list_new[j].Period14;
-                        list_byDepAndBPCCode[5].Period15 = (list_byDepAndBPCCode[5].Period15 ?? 0) + list_new[j].Period15;
-                        list_byDepAndBPCCode[5].Period16 = (list_byDepAndBPCCode[5].Period16 ?? 0) + list_new[j].Period16;
-
-                        list_SumByType[5].Period1 = (list_SumByType[5].Period1 ?? 0) + list_new[j].Period1;
-                        list_SumByType[5].Period2 = (list_SumByType[5].Period2 ?? 0) + list_new[j].Period2;
-                        list_SumByType[5].Period3 = (list_SumByType[5].Period3 ?? 0) + list_new[j].Period3;
-                        list_SumByType[5].Period4 = (list_SumByType[5].Period4 ?? 0) + list_new[j].Period4;
-                        list_SumByType[5].Period5 = (list_SumByType[5].Period5 ?? 0) + list_new[j].Period5;
-                        list_SumByType[5].Period6 = (list_SumByType[5].Period6 ?? 0) + list_new[j].Period6;
-                        list_SumByType[5].Period7 = (list_SumByType[5].Period7 ?? 0) + list_new[j].Period7;
-                        list_SumByType[5].Period8 = (list_SumByType[5].Period8 ?? 0) + list_new[j].Period8;
-                        list_SumByType[5].Period9 = (list_SumByType[5].Period9 ?? 0) + list_new[j].Period9;
-                        list_SumByType[5].Period10 = (list_SumByType[5].Period10 ?? 0) + list_new[j].Period10;
-                        list_SumByType[5].Period11 = (list_SumByType[5].Period11 ?? 0) + list_new[j].Period11;
-                        list_SumByType[5].Period12 = (list_SumByType[5].Period12 ?? 0) + list_new[j].Period12;
-                        list_SumByType[5].Period13 = (list_SumByType[5].Period13 ?? 0) + list_new[j].Period13;
-                        list_SumByType[5].Period14 = (list_SumByType[5].Period14 ?? 0) + list_new[j].Period14;
-                        list_SumByType[5].Period15 = (list_SumByType[5].Period15 ?? 0) + list_new[j].Period15;
-                        list_SumByType[5].Period16 = (list_SumByType[5].Period16 ?? 0) + list_new[j].Period16;
-                    }
-                    #endregion
-                    //计算IsSubtotal=1的类型的和
-                    #region
-                    if (list_new[j].IsSubtotal == 1)
-                    {
-                        list_new[j].Period1 = newItem.Period1;
-                        list_new[j].Period2 = newItem.Period2;
-                        list_new[j].Period3 = newItem.Period3;
-                        list_new[j].Period4 = newItem.Period4;
-                        list_new[j].Period5 = newItem.Period5;
-                        list_new[j].Period6 = newItem.Period6;
-                        list_new[j].Period7 = newItem.Period7;
-                        list_new[j].Period8 = newItem.Period8;
-                        list_new[j].Period9 = newItem.Period9;
-                        list_new[j].Period10 = newItem.Period10;
-                        list_new[j].Period11 = newItem.Period11;
-                        list_new[j].Period12 = newItem.Period12;
-                        list_new[j].Period13 = newItem.Period13;
-                        list_new[j].Period14 = newItem.Period14;
-                        list_new[j].Period15 = newItem.Period15;
-                        list_new[j].Period16 = newItem.Period16;
-                        newItem = new FOL_Input_6_0_TotalMOH();
-                    }
-                    else
-                    {
-                        newItem.Period1 = (newItem.Period1 ?? 0) + list_new[j].Period1;
-                        newItem.Period2 = (newItem.Period2 ?? 0) + list_new[j].Period2;
-                        newItem.Period3 = (newItem.Period3 ?? 0) + list_new[j].Period3;
-                        newItem.Period4 = (newItem.Period4 ?? 0) + list_new[j].Period4;
-                        newItem.Period5 = (newItem.Period5 ?? 0) + list_new[j].Period5;
-                        newItem.Period6 = (newItem.Period6 ?? 0) + list_new[j].Period6;
-                        newItem.Period7 = (newItem.Period7 ?? 0) + list_new[j].Period7;
-                        newItem.Period8 = (newItem.Period8 ?? 0) + list_new[j].Period8;
-                        newItem.Period9 = (newItem.Period9 ?? 0) + list_new[j].Period9;
-                        newItem.Period10 = (newItem.Period10 ?? 0) + list_new[j].Period10;
-                        newItem.Period11 = (newItem.Period11 ?? 0) + list_new[j].Period11;
-                        newItem.Period12 = (newItem.Period12 ?? 0) + list_new[j].Period12;
-                        newItem.Period13 = (newItem.Period13 ?? 0) + list_new[j].Period13;
-                        newItem.Period14 = (newItem.Period14 ?? 0) + list_new[j].Period14;
-                        newItem.Period15 = (newItem.Period15 ?? 0) + list_new[j].Period15;
-                        newItem.Period16 = (newItem.Period16 ?? 0) + list_new[j].Period16;
-                    }
-                    #endregion
-
-                    ////计算总和By BPCCode
-                    //for(int m=0;m< list_SumByType.Count; m++)
-                    //{
-                    //    if(list_new[j].BPCOutputCode == list_byDepAndBPCCode[0].PARENTH1)
-                    //}
+                    FOL_Input_6_0_SumByType newItem_SumByType = new FOL_Input_6_0_SumByType();
+                    newItem_SumByType.GLBPCCode = list_SumByTypeModule[n].GLBPCCode;
+                    newItem_SumByType.GLBPCDescription = list_SumByTypeModule[n].GLBPCDescription;
+                    newItem_SumByType.GLOutputCode = list_SumByTypeModule[n].GLOutputCode;
+                    newItem_SumByType.PARENTH1 = list_SumByTypeModule[n].PARENTH1;
+                    newItem_SumByType.UploadCode = list_SumByTypeModule[n].UploadCode;
+                    newItem_SumByType.BPCOutputCode = list_SumByTypeModule[n].BPCOutputCode;
+                    newItem_SumByType.BU = list_SumByTypeModule[n].BU;
+                    newItem_SumByType.Segment = list_SumByTypeModule[n].Segment;
+                    newItem_SumByType.Period1 = 0;
+                    newItem_SumByType.Period2 = 0;
+                    newItem_SumByType.Period3 = 0;
+                    newItem_SumByType.Period4 = 0;
+                    newItem_SumByType.Period5 = 0;
+                    newItem_SumByType.Period6 = 0;
+                    newItem_SumByType.Period7 = 0;
+                    newItem_SumByType.Period8 = 0;
+                    newItem_SumByType.Period9 = 0;
+                    newItem_SumByType.Period10 = 0;
+                    newItem_SumByType.Period11 = 0;
+                    newItem_SumByType.Period12 = 0;
+                    newItem_SumByType.Period13 = 0;
+                    newItem_SumByType.Period14 = 0;
+                    newItem_SumByType.Period15 = 0;
+                    newItem_SumByType.Period16 = 0;
+                    newItem_SumByType.Type = "6.0 Total MOH($)";
+                    newItem_SumByType.Version = version;
+                    newItem_SumByType.InsertDate = System.DateTime.Now;
+                    newItem_SumByType.InsertUser = "";
+                    list_SumByType.Add(newItem_SumByType);
                 }
-            }
-            dc.FOL_Input_6_0_SumByType.DeleteAllOnSubmit(dc.FOL_Input_6_0_SumByType.Where(x => x.Type == "6.0 Total MOH($)" && x.Version == version).ToList());
-            dc.FOL_Input_6_0_SumByType.InsertAllOnSubmit(list_SumByType);
-            dc.SubmitChanges();
+                for (int i = 0; i < list_department.Count; i++)
+                {
+                    string department = list_department[i];
+                    List<FOL_Input_6_0_TotalMOH> list_new = dc.FOL_Input_6_0_TotalMOH.Where(x => x.Department.Contains(department) && x.IsSubtotal != 11).ToList();
+                    List<FOL_Input_6_0_TotalMOH> list_byDepAndBPCCode = dc.FOL_Input_6_0_TotalMOH.Where(x => x.Department.Contains(department) && x.IsSubtotal == 11).ToList();
 
-            return list;
+                    FOL_Input_6_0_TotalMOH newItem = new FOL_Input_6_0_TotalMOH();
+
+                    for (int j = 0; j < list_new.Count; j++)
+                    {
+                        //计算总和By BPCCode By Dep
+                        #region
+                        if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[0].PARENTH1)
+                        {
+                            list_byDepAndBPCCode[0].Period1 = (list_byDepAndBPCCode[0].Period1 ?? 0) + list_new[j].Period1;
+                            list_byDepAndBPCCode[0].Period2 = (list_byDepAndBPCCode[0].Period2 ?? 0) + list_new[j].Period2;
+                            list_byDepAndBPCCode[0].Period3 = (list_byDepAndBPCCode[0].Period3 ?? 0) + list_new[j].Period3;
+                            list_byDepAndBPCCode[0].Period4 = (list_byDepAndBPCCode[0].Period4 ?? 0) + list_new[j].Period4;
+                            list_byDepAndBPCCode[0].Period5 = (list_byDepAndBPCCode[0].Period5 ?? 0) + list_new[j].Period5;
+                            list_byDepAndBPCCode[0].Period6 = (list_byDepAndBPCCode[0].Period6 ?? 0) + list_new[j].Period6;
+                            list_byDepAndBPCCode[0].Period7 = (list_byDepAndBPCCode[0].Period7 ?? 0) + list_new[j].Period7;
+                            list_byDepAndBPCCode[0].Period8 = (list_byDepAndBPCCode[0].Period8 ?? 0) + list_new[j].Period8;
+                            list_byDepAndBPCCode[0].Period9 = (list_byDepAndBPCCode[0].Period9 ?? 0) + list_new[j].Period9;
+                            list_byDepAndBPCCode[0].Period10 = (list_byDepAndBPCCode[0].Period10 ?? 0) + list_new[j].Period10;
+                            list_byDepAndBPCCode[0].Period11 = (list_byDepAndBPCCode[0].Period11 ?? 0) + list_new[j].Period11;
+                            list_byDepAndBPCCode[0].Period12 = (list_byDepAndBPCCode[0].Period12 ?? 0) + list_new[j].Period12;
+                            list_byDepAndBPCCode[0].Period13 = (list_byDepAndBPCCode[0].Period13 ?? 0) + list_new[j].Period13;
+                            list_byDepAndBPCCode[0].Period14 = (list_byDepAndBPCCode[0].Period14 ?? 0) + list_new[j].Period14;
+                            list_byDepAndBPCCode[0].Period15 = (list_byDepAndBPCCode[0].Period15 ?? 0) + list_new[j].Period15;
+                            list_byDepAndBPCCode[0].Period16 = (list_byDepAndBPCCode[0].Period16 ?? 0) + list_new[j].Period16;
+
+                            list_SumByType[0].Period1 = (list_SumByType[0].Period1 ?? 0) + list_new[j].Period1;
+                            list_SumByType[0].Period2 = (list_SumByType[0].Period2 ?? 0) + list_new[j].Period2;
+                            list_SumByType[0].Period3 = (list_SumByType[0].Period3 ?? 0) + list_new[j].Period3;
+                            list_SumByType[0].Period4 = (list_SumByType[0].Period4 ?? 0) + list_new[j].Period4;
+                            list_SumByType[0].Period5 = (list_SumByType[0].Period5 ?? 0) + list_new[j].Period5;
+                            list_SumByType[0].Period6 = (list_SumByType[0].Period6 ?? 0) + list_new[j].Period6;
+                            list_SumByType[0].Period7 = (list_SumByType[0].Period7 ?? 0) + list_new[j].Period7;
+                            list_SumByType[0].Period8 = (list_SumByType[0].Period8 ?? 0) + list_new[j].Period8;
+                            list_SumByType[0].Period9 = (list_SumByType[0].Period9 ?? 0) + list_new[j].Period9;
+                            list_SumByType[0].Period10 = (list_SumByType[0].Period10 ?? 0) + list_new[j].Period10;
+                            list_SumByType[0].Period11 = (list_SumByType[0].Period11 ?? 0) + list_new[j].Period11;
+                            list_SumByType[0].Period12 = (list_SumByType[0].Period12 ?? 0) + list_new[j].Period12;
+                            list_SumByType[0].Period13 = (list_SumByType[0].Period13 ?? 0) + list_new[j].Period13;
+                            list_SumByType[0].Period14 = (list_SumByType[0].Period14 ?? 0) + list_new[j].Period14;
+                            list_SumByType[0].Period15 = (list_SumByType[0].Period15 ?? 0) + list_new[j].Period15;
+                            list_SumByType[0].Period16 = (list_SumByType[0].Period16 ?? 0) + list_new[j].Period16;
+                        }
+                        else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[1].PARENTH1)
+                        {
+                            list_byDepAndBPCCode[1].Period1 = (list_byDepAndBPCCode[1].Period1 ?? 0) + list_new[j].Period1;
+                            list_byDepAndBPCCode[1].Period2 = (list_byDepAndBPCCode[1].Period2 ?? 0) + list_new[j].Period2;
+                            list_byDepAndBPCCode[1].Period3 = (list_byDepAndBPCCode[1].Period3 ?? 0) + list_new[j].Period3;
+                            list_byDepAndBPCCode[1].Period4 = (list_byDepAndBPCCode[1].Period4 ?? 0) + list_new[j].Period4;
+                            list_byDepAndBPCCode[1].Period5 = (list_byDepAndBPCCode[1].Period5 ?? 0) + list_new[j].Period5;
+                            list_byDepAndBPCCode[1].Period6 = (list_byDepAndBPCCode[1].Period6 ?? 0) + list_new[j].Period6;
+                            list_byDepAndBPCCode[1].Period7 = (list_byDepAndBPCCode[1].Period7 ?? 0) + list_new[j].Period7;
+                            list_byDepAndBPCCode[1].Period8 = (list_byDepAndBPCCode[1].Period8 ?? 0) + list_new[j].Period8;
+                            list_byDepAndBPCCode[1].Period9 = (list_byDepAndBPCCode[1].Period9 ?? 0) + list_new[j].Period9;
+                            list_byDepAndBPCCode[1].Period10 = (list_byDepAndBPCCode[1].Period10 ?? 0) + list_new[j].Period10;
+                            list_byDepAndBPCCode[1].Period11 = (list_byDepAndBPCCode[1].Period11 ?? 0) + list_new[j].Period11;
+                            list_byDepAndBPCCode[1].Period12 = (list_byDepAndBPCCode[1].Period12 ?? 0) + list_new[j].Period12;
+                            list_byDepAndBPCCode[1].Period13 = (list_byDepAndBPCCode[1].Period13 ?? 0) + list_new[j].Period13;
+                            list_byDepAndBPCCode[1].Period14 = (list_byDepAndBPCCode[1].Period14 ?? 0) + list_new[j].Period14;
+                            list_byDepAndBPCCode[1].Period15 = (list_byDepAndBPCCode[1].Period15 ?? 0) + list_new[j].Period15;
+                            list_byDepAndBPCCode[1].Period16 = (list_byDepAndBPCCode[1].Period16 ?? 0) + list_new[j].Period16;
+
+                            list_SumByType[1].Period1 = (list_SumByType[1].Period1 ?? 0) + list_new[j].Period1;
+                            list_SumByType[1].Period2 = (list_SumByType[1].Period2 ?? 0) + list_new[j].Period2;
+                            list_SumByType[1].Period3 = (list_SumByType[1].Period3 ?? 0) + list_new[j].Period3;
+                            list_SumByType[1].Period4 = (list_SumByType[1].Period4 ?? 0) + list_new[j].Period4;
+                            list_SumByType[1].Period5 = (list_SumByType[1].Period5 ?? 0) + list_new[j].Period5;
+                            list_SumByType[1].Period6 = (list_SumByType[1].Period6 ?? 0) + list_new[j].Period6;
+                            list_SumByType[1].Period7 = (list_SumByType[1].Period7 ?? 0) + list_new[j].Period7;
+                            list_SumByType[1].Period8 = (list_SumByType[1].Period8 ?? 0) + list_new[j].Period8;
+                            list_SumByType[1].Period9 = (list_SumByType[1].Period9 ?? 0) + list_new[j].Period9;
+                            list_SumByType[1].Period10 = (list_SumByType[1].Period10 ?? 0) + list_new[j].Period10;
+                            list_SumByType[1].Period11 = (list_SumByType[1].Period11 ?? 0) + list_new[j].Period11;
+                            list_SumByType[1].Period12 = (list_SumByType[1].Period12 ?? 0) + list_new[j].Period12;
+                            list_SumByType[1].Period13 = (list_SumByType[1].Period13 ?? 0) + list_new[j].Period13;
+                            list_SumByType[1].Period14 = (list_SumByType[1].Period14 ?? 0) + list_new[j].Period14;
+                            list_SumByType[1].Period15 = (list_SumByType[1].Period15 ?? 0) + list_new[j].Period15;
+                            list_SumByType[1].Period16 = (list_SumByType[1].Period16 ?? 0) + list_new[j].Period16;
+                        }
+                        else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[2].PARENTH1)
+                        {
+                            list_byDepAndBPCCode[2].Period1 = (list_byDepAndBPCCode[2].Period1 ?? 0) + list_new[j].Period1;
+                            list_byDepAndBPCCode[2].Period2 = (list_byDepAndBPCCode[2].Period2 ?? 0) + list_new[j].Period2;
+                            list_byDepAndBPCCode[2].Period3 = (list_byDepAndBPCCode[2].Period3 ?? 0) + list_new[j].Period3;
+                            list_byDepAndBPCCode[2].Period4 = (list_byDepAndBPCCode[2].Period4 ?? 0) + list_new[j].Period4;
+                            list_byDepAndBPCCode[2].Period5 = (list_byDepAndBPCCode[2].Period5 ?? 0) + list_new[j].Period5;
+                            list_byDepAndBPCCode[2].Period6 = (list_byDepAndBPCCode[2].Period6 ?? 0) + list_new[j].Period6;
+                            list_byDepAndBPCCode[2].Period7 = (list_byDepAndBPCCode[2].Period7 ?? 0) + list_new[j].Period7;
+                            list_byDepAndBPCCode[2].Period8 = (list_byDepAndBPCCode[2].Period8 ?? 0) + list_new[j].Period8;
+                            list_byDepAndBPCCode[2].Period9 = (list_byDepAndBPCCode[2].Period9 ?? 0) + list_new[j].Period9;
+                            list_byDepAndBPCCode[2].Period10 = (list_byDepAndBPCCode[2].Period10 ?? 0) + list_new[j].Period10;
+                            list_byDepAndBPCCode[2].Period11 = (list_byDepAndBPCCode[2].Period11 ?? 0) + list_new[j].Period11;
+                            list_byDepAndBPCCode[2].Period12 = (list_byDepAndBPCCode[2].Period12 ?? 0) + list_new[j].Period12;
+                            list_byDepAndBPCCode[2].Period13 = (list_byDepAndBPCCode[2].Period13 ?? 0) + list_new[j].Period13;
+                            list_byDepAndBPCCode[2].Period14 = (list_byDepAndBPCCode[2].Period14 ?? 0) + list_new[j].Period14;
+                            list_byDepAndBPCCode[2].Period15 = (list_byDepAndBPCCode[2].Period15 ?? 0) + list_new[j].Period15;
+                            list_byDepAndBPCCode[2].Period16 = (list_byDepAndBPCCode[2].Period16 ?? 0) + list_new[j].Period16;
+
+                            list_SumByType[2].Period1 = (list_SumByType[2].Period1 ?? 0) + list_new[j].Period1;
+                            list_SumByType[2].Period2 = (list_SumByType[2].Period2 ?? 0) + list_new[j].Period2;
+                            list_SumByType[2].Period3 = (list_SumByType[2].Period3 ?? 0) + list_new[j].Period3;
+                            list_SumByType[2].Period4 = (list_SumByType[2].Period4 ?? 0) + list_new[j].Period4;
+                            list_SumByType[2].Period5 = (list_SumByType[2].Period5 ?? 0) + list_new[j].Period5;
+                            list_SumByType[2].Period6 = (list_SumByType[2].Period6 ?? 0) + list_new[j].Period6;
+                            list_SumByType[2].Period7 = (list_SumByType[2].Period7 ?? 0) + list_new[j].Period7;
+                            list_SumByType[2].Period8 = (list_SumByType[2].Period8 ?? 0) + list_new[j].Period8;
+                            list_SumByType[2].Period9 = (list_SumByType[2].Period9 ?? 0) + list_new[j].Period9;
+                            list_SumByType[2].Period10 = (list_SumByType[2].Period10 ?? 0) + list_new[j].Period10;
+                            list_SumByType[2].Period11 = (list_SumByType[2].Period11 ?? 0) + list_new[j].Period11;
+                            list_SumByType[2].Period12 = (list_SumByType[2].Period12 ?? 0) + list_new[j].Period12;
+                            list_SumByType[2].Period13 = (list_SumByType[2].Period13 ?? 0) + list_new[j].Period13;
+                            list_SumByType[2].Period14 = (list_SumByType[2].Period14 ?? 0) + list_new[j].Period14;
+                            list_SumByType[2].Period15 = (list_SumByType[2].Period15 ?? 0) + list_new[j].Period15;
+                            list_SumByType[2].Period16 = (list_SumByType[2].Period16 ?? 0) + list_new[j].Period16;
+                        }
+                        else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[3].PARENTH1)
+                        {
+                            list_byDepAndBPCCode[3].Period1 = (list_byDepAndBPCCode[3].Period1 ?? 0) + list_new[j].Period1;
+                            list_byDepAndBPCCode[3].Period2 = (list_byDepAndBPCCode[3].Period2 ?? 0) + list_new[j].Period2;
+                            list_byDepAndBPCCode[3].Period3 = (list_byDepAndBPCCode[3].Period3 ?? 0) + list_new[j].Period3;
+                            list_byDepAndBPCCode[3].Period4 = (list_byDepAndBPCCode[3].Period4 ?? 0) + list_new[j].Period4;
+                            list_byDepAndBPCCode[3].Period5 = (list_byDepAndBPCCode[3].Period5 ?? 0) + list_new[j].Period5;
+                            list_byDepAndBPCCode[3].Period6 = (list_byDepAndBPCCode[3].Period6 ?? 0) + list_new[j].Period6;
+                            list_byDepAndBPCCode[3].Period7 = (list_byDepAndBPCCode[3].Period7 ?? 0) + list_new[j].Period7;
+                            list_byDepAndBPCCode[3].Period8 = (list_byDepAndBPCCode[3].Period8 ?? 0) + list_new[j].Period8;
+                            list_byDepAndBPCCode[3].Period9 = (list_byDepAndBPCCode[3].Period9 ?? 0) + list_new[j].Period9;
+                            list_byDepAndBPCCode[3].Period10 = (list_byDepAndBPCCode[3].Period10 ?? 0) + list_new[j].Period10;
+                            list_byDepAndBPCCode[3].Period11 = (list_byDepAndBPCCode[3].Period11 ?? 0) + list_new[j].Period11;
+                            list_byDepAndBPCCode[3].Period12 = (list_byDepAndBPCCode[3].Period12 ?? 0) + list_new[j].Period12;
+                            list_byDepAndBPCCode[3].Period13 = (list_byDepAndBPCCode[3].Period13 ?? 0) + list_new[j].Period13;
+                            list_byDepAndBPCCode[3].Period14 = (list_byDepAndBPCCode[3].Period14 ?? 0) + list_new[j].Period14;
+                            list_byDepAndBPCCode[3].Period15 = (list_byDepAndBPCCode[3].Period15 ?? 0) + list_new[j].Period15;
+                            list_byDepAndBPCCode[3].Period16 = (list_byDepAndBPCCode[3].Period16 ?? 0) + list_new[j].Period16;
+
+                            list_SumByType[3].Period1 = (list_SumByType[3].Period1 ?? 0) + list_new[j].Period1;
+                            list_SumByType[3].Period2 = (list_SumByType[3].Period2 ?? 0) + list_new[j].Period2;
+                            list_SumByType[3].Period3 = (list_SumByType[3].Period3 ?? 0) + list_new[j].Period3;
+                            list_SumByType[3].Period4 = (list_SumByType[3].Period4 ?? 0) + list_new[j].Period4;
+                            list_SumByType[3].Period5 = (list_SumByType[3].Period5 ?? 0) + list_new[j].Period5;
+                            list_SumByType[3].Period6 = (list_SumByType[3].Period6 ?? 0) + list_new[j].Period6;
+                            list_SumByType[3].Period7 = (list_SumByType[3].Period7 ?? 0) + list_new[j].Period7;
+                            list_SumByType[3].Period8 = (list_SumByType[3].Period8 ?? 0) + list_new[j].Period8;
+                            list_SumByType[3].Period9 = (list_SumByType[3].Period9 ?? 0) + list_new[j].Period9;
+                            list_SumByType[3].Period10 = (list_SumByType[3].Period10 ?? 0) + list_new[j].Period10;
+                            list_SumByType[3].Period11 = (list_SumByType[3].Period11 ?? 0) + list_new[j].Period11;
+                            list_SumByType[3].Period12 = (list_SumByType[3].Period12 ?? 0) + list_new[j].Period12;
+                            list_SumByType[3].Period13 = (list_SumByType[3].Period13 ?? 0) + list_new[j].Period13;
+                            list_SumByType[3].Period14 = (list_SumByType[3].Period14 ?? 0) + list_new[j].Period14;
+                            list_SumByType[3].Period15 = (list_SumByType[3].Period15 ?? 0) + list_new[j].Period15;
+                            list_SumByType[3].Period16 = (list_SumByType[3].Period16 ?? 0) + list_new[j].Period16;
+                        }
+                        else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[4].PARENTH1)
+                        {
+                            list_byDepAndBPCCode[4].Period1 = (list_byDepAndBPCCode[4].Period1 ?? 0) + list_new[j].Period1;
+                            list_byDepAndBPCCode[4].Period2 = (list_byDepAndBPCCode[4].Period2 ?? 0) + list_new[j].Period2;
+                            list_byDepAndBPCCode[4].Period3 = (list_byDepAndBPCCode[4].Period3 ?? 0) + list_new[j].Period3;
+                            list_byDepAndBPCCode[4].Period4 = (list_byDepAndBPCCode[4].Period4 ?? 0) + list_new[j].Period4;
+                            list_byDepAndBPCCode[4].Period5 = (list_byDepAndBPCCode[4].Period5 ?? 0) + list_new[j].Period5;
+                            list_byDepAndBPCCode[4].Period6 = (list_byDepAndBPCCode[4].Period6 ?? 0) + list_new[j].Period6;
+                            list_byDepAndBPCCode[4].Period7 = (list_byDepAndBPCCode[4].Period7 ?? 0) + list_new[j].Period7;
+                            list_byDepAndBPCCode[4].Period8 = (list_byDepAndBPCCode[4].Period8 ?? 0) + list_new[j].Period8;
+                            list_byDepAndBPCCode[4].Period9 = (list_byDepAndBPCCode[4].Period9 ?? 0) + list_new[j].Period9;
+                            list_byDepAndBPCCode[4].Period10 = (list_byDepAndBPCCode[4].Period10 ?? 0) + list_new[j].Period10;
+                            list_byDepAndBPCCode[4].Period11 = (list_byDepAndBPCCode[4].Period11 ?? 0) + list_new[j].Period11;
+                            list_byDepAndBPCCode[4].Period12 = (list_byDepAndBPCCode[4].Period12 ?? 0) + list_new[j].Period12;
+                            list_byDepAndBPCCode[4].Period13 = (list_byDepAndBPCCode[4].Period13 ?? 0) + list_new[j].Period13;
+                            list_byDepAndBPCCode[4].Period14 = (list_byDepAndBPCCode[4].Period14 ?? 0) + list_new[j].Period14;
+                            list_byDepAndBPCCode[4].Period15 = (list_byDepAndBPCCode[4].Period15 ?? 0) + list_new[j].Period15;
+                            list_byDepAndBPCCode[4].Period16 = (list_byDepAndBPCCode[4].Period16 ?? 0) + list_new[j].Period16;
+
+                            list_SumByType[4].Period1 = (list_SumByType[4].Period1 ?? 0) + list_new[j].Period1;
+                            list_SumByType[4].Period2 = (list_SumByType[4].Period2 ?? 0) + list_new[j].Period2;
+                            list_SumByType[4].Period3 = (list_SumByType[4].Period3 ?? 0) + list_new[j].Period3;
+                            list_SumByType[4].Period4 = (list_SumByType[4].Period4 ?? 0) + list_new[j].Period4;
+                            list_SumByType[4].Period5 = (list_SumByType[4].Period5 ?? 0) + list_new[j].Period5;
+                            list_SumByType[4].Period6 = (list_SumByType[4].Period6 ?? 0) + list_new[j].Period6;
+                            list_SumByType[4].Period7 = (list_SumByType[4].Period7 ?? 0) + list_new[j].Period7;
+                            list_SumByType[4].Period8 = (list_SumByType[4].Period8 ?? 0) + list_new[j].Period8;
+                            list_SumByType[4].Period9 = (list_SumByType[4].Period9 ?? 0) + list_new[j].Period9;
+                            list_SumByType[4].Period10 = (list_SumByType[4].Period10 ?? 0) + list_new[j].Period10;
+                            list_SumByType[4].Period11 = (list_SumByType[4].Period11 ?? 0) + list_new[j].Period11;
+                            list_SumByType[4].Period12 = (list_SumByType[4].Period12 ?? 0) + list_new[j].Period12;
+                            list_SumByType[4].Period13 = (list_SumByType[4].Period13 ?? 0) + list_new[j].Period13;
+                            list_SumByType[4].Period14 = (list_SumByType[4].Period14 ?? 0) + list_new[j].Period14;
+                            list_SumByType[4].Period15 = (list_SumByType[4].Period15 ?? 0) + list_new[j].Period15;
+                            list_SumByType[4].Period16 = (list_SumByType[1].Period16 ?? 0) + list_new[j].Period16;
+                        }
+                        else if (list_new[j].BPCOutputCode == list_byDepAndBPCCode[5].PARENTH1)
+                        {
+                            list_byDepAndBPCCode[5].Period1 = (list_byDepAndBPCCode[5].Period1 ?? 0) + list_new[j].Period1;
+                            list_byDepAndBPCCode[5].Period2 = (list_byDepAndBPCCode[5].Period2 ?? 0) + list_new[j].Period2;
+                            list_byDepAndBPCCode[5].Period3 = (list_byDepAndBPCCode[5].Period3 ?? 0) + list_new[j].Period3;
+                            list_byDepAndBPCCode[5].Period4 = (list_byDepAndBPCCode[5].Period4 ?? 0) + list_new[j].Period4;
+                            list_byDepAndBPCCode[5].Period5 = (list_byDepAndBPCCode[5].Period5 ?? 0) + list_new[j].Period5;
+                            list_byDepAndBPCCode[5].Period6 = (list_byDepAndBPCCode[5].Period6 ?? 0) + list_new[j].Period6;
+                            list_byDepAndBPCCode[5].Period7 = (list_byDepAndBPCCode[5].Period7 ?? 0) + list_new[j].Period7;
+                            list_byDepAndBPCCode[5].Period8 = (list_byDepAndBPCCode[5].Period8 ?? 0) + list_new[j].Period8;
+                            list_byDepAndBPCCode[5].Period9 = (list_byDepAndBPCCode[5].Period9 ?? 0) + list_new[j].Period9;
+                            list_byDepAndBPCCode[5].Period10 = (list_byDepAndBPCCode[5].Period10 ?? 0) + list_new[j].Period10;
+                            list_byDepAndBPCCode[5].Period11 = (list_byDepAndBPCCode[5].Period11 ?? 0) + list_new[j].Period11;
+                            list_byDepAndBPCCode[5].Period12 = (list_byDepAndBPCCode[5].Period12 ?? 0) + list_new[j].Period12;
+                            list_byDepAndBPCCode[5].Period13 = (list_byDepAndBPCCode[5].Period13 ?? 0) + list_new[j].Period13;
+                            list_byDepAndBPCCode[5].Period14 = (list_byDepAndBPCCode[5].Period14 ?? 0) + list_new[j].Period14;
+                            list_byDepAndBPCCode[5].Period15 = (list_byDepAndBPCCode[5].Period15 ?? 0) + list_new[j].Period15;
+                            list_byDepAndBPCCode[5].Period16 = (list_byDepAndBPCCode[5].Period16 ?? 0) + list_new[j].Period16;
+
+                            list_SumByType[5].Period1 = (list_SumByType[5].Period1 ?? 0) + list_new[j].Period1;
+                            list_SumByType[5].Period2 = (list_SumByType[5].Period2 ?? 0) + list_new[j].Period2;
+                            list_SumByType[5].Period3 = (list_SumByType[5].Period3 ?? 0) + list_new[j].Period3;
+                            list_SumByType[5].Period4 = (list_SumByType[5].Period4 ?? 0) + list_new[j].Period4;
+                            list_SumByType[5].Period5 = (list_SumByType[5].Period5 ?? 0) + list_new[j].Period5;
+                            list_SumByType[5].Period6 = (list_SumByType[5].Period6 ?? 0) + list_new[j].Period6;
+                            list_SumByType[5].Period7 = (list_SumByType[5].Period7 ?? 0) + list_new[j].Period7;
+                            list_SumByType[5].Period8 = (list_SumByType[5].Period8 ?? 0) + list_new[j].Period8;
+                            list_SumByType[5].Period9 = (list_SumByType[5].Period9 ?? 0) + list_new[j].Period9;
+                            list_SumByType[5].Period10 = (list_SumByType[5].Period10 ?? 0) + list_new[j].Period10;
+                            list_SumByType[5].Period11 = (list_SumByType[5].Period11 ?? 0) + list_new[j].Period11;
+                            list_SumByType[5].Period12 = (list_SumByType[5].Period12 ?? 0) + list_new[j].Period12;
+                            list_SumByType[5].Period13 = (list_SumByType[5].Period13 ?? 0) + list_new[j].Period13;
+                            list_SumByType[5].Period14 = (list_SumByType[5].Period14 ?? 0) + list_new[j].Period14;
+                            list_SumByType[5].Period15 = (list_SumByType[5].Period15 ?? 0) + list_new[j].Period15;
+                            list_SumByType[5].Period16 = (list_SumByType[5].Period16 ?? 0) + list_new[j].Period16;
+                        }
+                        #endregion
+                        //计算IsSubtotal=1的类型的和
+                        #region
+                        if (list_new[j].IsSubtotal == 1)
+                        {
+                            list_new[j].Period1 = newItem.Period1;
+                            list_new[j].Period2 = newItem.Period2;
+                            list_new[j].Period3 = newItem.Period3;
+                            list_new[j].Period4 = newItem.Period4;
+                            list_new[j].Period5 = newItem.Period5;
+                            list_new[j].Period6 = newItem.Period6;
+                            list_new[j].Period7 = newItem.Period7;
+                            list_new[j].Period8 = newItem.Period8;
+                            list_new[j].Period9 = newItem.Period9;
+                            list_new[j].Period10 = newItem.Period10;
+                            list_new[j].Period11 = newItem.Period11;
+                            list_new[j].Period12 = newItem.Period12;
+                            list_new[j].Period13 = newItem.Period13;
+                            list_new[j].Period14 = newItem.Period14;
+                            list_new[j].Period15 = newItem.Period15;
+                            list_new[j].Period16 = newItem.Period16;
+                            newItem = new FOL_Input_6_0_TotalMOH();
+                        }
+                        else
+                        {
+                            newItem.Period1 = (newItem.Period1 ?? 0) + list_new[j].Period1;
+                            newItem.Period2 = (newItem.Period2 ?? 0) + list_new[j].Period2;
+                            newItem.Period3 = (newItem.Period3 ?? 0) + list_new[j].Period3;
+                            newItem.Period4 = (newItem.Period4 ?? 0) + list_new[j].Period4;
+                            newItem.Period5 = (newItem.Period5 ?? 0) + list_new[j].Period5;
+                            newItem.Period6 = (newItem.Period6 ?? 0) + list_new[j].Period6;
+                            newItem.Period7 = (newItem.Period7 ?? 0) + list_new[j].Period7;
+                            newItem.Period8 = (newItem.Period8 ?? 0) + list_new[j].Period8;
+                            newItem.Period9 = (newItem.Period9 ?? 0) + list_new[j].Period9;
+                            newItem.Period10 = (newItem.Period10 ?? 0) + list_new[j].Period10;
+                            newItem.Period11 = (newItem.Period11 ?? 0) + list_new[j].Period11;
+                            newItem.Period12 = (newItem.Period12 ?? 0) + list_new[j].Period12;
+                            newItem.Period13 = (newItem.Period13 ?? 0) + list_new[j].Period13;
+                            newItem.Period14 = (newItem.Period14 ?? 0) + list_new[j].Period14;
+                            newItem.Period15 = (newItem.Period15 ?? 0) + list_new[j].Period15;
+                            newItem.Period16 = (newItem.Period16 ?? 0) + list_new[j].Period16;
+                        }
+                        #endregion
+
+                        ////计算总和By BPCCode
+                        //for(int m=0;m< list_SumByType.Count; m++)
+                        //{
+                        //    if(list_new[j].BPCOutputCode == list_byDepAndBPCCode[0].PARENTH1)
+                        //}
+                    }
+                }
+                dc.FOL_Input_6_0_SumByType.DeleteAllOnSubmit(dc.FOL_Input_6_0_SumByType.Where(x => x.Type == "6.0 Total MOH($)" && x.Version == version).ToList());
+                dc.FOL_Input_6_0_SumByType.InsertAllOnSubmit(list_SumByType);
+                dc.SubmitChanges();
+                message = "Success";
+            }
+            catch (Exception ex)
+            {
+
+                message = ex.Message;
+            }
+            return message;
         }
 
         //6.1
-        public List<FOL_Input_2_1> Calculate6_1(string version, List<FOL_Input_6_1> list1)
+        public string Calculate6_1(string version, List<FOL_Input_6_1> list1)
         {
             List<FOL_Input_2_1> list = new List<FOL_Input_2_1>();
             List<FOL_Input_1_1> list_Dollar = new List<FOL_Input_1_1>();
             Dictionary<int, FOL_Input_6_1> dic_totalPeopleAmount = new Dictionary<int, FOL_Input_6_1>();
-
+            string message = "";
             try
             {
                 List<int> flags = new List<int>();
@@ -1158,6 +1166,7 @@ namespace ApiForFOL
                 dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "6.1 IDL (%&#)"));
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list_Dollar);
                 dc.SubmitChanges();
+                message = "Success";
                 //Calculate SumPercent by project
                 #region
                 //int flag2 = 0;
@@ -1282,14 +1291,12 @@ namespace ApiForFOL
                 //    list.Add(BUTotal);
                 //}
                 #endregion
-
-
             }
             catch (Exception ex)
             {
-
+                message = ex.Message;
             }
-            return list;
+            return message;
         }
 
         //6.2, 6.3, 6.4, 6.5, 6.6
@@ -1916,10 +1923,14 @@ namespace ApiForFOL
             List<FOL_Input_1_1> projectList2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
             List<FOL_Input_1_1> projectList3 = dc.FOL_Input_1_1.Where(x => x.Type == "1.3 Gross Sales - Recoveries($)" && x.Version == version).ToList();
             List<FOL_Input_2_1> percentList2_1 = dc.FOL_Input_2_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> projectList2_1 = dc.FOL_Input_1_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> projectList1_0 = dc.FOL_Input_1_1.Where(x => x.Type == "1.0 Total Sales($)" && x.Version == version).ToList();
 
             FOL_Input_1_1 site1 = new FOL_Input_1_1();
             FOL_Input_1_1 site2 = new FOL_Input_1_1();
             FOL_Input_1_1 site3 = new FOL_Input_1_1();
+            FOL_Input_1_1 site1_0 = new FOL_Input_1_1();
+            FOL_Input_1_1 site2_1 = new FOL_Input_1_1();
             FOL_Input_2_1 sitePercent2_1 = new FOL_Input_2_1();
 
             //*********site1,2,3的一些赋值
@@ -1947,6 +1958,14 @@ namespace ApiForFOL
             site3.Segment = "Site";
             site3.Version = version;
             site3.InsertDate = System.DateTime.Now;
+
+            site1_0.GLBPCCode = "30_SALES";
+            site1_0.GLBPCDescription = "Total Sales";
+            site1_0.GLOutputCode = "30_SALES - AGI";
+            site1_0.CustomerOutputCode = "Total - Site";
+            site1_0.Segment = "Site";
+            site1_0.Version = version;
+            site1_0.InsertDate = System.DateTime.Now;
             #endregion
 
             List<FOL_Input_1_1> List_ProjectSumOfThree = new List<FOL_Input_1_1>();
@@ -2010,24 +2029,57 @@ namespace ApiForFOL
                 site3.Period15 = +(site3.Period15 ?? 0) + projectList3[i].Period15;
                 site3.Period16 = +(site3.Period16 ?? 0) + projectList3[i].Period16;
 
-                sitePercent2_1.Period1 = +(sitePercent2_1.Period1 ?? 0) + percentList2_1[i].Period1;
-                sitePercent2_1.Period2 = +(sitePercent2_1.Period2 ?? 0) + percentList2_1[i].Period2;
-                sitePercent2_1.Period3 = +(sitePercent2_1.Period3 ?? 0) + percentList2_1[i].Period3;
-                sitePercent2_1.Period4 = +(sitePercent2_1.Period4 ?? 0) + percentList2_1[i].Period4;
-                sitePercent2_1.Period5 = +(sitePercent2_1.Period5 ?? 0) + percentList2_1[i].Period5;
-                sitePercent2_1.Period6 = +(sitePercent2_1.Period6 ?? 0) + percentList2_1[i].Period6;
-                sitePercent2_1.Period7 = +(sitePercent2_1.Period7 ?? 0) + percentList2_1[i].Period7;
-                sitePercent2_1.Period8 = +(sitePercent2_1.Period8 ?? 0) + percentList2_1[i].Period8;
-                sitePercent2_1.Period9 = +(sitePercent2_1.Period9 ?? 0) + percentList2_1[i].Period9;
-                sitePercent2_1.Period10 = +(sitePercent2_1.Period10 ?? 0) + percentList2_1[i].Period10;
-                sitePercent2_1.Period11 = +(sitePercent2_1.Period11 ?? 0) + percentList2_1[i].Period11;
-                sitePercent2_1.Period12 = +(sitePercent2_1.Period12 ?? 0) + percentList2_1[i].Period12;
-                sitePercent2_1.Period13 = +(sitePercent2_1.Period13 ?? 0) + percentList2_1[i].Period13;
-                sitePercent2_1.Period14 = +(sitePercent2_1.Period14 ?? 0) + percentList2_1[i].Period14;
-                sitePercent2_1.Period15 = +(sitePercent2_1.Period15 ?? 0) + percentList2_1[i].Period15;
-                sitePercent2_1.Period16 = +(sitePercent2_1.Period16 ?? 0) + percentList2_1[i].Period16;
+                site1_0.Period1 = +(site1_0.Period1 ?? 0) + projectList1_0[i].Period1;
+                site1_0.Period2 = +(site1_0.Period2 ?? 0) + projectList1_0[i].Period2;
+                site1_0.Period3 = +(site1_0.Period3 ?? 0) + projectList1_0[i].Period3;
+                site1_0.Period4 = +(site1_0.Period4 ?? 0) + projectList1_0[i].Period4;
+                site1_0.Period5 = +(site1_0.Period5 ?? 0) + projectList1_0[i].Period5;
+                site1_0.Period6 = +(site1_0.Period6 ?? 0) + projectList1_0[i].Period6;
+                site1_0.Period7 = +(site1_0.Period7 ?? 0) + projectList1_0[i].Period7;
+                site1_0.Period8 = +(site1_0.Period8 ?? 0) + projectList1_0[i].Period8;
+                site1_0.Period9 = +(site1_0.Period9 ?? 0) + projectList1_0[i].Period9;
+                site1_0.Period10 = +(site1_0.Period10 ?? 0) + projectList1_0[i].Period10;
+                site1_0.Period11 = +(site1_0.Period11 ?? 0) + projectList1_0[i].Period11;
+                site1_0.Period12 = +(site1_0.Period12 ?? 0) + projectList1_0[i].Period12;
+                site1_0.Period13 = +(site1_0.Period13 ?? 0) + projectList1_0[i].Period13;
+                site1_0.Period14 = +(site1_0.Period14 ?? 0) + projectList1_0[i].Period14;
+                site1_0.Period15 = +(site1_0.Period15 ?? 0) + projectList1_0[i].Period15;
+                site1_0.Period16 = +(site1_0.Period16 ?? 0) + projectList1_0[i].Period16;
+
+                site2_1.Period1 = +(site2_1.Period1 ?? 0) + projectList2_1[i].Period1;
+                site2_1.Period2 = +(site2_1.Period2 ?? 0) + projectList2_1[i].Period2;
+                site2_1.Period3 = +(site2_1.Period3 ?? 0) + projectList2_1[i].Period3;
+                site2_1.Period4 = +(site2_1.Period4 ?? 0) + projectList2_1[i].Period4;
+                site2_1.Period5 = +(site2_1.Period5 ?? 0) + projectList2_1[i].Period5;
+                site2_1.Period6 = +(site2_1.Period6 ?? 0) + projectList2_1[i].Period6;
+                site2_1.Period7 = +(site2_1.Period7 ?? 0) + projectList2_1[i].Period7;
+                site2_1.Period8 = +(site2_1.Period8 ?? 0) + projectList2_1[i].Period8;
+                site2_1.Period9 = +(site2_1.Period9 ?? 0) + projectList2_1[i].Period9;
+                site2_1.Period10 = +(site2_1.Period10 ?? 0) + projectList2_1[i].Period10;
+                site2_1.Period11 = +(site2_1.Period11 ?? 0) + projectList2_1[i].Period11;
+                site2_1.Period12 = +(site2_1.Period12 ?? 0) + projectList2_1[i].Period12;
+                site2_1.Period13 = +(site2_1.Period13 ?? 0) + projectList2_1[i].Period13;
+                site2_1.Period14 = +(site2_1.Period14 ?? 0) + projectList2_1[i].Period14;
+                site2_1.Period15 = +(site2_1.Period15 ?? 0) + projectList2_1[i].Period15;
+                site2_1.Period16 = +(site2_1.Period16 ?? 0) + projectList2_1[i].Period16;
             }
             #endregion
+            sitePercent2_1.Period1 = (site1_0.Period1 == 0) ? 0 : (site2_1.Period1 / site1_0.Period1);
+            sitePercent2_1.Period2 = (site1_0.Period2 == 0) ? 0 : (site2_1.Period2 / site1_0.Period2);
+            sitePercent2_1.Period3 = (site1_0.Period3 == 0) ? 0 : (site2_1.Period3 / site1_0.Period3);
+            sitePercent2_1.Period4 = (site1_0.Period4 == 0) ? 0 : (site2_1.Period5 / site1_0.Period4);
+            sitePercent2_1.Period5 = (site1_0.Period5 == 0) ? 0 : (site2_1.Period5 / site1_0.Period5);
+            sitePercent2_1.Period6 = (site1_0.Period6 == 0) ? 0 : (site2_1.Period6 / site1_0.Period6);
+            sitePercent2_1.Period7 = (site1_0.Period7 == 0) ? 0 : (site2_1.Period7 / site1_0.Period7);
+            sitePercent2_1.Period8 = (site1_0.Period8 == 0) ? 0 : (site2_1.Period8 / site1_0.Period8);
+            sitePercent2_1.Period9 = (site1_0.Period9 == 0) ? 0 : (site2_1.Period9 / site1_0.Period9);
+            sitePercent2_1.Period10 = (site1_0.Period10 == 0) ? 0 : (site2_1.Period10 / site1_0.Period10);
+            sitePercent2_1.Period11 = (site1_0.Period11 == 0) ? 0 : (site2_1.Period11 / site1_0.Period11);
+            sitePercent2_1.Period12 = (site1_0.Period12 == 0) ? 0 : (site2_1.Period12 / site1_0.Period12);
+            sitePercent2_1.Period13 = (site1_0.Period13 == 0) ? 0 : (site2_1.Period13 / site1_0.Period13);
+            sitePercent2_1.Period14 = (site1_0.Period14 == 0) ? 0 : (site2_1.Period14 / site1_0.Period14);
+            sitePercent2_1.Period15 = (site1_0.Period15 == 0) ? 0 : (site2_1.Period15 / site1_0.Period15);
+            sitePercent2_1.Period16 = (site1_0.Period16 == 0) ? 0 : (site2_1.Period16 / site1_0.Period16);
 
             //********计算percent= {Project (1.1 + 1.2 + 1.3) ÷ Site (1.1 + 1.2 + 1.3)+ [Project(1.1 + 1.2) @ Project(2.1 %) + Project(1.3)] ÷ [Site(1.1 + 1.2) @ Site(2.1 %) + Site(1.3)]} ÷ 2
             for (int i = 0; i < projectList1.Count; i++)
@@ -2115,10 +2167,29 @@ namespace ApiForFOL
 
             return listResult;
         }
-
         //8.0
-        public List<FOL_Input_1_1> Calculate8_0(string version, List<FOL_Input_1_1> list1, List<FOL_Input_1_1> list2, List<FOL_Input_1_1> list3, List<FOL_Input_1_1> list4, List<FOL_Input_1_1> list5, List<FOL_Input_2_1> list6)
+        public string Calculate8_0(string version)
         {
+            string message = "";
+            List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list3 = dc.FOL_Input_1_1.Where(x => x.Type == "1.3 Gross Sales - Recoveries($)" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list4 = dc.FOL_Input_1_1.Where(x => x.Type == "1.4 Rev Recog - OT Contract" && x.Version == version).ToList();
+            List<FOL_Input_1_1> list5 = dc.FOL_Input_1_1.Where(x => x.Type == "1.5 Rev Reversal - OT Contract" && x.Version == version).ToList();
+            List<FOL_Input_2_1> list6 = dc.FOL_Input_2_1.Where(x => x.Type == "8.0 Corp. Alloc. (%)" && x.Version == version).ToList();
+            if (list1 == null)
+            { message = "该月份的1.1 Gross Sales - External($)数据为空;"; }
+            if (list2 == null)
+            { message = message + "该月份的1.2 Gross Sales - Interco($)数据为空;"; }
+            if (list3 == null)
+            { message = message + "该月份的1.3 Gross Sales - Recoveries($)数据为空;"; }
+            if (list4 == null)
+            { message = message + "该月份的1.4 Rev Recog - OT Contract数据为空;"; }
+            if (list5 == null)
+            { message = message + "该月份的1.5 Rev Reversal - OT Contract数据为空;"; }
+            if (list6 == null)
+            { message = message + "该月份的8.0 Corp. Alloc. (%)的百分比数据为空;"; }
+
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             try
             {
@@ -2161,12 +2232,13 @@ namespace ApiForFOL
                 dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "8.0 Corp. Alloc. (%)").ToList());
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
+                message = "Success";
             }
             catch (Exception ex)
             {
-
+                message = message + ex.Message;
             }
-            return list;
+            return message;
         }
 
         public string getType(string type)

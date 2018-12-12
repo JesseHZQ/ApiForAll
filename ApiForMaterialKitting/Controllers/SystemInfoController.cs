@@ -19,7 +19,7 @@ namespace ApiForMaterialKitting.Controllers
         {
             DataTable dt = new DataTable();
             int wknow = GetWeekOfYear(DateTime.Now);
-            int wk = GetWeekOfYear(DateTime.Now.AddDays(21));
+            int wk = GetWeekOfYear(DateTime.Now.AddDays(14));
             if (wk > wknow)
             {
                 dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from" +
@@ -62,7 +62,7 @@ namespace ApiForMaterialKitting.Controllers
         public Resp getTypedSystem(string type)
         {
             DataTable dt = new DataTable();
-            int wk = GetWeekOfYear(DateTime.Now) + 3;
+            int wk = GetWeekOfYear(DateTime.Now) + 2;
             if (type == "all")
             {
                 dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join SummaryH b on b.SystemSlot = a.Slot order by DemandDate");
@@ -82,7 +82,7 @@ namespace ApiForMaterialKitting.Controllers
         public Resp getSystemById(int id)
         {
             DataTable dt = new DataTable();
-            int wk = GetWeekOfYear(DateTime.Now) + 3;
+            int wk = GetWeekOfYear(DateTime.Now) + 2;
             dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join SummaryH b on b.SystemSlot = a.Slot where a.id = '" + id + "'");
             Resp resp = new Resp();
             resp.Code = 200;
