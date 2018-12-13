@@ -22,7 +22,7 @@ namespace ApiForFOL.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public RespAll getOutputData(string version,string project)
+        public RespAll getOutputData(string version, string project)
         {
             RespAll resp = new RespAll();
             try
@@ -31,6 +31,8 @@ namespace ApiForFOL.Controllers
                 resp.PriorForcast = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_OutputByProject_PriorFsct] where version='" + version + "' and Project='" + project + "'");
                 resp.CurrentForcast = SqlHelper.ExecuteDataTable("select * from  [dbo].[FOL_Input_1_1] where version='" + version + "' and CustomerOutputCode like '%" + project + "%'");
                 resp.Actual = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_OutputByProject_Actuals] where version='" + version + "' and Project='" + project + "'");
+                resp.OutputModules= SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_OutputModulesByCustomer]");
+                resp.ProjectMapping = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_ProjectMapping]");
                 resp.Message = "Success";
             }
             catch (Exception ex)
@@ -74,5 +76,7 @@ public class RespAll
     public DataTable PriorForcast { get; set; }
     public DataTable CurrentForcast { get; set; }
     public DataTable Actual { get; set; }
+    public DataTable OutputModules { get; set; }
+    public DataTable ProjectMapping { get; set; }
     public string Message { get; set; }
 }
