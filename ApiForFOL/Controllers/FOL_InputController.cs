@@ -122,42 +122,50 @@ namespace ApiForFOL.Controllers
             FOL_InputFormulas fi = new FOL_InputFormulas();
             Resp resp = new Resp();
             string message = "";
-            switch (type)
+            if (type == "3.1 PPV(%&$)" ||type== "4.2 Freight in (%)" || type == "4.3 Freight out (%)" || type == "4.4 EDM (%)" || type == "4.5 MCOSO (%)" || type == "4.6 Subcontract ($)" || type == "4.7 Inv. Reserve ($)")
             {
-                case "1.0 Total Sales($)":
-                    message = fi.Calculate1_0(version, type);
-                    break;
-                case "2.0 MCOS($)":
-                    message = fi.Calculate2_0(version, type);
-                    break;
-                case "2.1 Std VAM % from Ops(%)":
-                    message = fi.Calculate2_1(version, type);
-                    break;
-                case "2.4 COGS Reversal - OT Contract":
-                    message = fi.Calculate2_4(version, type);
-                    break;
-                case "3.0 Material Margin ($)":
-                    message = fi.Calculate3_0(version, type);
-                    break;
-                case "4.1 Material Loss (%)":
-                    message = fi.Calculate4_1(version, type);
-                    break;
-                case "5.1 DL (%)":
-                    message = fi.Calculate5_1(version, type);
-                    break;
-                case "6.0 Total MOH($)":
-                    message = fi.Calculate6_0(version);
-                    break;
-                case "6.1 IDL (%&#)":
-                    List<FOL_Input_6_1> list_amount = dc.FOL_Input_6_1.Where(x => x.Type == type && x.Version == version).ToList();
-                    message = fi.Calculate6_1(version, list_amount);
-                    break;
-                case "8.0 Corp. Alloc. (%)":
-                    message = fi.Calculate8_0(version);
-                    break;
-                default:
-                    message = "Default";
-                    break;
+                message = fi.Calculate3_1(version, type);
+            }
+            else
+            {
+                switch (type)
+                {
+                    case "1.0 Total Sales($)":
+                        message = fi.Calculate2_1(version, type);
+                        break;
+                    case "2.0 MCOS($)":
+                        message = fi.Calculate2_0(version, type);
+                        break;
+                    case "2.1 Std VAM % from Ops(%)":
+                        message = fi.Calculate2_1(version, type);
+                        break;
+                    case "2.4 COGS Reversal - OT Contract":
+                        message = fi.Calculate2_4(version, type);
+                        break;
+                    case "3.0 Material Margin ($)":
+                        message = fi.Calculate3_0(version, type);
+                        break;
+                    case "4.1 Material Loss (%)":
+                        message = fi.Calculate4_1(version, type);
+                        break;
+                    case "5.1 DL (%)":
+                        message = fi.Calculate5_1(version, type);
+                        break;
+                    case "6.0 Total MOH($)":
+                        message = fi.Calculate6_0(version);
+                        break;
+                    case "6.1 IDL (%&#)":
+                        List<FOL_Input_6_1> list_amount = dc.FOL_Input_6_1.Where(x => x.Type == type && x.Version == version).ToList();
+                        message = fi.Calculate6_1(version, list_amount);
+                        break;
+                    case "8.0 Corp. Alloc. (%)":
+                        message = fi.Calculate8_0(version);
+                        break;
+                    default:
+                        message = "Default";
+                        break;
+                }
+
             }
             resp.Code = "200";
             resp.Message = message;

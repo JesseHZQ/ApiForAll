@@ -22,19 +22,20 @@ namespace ApiForFOL.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public Resp getDetail(string version)
+        public RespAll getOutputData(string version,string project)
         {
-            Resp resp = new Resp();
+            RespAll resp = new RespAll();
             try
             {
-                resp.Data = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_OutputByProject_PriorFsct] where version='" + version + "'");
                 resp.Code = "200";
-                resp.Message = "success";
+                resp.PriorForcast = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_OutputByProject_PriorFsct] where version='" + version + "' and Project='" + project + "'");
+                resp.CurrentForcast = SqlHelper.ExecuteDataTable("select * from  [dbo].[FOL_Input_1_1] where version='" + version + "' and CustomerOutputCode like '%" + project + "%'");
+                resp.Actual = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_OutputByProject_Actuals] where version='" + version + "' and Project='" + project + "'");
+                resp.Message = "Success";
             }
             catch (Exception ex)
             {
                 resp.Code = "10001";
-                resp.Data = null;
                 resp.Message = ex.Message;
             }
             return resp;
