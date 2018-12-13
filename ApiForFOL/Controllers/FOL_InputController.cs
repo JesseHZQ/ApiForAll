@@ -125,7 +125,7 @@ namespace ApiForFOL.Controllers
             switch (type)
             {
                 case "1.0 Total Sales($)":
-                    message = fi.Calculate2_1(version, type);
+                    message = fi.Calculate1_0(version, type);
                     break;
                 case "2.0 MCOS($)":
                     message = fi.Calculate2_0(version, type);

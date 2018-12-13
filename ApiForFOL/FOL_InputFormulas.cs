@@ -103,8 +103,6 @@ namespace ApiForFOL
             { message = message + "该月份的2.3 COGS Recog - OT Contract数据为空"; return message; }
             if (list4.Count==0)
             { message = message + "该月份的2.4 COGS Reversal - OT Contract数据为空"; return message; }
-            if (list_TotalSales.Count==0)
-            { message = message + "该月份的1.0 Total Sales($)数据为空"; return message; }
 
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             int i = 0;
@@ -161,6 +159,8 @@ namespace ApiForFOL
             #endregion
 
             #region
+            if (list_TotalSales.Count == 0)
+            { message = message + "该月份的1.0 Total Sales($)数据为空"; return message; }
             List<FOL_Input_2_1> list2_1 = new List<FOL_Input_2_1>();
             try
             {
