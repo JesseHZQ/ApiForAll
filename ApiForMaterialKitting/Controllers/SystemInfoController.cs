@@ -36,9 +36,9 @@ namespace ApiForMaterialKitting.Controllers
                 //dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ")a left join (select * from MaterialKitting where IsDel = 0)b on a.SystemSlot = b.Slot order by a.ShipWeek");
 
                 dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from" +
-                    "(SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryHHM where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + " " +
-                    "union SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + " " +
-                    "union Select SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate from SummaryHIM where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ")" +
+                    "(SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryHHM where Lock = 0 and (ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ") " +
+                    "union SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryH where Lock = 0 and (ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ") " +
+                    "union Select SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate from SummaryHIM where Lock = 0 and (ShipWeek <= " + wk + " or ShipWeek >= " + wknow + "))" +
                     "a left join " +
                     "(select * from MaterialKitting where IsDel = 0)b " +
                     "on a.SystemSlot = b.Slot " +

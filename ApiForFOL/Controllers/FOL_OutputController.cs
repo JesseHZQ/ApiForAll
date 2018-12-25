@@ -32,12 +32,31 @@ namespace ApiForFOL.Controllers
                 resp.CurrentForcast = SqlHelper.ExecuteDataTable("select * from  [dbo].[FOL_Input_1_1] where version='" + version + "' and CustomerOutputCode like '%" + project + "%'");
                 resp.Actual = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_OutputByProject_Actuals] where version='" + version + "' and Project='" + project + "'");
                 resp.OutputModules= SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_OutputModulesByCustomer]");
-                resp.ProjectMapping = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_ProjectMapping]");
+                //resp.ProjectMapping = null;
                 resp.Message = "Success";
             }
             catch (Exception ex)
             {
                 resp.Code = "10001";
+                resp.Message = ex.Message;
+            }
+            return resp;
+        }
+
+        [System.Web.Http.HttpGet]
+        public Resp getProjectList()
+        {
+            Resp resp = new Resp();
+            try
+            {
+                resp.Data = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_ProjectMapping]");
+                resp.Code = "200";
+                resp.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                resp.Code = "10000";
+                resp.Data = null;
                 resp.Message = ex.Message;
             }
             return resp;
@@ -77,6 +96,6 @@ public class RespAll
     public DataTable CurrentForcast { get; set; }
     public DataTable Actual { get; set; }
     public DataTable OutputModules { get; set; }
-    public DataTable ProjectMapping { get; set; }
+    //public DataTable ProjectMapping { get; set; }
     public string Message { get; set; }
 }
