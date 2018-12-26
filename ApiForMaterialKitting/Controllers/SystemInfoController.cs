@@ -258,7 +258,7 @@ namespace ApiForMaterialKitting.Controllers
                     "eric.lin2@flex.com",
                     "Jesse.He@flex.com"
                 };
-                int result = SendMail("Material-Kitting@flex.com", "Ultra system 增料", list, cclist, str);
+                int result = SendMail("Material-Kitting@flex.com", model.SystemSlot.Substring(0, 2) + " system 增料", list, cclist, str);
                 if (result == 1)
                 {
                     resp.Code = 200;
