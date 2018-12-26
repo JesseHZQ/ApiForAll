@@ -221,7 +221,7 @@ namespace ApiForMaterialKitting.Controllers
             str += "</thead><tbody>";
             str += "<tr style='font-size: 14px; height: 24px; text-align: center;'>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.SystemSlot + "</td>";
-            str += "<td style='border-style: solid; border-width: 1px'>" + "UF" + "</td>";
+            str += "<td style='border-style: solid; border-width: 1px'>" + model.SystemSlot.Substring(0, 2) + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.Customer + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.PO + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.Station.ToUpper() + "</td>";
