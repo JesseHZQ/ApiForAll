@@ -41,16 +41,17 @@ namespace ApiForMinioneMiscShipping.Controllers
         /// </summary>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public Resp uploadFile()
+        public RespWithPath uploadFile()
         {
             var httpRequest = HttpContext.Current.Request;
             HttpPostedFile file = httpRequest.Files[0];
             string filePath = Path.Combine(HttpContext.Current.Server.MapPath("../../Uploads"), Path.GetFileName(file.FileName));
             file.SaveAs(filePath);
-            Resp resp = new Resp();
+            RespWithPath resp = new RespWithPath();
+            resp.Path = Path.GetFileName(file.FileName);
             string token = "24.af28dd056f4ec0d136df87cf5b266037.2592000.1545982236.282335-14817751";
             string strbaser64 = ImgToBase64String(filePath);
-            string host = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic?access_token=" + token;
+            string host = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic?access_token=" + token;
             Encoding encoding = Encoding.Default;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(host);
             request.Method = "post";
@@ -125,6 +126,14 @@ namespace ApiForMinioneMiscShipping.Controllers
             public int Code { get; set; }
             public DataTable Data { get; set; }
             public string Message { get; set; }
+        }
+
+        public class RespWithPath
+        {
+            public int Code { get; set; }
+            public DataTable Data { get; set; }
+            public string Message { get; set; }
+            public string Path { get; set; }
         }
     }
 }

@@ -36,9 +36,9 @@ namespace ApiForMaterialKitting.Controllers
                 //dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ")a left join (select * from MaterialKitting where IsDel = 0)b on a.SystemSlot = b.Slot order by a.ShipWeek");
 
                 dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from" +
-                    "(SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryHHM where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + " " +
-                    "union SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + " " +
-                    "union Select SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate from SummaryHIM where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ")" +
+                    "(SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryHHM where Lock = 0 and (ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ") " +
+                    "union SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryH where Lock = 0 and (ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ") " +
+                    "union Select SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate from SummaryHIM where Lock = 0 and (ShipWeek <= " + wk + " or ShipWeek >= " + wknow + "))" +
                     "a left join " +
                     "(select * from MaterialKitting where IsDel = 0)b " +
                     "on a.SystemSlot = b.Slot " +
@@ -221,7 +221,7 @@ namespace ApiForMaterialKitting.Controllers
             str += "</thead><tbody>";
             str += "<tr style='font-size: 14px; height: 24px; text-align: center;'>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.SystemSlot + "</td>";
-            str += "<td style='border-style: solid; border-width: 1px'>" + "UF" + "</td>";
+            str += "<td style='border-style: solid; border-width: 1px'>" + model.SystemSlot.Substring(0, 2) + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.Customer + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.PO + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.Station.ToUpper() + "</td>";
@@ -258,7 +258,7 @@ namespace ApiForMaterialKitting.Controllers
                     "eric.lin2@flex.com",
                     "Jesse.He@flex.com"
                 };
-                int result = SendMail("Material-Kitting@flex.com", "Ultra system 增料", list, cclist, str);
+                int result = SendMail("Material-Kitting@flex.com", model.SystemSlot.Substring(0, 2) + " system 增料", list, cclist, str);
                 if (result == 1)
                 {
                     resp.Code = 200;
