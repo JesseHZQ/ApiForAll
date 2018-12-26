@@ -46,9 +46,9 @@ namespace ApiForFOL.Controllers
             Resp resp = new Resp();
             try
             {
-                resp.Data = SqlHelper.ExecuteDataTable("select * from[dbo].[FOL_OutputByProject_Actuals] where version = '" + version + "'");
                 resp.Code = "200";
-                resp.Message = "success";
+                resp.Data = SqlHelper.ExecuteDataTable("select * from [dbo].[FOL_OutputByProject_Actuals] where version = '" + version + "'");
+                resp.Message = "Success";
             }
             catch (Exception ex)
             {

@@ -138,7 +138,7 @@ namespace ApiForFOL
                         Period14 = item.Period14 + list2[i].Period14 + list3[i].Period14 + (list4[i].Period14 == null ? 0 : list4[i].Period14),
                         Period15 = item.Period15 + list2[i].Period15 + list3[i].Period15 + (list4[i].Period15 == null ? 0 : list4[i].Period15),
                         Period16 = item.Period16 + list2[i].Period16 + list3[i].Period16 + (list4[i].Period16 == null ? 0 : list4[i].Period16),
-                        Type = "2.0 MCOS($)",
+                        Type = type,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
                         Version = version,
@@ -195,7 +195,7 @@ namespace ApiForFOL
                         Period15 = (list_TotalSales[i].Period15 == 0) ? 0 : (1 - (item.Period15 / list_TotalSales[i].Period15)),
                         Period16 = (list_TotalSales[i].Period16 == 0) ? 0 : (1 - (item.Period16 / list_TotalSales[i].Period16)),
 
-                        Type = "2.0 MCOS($)",
+                        Type = type,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
                         Version = version,
@@ -264,7 +264,7 @@ namespace ApiForFOL
                         Period15 = (item.Period15 + list2[i].Period15) * (1 - list3[i].Period15),
                         Period16 = (item.Period16 + list2[i].Period16) * (1 - list3[i].Period16),
 
-                        Type = "2.1 Std VAM % from Ops(%)",
+                        Type = type,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
                         Version = version,
@@ -322,7 +322,7 @@ namespace ApiForFOL
                         Period14 = -item.Period13,
                         Period15 = -item.Period14,
                         Period16 = -item.Period15,
-                        Type = "2.4 COGS Reversal - OT Contract",
+                        Type = type,
                         Version = item.Version,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
@@ -391,7 +391,7 @@ namespace ApiForFOL
                         Period14 = (item.Period14 ?? 0) + (list2[i].Period14 ?? 0) + (list3[i].Period14 ?? 0),
                         Period15 = (item.Period15 ?? 0) + (list2[i].Period15 ?? 0) + (list3[i].Period15 ?? 0),
                         Period16 = (item.Period16 ?? 0) + (list2[i].Period16 ?? 0) + (list3[i].Period16 ?? 0),
-                        Type = "3.0 Material Margin ($)",
+                        Type = type,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
                         Version = version,
@@ -445,7 +445,7 @@ namespace ApiForFOL
                         Period14 = (list_percent[i].Period14 == 0) ? 0 : (item.Period14 / list_percent[i].Period14),
                         Period15 = (list_percent[i].Period15 == 0) ? 0 : (item.Period15 / list_percent[i].Period15),
                         Period16 = (list_percent[i].Period16 == 0) ? 0 : (item.Period15 / list_percent[i].Period15),
-                        Type = "3.0 Material Margin ($)",
+                        Type = type,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
                         Version = version,
@@ -684,7 +684,7 @@ namespace ApiForFOL
                         Period13 = (list1[j].Period13 + list2[j].Period13) * list3[i].Period13 + list4[i].Period13,
                         Period14 = (list1[j].Period14 + list2[j].Period14) * list3[i].Period14 + list4[i].Period14,
                         Period15 = (list1[j].Period15 + list2[j].Period15) * list3[i].Period15 + list4[i].Period15,
-                        Type = "5.1 DL (%)",
+                        Type = type,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
                         Version = version,
@@ -706,7 +706,7 @@ namespace ApiForFOL
         }
 
         //6.0
-        public string Calculate6_0(string version)
+        public string Calculate6_0(string version,string type)
         {
             string message = "";
             List<FOL_Input_6_0_TotalMOH> list = new List<FOL_Input_6_0_TotalMOH>();
@@ -742,7 +742,7 @@ namespace ApiForFOL
                     newItem_SumByType.Period14 = 0;
                     newItem_SumByType.Period15 = 0;
                     newItem_SumByType.Period16 = 0;
-                    newItem_SumByType.Type = "6.0 Total MOH($)";
+                    newItem_SumByType.Type = type;
                     newItem_SumByType.Version = version;
                     newItem_SumByType.InsertDate = System.DateTime.Now;
                     newItem_SumByType.InsertUser = "";
@@ -1041,7 +1041,7 @@ namespace ApiForFOL
         }
 
         //6.1
-        public string Calculate6_1(string version, List<FOL_Input_6_1> list1)
+        public string Calculate6_1(string version,string type, List<FOL_Input_6_1> list1)
         {
             List<FOL_Input_2_1> list = new List<FOL_Input_2_1>();
             List<FOL_Input_1_1> list_Dollar = new List<FOL_Input_1_1>();
@@ -1121,7 +1121,7 @@ namespace ApiForFOL
                         newItemPercent.Period14 = (totalItem.Period14 == 0) ? 0 : (list1[i].Period14 / totalItem.Period14);
                         newItemPercent.Period15 = (totalItem.Period15 == 0) ? 0 : (list1[i].Period15 / totalItem.Period15);
                         newItemPercent.Period16 = (totalItem.Period16 == 0) ? 0 : (list1[i].Period16 / totalItem.Period16);
-                        newItemPercent.Type = "6.1 IDL (%&#)";
+                        newItemPercent.Type = type;
                         newItemPercent.InsertDate = System.DateTime.Now;
                         newItemPercent.InsertUser = "";
                         newItemPercent.Version = version;
@@ -1153,7 +1153,7 @@ namespace ApiForFOL
                         newItemDollar.Period14 = newItemPercent.Period14 * totalIDL.Period14;
                         newItemDollar.Period15 = newItemPercent.Period15 * totalIDL.Period15;
                         newItemDollar.Period16 = newItemPercent.Period16 * totalIDL.Period16;
-                        newItemDollar.Type = "6.1 IDL (%&#)";
+                        newItemDollar.Type = type;
                         newItemDollar.InsertDate = System.DateTime.Now;
                         newItemDollar.InsertUser = "";
                         newItemDollar.Version = version;
@@ -1163,9 +1163,9 @@ namespace ApiForFOL
                         list_Dollar.Add(newItemDollar);
                     }
                 }
-                dc.FOL_Input_2_1.DeleteAllOnSubmit(dc.FOL_Input_2_1.Where(x => x.Version == version && x.Type == "6.1 IDL (%&#)"));
+                dc.FOL_Input_2_1.DeleteAllOnSubmit(dc.FOL_Input_2_1.Where(x => x.Version == version && x.Type == type));
                 dc.FOL_Input_2_1.InsertAllOnSubmit(list);
-                dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == "6.1 IDL (%&#)"));
+                dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == type));
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list_Dollar);
                 dc.SubmitChanges();
                 message = "Success";
@@ -2170,7 +2170,7 @@ namespace ApiForFOL
             return listResult;
         }
         //8.0
-        public string Calculate8_0(string version)
+        public string Calculate8_0(string version,string type)
         {
             string message = "";
             List<FOL_Input_1_1> list1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
@@ -2225,7 +2225,7 @@ namespace ApiForFOL
                         Period13 = (item.Period13 + list2[i].Period13 + list3[i].Period13 + list4[i].Period13 + list5[i].Period13) * list6[i].Period13,
                         Period14 = (item.Period14 + list2[i].Period14 + list3[i].Period14 + list4[i].Period14 + list5[i].Period14) * list6[i].Period14,
                         Period15 = (item.Period15 + list2[i].Period15 + list3[i].Period15 + list4[i].Period15 + list5[i].Period15) * list6[i].Period15,
-                        Type = "8.0 Corp. Alloc. (%)",
+                        Type = type,
                         InsertDate = System.DateTime.Now,
                         InsertUser = "",
                         Version = version,
