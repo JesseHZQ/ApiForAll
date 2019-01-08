@@ -7,7 +7,7 @@ namespace ApiForCOQ
     {
         //连接字符串
         //1、添加引用 2、导入命名空间 为了使用ConfigurationManager
-        public static string conStr = ConfigurationManager.ConnectionStrings["CATEGORY"].ConnectionString;
+        public static string conStr = ConfigurationManager.ConnectionStrings["COQLIST"].ConnectionString;
 
         //增删改查
         //查找数据  ExecuteScalar()返回首行首列   ExecuteReader()  DataTable

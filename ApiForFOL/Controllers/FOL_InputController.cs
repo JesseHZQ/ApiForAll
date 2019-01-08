@@ -16,14 +16,28 @@ namespace ApiForFOL.Controllers
         FOLDataClassesDataContext dc = new FOLDataClassesDataContext();
 
         [System.Web.Http.HttpGet]
-        public RespAll getTypedList(string version, string type)
+        public RespAll getTypedList(string version, string type, string cc)
         {
             DataTable dt1 = new DataTable();
             DataTable dt2 = new DataTable();
             DataTable dt3 = new DataTable();
-            dt1 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_1_1] where version= '" + version + " ' and type like '%" + type + "%'");
-            dt2 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_2_1] where version= '" + version + " ' and type like '%" + type + "%'");
-            dt3 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_3_1] where version= '" + version + " ' and type like '%" + type + "%'");
+            if (type == "6.0 Total MOH($)" || type == "7.0 Total SG&A($)")
+            {
+                dt1 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_6_0_TotalMOH] where version= '" + version + " ' and type like '%" + type + "%' and Department ='" + cc + "'");
+            }
+            else if (type == "6.1 IDL(%&#)")
+            {
+                dt1 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_1_1] where version= '" + version + " ' and type like '%" + type + "%' and Department ='" + cc + "'");
+                dt2 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_2_1] where version= '" + version + " ' and type like '%" + type + "%' and Department ='" + cc + "'");
+                dt3 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_3_1] where version= '" + version + " ' and type like '%" + type + "%' and Department ='" + cc + "'");
+            }
+            else
+            {
+                dt1 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_1_1] where version= '" + version + " ' and type like '%" + type + "%'");
+                dt2 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_2_1] where version= '" + version + " ' and type like '%" + type + "%'");
+                dt3 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_3_1] where version= '" + version + " ' and type like '%" + type + "%'");
+
+            }
             RespAll resp = new RespAll();
             resp.Code = "200";
             resp.DataForecast = dt1;
@@ -34,13 +48,16 @@ namespace ApiForFOL.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public Resp getItemById(int id, string type)
+        public Resp getItemById(int id, string type, string menuType)
         {
             string tableName = "";
             switch (type)
             {
                 case "forecast":
-                    tableName = "FOL_Input_1_1";
+                    if (menuType == "6.0 Total MOH($)" || menuType == "7.0 Total SG&A($)")
+                        tableName = "FOL_Input_6_0_TotalMOH";
+                    else
+                        tableName = "FOL_Input_1_1";
                     break;
                 case "percent":
                     tableName = "FOL_Input_2_1";
@@ -69,7 +86,10 @@ namespace ApiForFOL.Controllers
             switch (model.DataType)
             {
                 case "forecast":
-                    tableName = "FOL_Input_1_1";
+                    if (model.MenuType == "6.0 Total MOH($)" || model.MenuType == "7.0 Total SG&A($)")
+                        tableName = "FOL_Input_6_0_TotalMOH";
+                    else
+                        tableName = "FOL_Input_1_1";
                     break;
                 case "percent":
                     tableName = "FOL_Input_2_1";
@@ -117,14 +137,18 @@ namespace ApiForFOL.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public Resp calculateByType(string type, string version)
+        public Resp calculateByType(string type, string version, string cc)
         {
             FOL_InputFormulas fi = new FOL_InputFormulas();
             Resp resp = new Resp();
             string message = "";
-            if (type == "3.1 PPV(%&$)" ||type== "4.2 Freight in(%)" || type == "4.3 Freight out(%)" || type == "4.4 EDM(%)" || type == "4.5 MCOSO(%)" || type == "4.6 Subcontract($)" || type == "4.7 Inv. Reserve($)")
+            if (type == "3.1 PPV(%&$)" || type == "4.2 Freight in(%)" || type == "4.3 Freight out(%)" || type == "4.4 EDM(%)" || type == "4.5 MCOSO(%)" || type == "4.6 Subcontract($)" || type == "4.7 Inv. Reserve($)")
             {
                 message = fi.Calculate3_1(version, type);
+            }
+            else if (type == "6.2 Depn(%)" || type == "6.3 FUS.(%)" || type == "6.4 MOHO(%)" || type == "6.5 OEUP(%)" || type == "6.6 ELEC(%)")
+            {
+                message = fi.Calculate6_2(version, type);
             }
             else
             {
@@ -152,12 +176,12 @@ namespace ApiForFOL.Controllers
                         message = fi.Calculate5_1(version, type);
                         break;
                     case "6.0 Total MOH($)":
-                        message = fi.Calculate6_0(version,type);
+                        message = fi.Calculate6_0(version, type, cc);
                         break;
                     case "6.1 IDL(%&#)":
-                        List<FOL_Input_6_1> list_amount = dc.FOL_Input_6_1.Where(x => x.Type == type && x.Version == version).ToList();
-                        message = fi.Calculate6_1(version,type, list_amount);
+                        message = fi.Calculate6_1(version, type, cc);
                         break;
+
                     //case "8.0 Corp. Alloc.(%)":
                     //    message = fi.Calculate8_0(version, type);
                     //    break;
@@ -184,6 +208,7 @@ namespace ApiForFOL.Controllers
             string type = httpRequest.Form["type"];
             string version = httpRequest.Form["version"];
             string fileType = httpRequest.Form["fileType"];
+            string CC = httpRequest.Form["cc"];
             HttpPostedFile file = httpRequest.Files[0];
             string filePath = Path.Combine(HttpContext.Current.Server.MapPath("../../Uploads"), Path.GetFileName(file.FileName));
             file.SaveAs(filePath);
@@ -192,13 +217,16 @@ namespace ApiForFOL.Controllers
             switch (fileType)
             {
                 case "1":
-                    result = Upload1_1(type, version, workbook);
+                    if (type == "6.0 Total MOH($)" || type == "7.0 Total SG&A($)")
+                        result = Upload6_0(type, version, workbook, CC);
+                    else
+                        result = Upload1_1(type, version, workbook, CC);
                     break;
                 case "2":
-                    result = Upload2_1(type, version, workbook);
+                    result = Upload2_1(type, version, workbook, CC);
                     break;
                 case "3":
-                    result = Upload3_1(type, version, workbook);
+                    result = Upload3_1(type, version, workbook, CC);
                     break;
                 default:
                     result = "";
@@ -229,7 +257,7 @@ namespace ApiForFOL.Controllers
             public string Message { get; set; }
         }
 
-        public string Upload1_1(string insertType, string version, Workbook workbook)
+        public string Upload1_1(string insertType, string version, Workbook workbook, string CC)
         {
             Cells cells = workbook.Worksheets[0].Cells;
             int max = cells.MaxDataRow;
@@ -272,11 +300,12 @@ namespace ApiForFOL.Controllers
                         InsertUser = "",
                         Version = version,
                         Type = insertType,
+                        Department = CC,
                     };
                     list.Add(item);
 
                 }
-                dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == insertType).ToList());
+                dc.FOL_Input_1_1.DeleteAllOnSubmit(dc.FOL_Input_1_1.Where(x => x.Version == version && x.Type == insertType && x.Department == CC).ToList());
                 dc.FOL_Input_1_1.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
                 return "Success";
@@ -286,7 +315,7 @@ namespace ApiForFOL.Controllers
                 return ex.Message;
             }
         }
-        public string Upload2_1(string insertType, string version, Workbook workbook)
+        public string Upload2_1(string insertType, string version, Workbook workbook, string CC)
         {
             Cells cells = workbook.Worksheets[0].Cells;
             int max = cells.MaxDataRow;
@@ -329,11 +358,12 @@ namespace ApiForFOL.Controllers
                         InsertUser = "",
                         Version = version,
                         Type = insertType,
+                        Department = CC,
                     };
                     list.Add(item);
                 }
 
-                dc.FOL_Input_2_1.DeleteAllOnSubmit(dc.FOL_Input_2_1.Where(x => x.Version == version && x.Type == insertType).ToList());
+                dc.FOL_Input_2_1.DeleteAllOnSubmit(dc.FOL_Input_2_1.Where(x => x.Version == version && x.Type == insertType && x.Department == CC).ToList());
                 dc.FOL_Input_2_1.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
                 return "Success";
@@ -343,7 +373,7 @@ namespace ApiForFOL.Controllers
                 return ex.Message;
             }
         }
-        public string Upload3_1(string insertType, string version, Workbook workbook)
+        public string Upload3_1(string insertType, string version, Workbook workbook, string CC)
         {
             Cells cells = workbook.Worksheets[0].Cells;
             int max = cells.MaxDataRow;
@@ -386,12 +416,73 @@ namespace ApiForFOL.Controllers
                         InsertUser = "",
                         Version = version,
                         Type = insertType,
+                        Department = CC,
                     };
                     list.Add(item);
                 }
 
-                dc.FOL_Input_3_1.DeleteAllOnSubmit(dc.FOL_Input_3_1.Where(x => x.Version == version && x.Type == insertType).ToList());
+                dc.FOL_Input_3_1.DeleteAllOnSubmit(dc.FOL_Input_3_1.Where(x => x.Version == version && x.Type == insertType && x.Department == CC).ToList());
                 dc.FOL_Input_3_1.InsertAllOnSubmit(list);
+                dc.SubmitChanges();
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
+        }
+
+        public string Upload6_0(string insertType, string version, Workbook workbook, string CC)
+        {
+            Cells cells = workbook.Worksheets[0].Cells;
+            int max = cells.MaxDataRow;
+            int columns = cells.MaxColumn;
+            List<FOL_Input_6_0_TotalMOH> list = new List<FOL_Input_6_0_TotalMOH>();
+            try
+            {
+                for (int i = 1; i <= cells.MaxDataRow; i++)
+                {
+                    FOL_Input_6_0_TotalMOH item = new FOL_Input_6_0_TotalMOH
+                    {
+                        GLBPCCode = cells[i, 0].Value == null ? "" : cells[i, 0].Value.ToString(),
+                        GLBPCDescription = cells[i, 1].Value == null ? "" : cells[i, 1].Value.ToString(),
+                        GLOutputCode = cells[i, 2].Value == null ? "" : cells[i, 2].Value.ToString(),
+                        PARENTH1 = cells[i, 3].Value == null ? "" : cells[i, 3].Value.ToString(),
+                        UploadCode = cells[i, 4].Value == null ? "" : cells[i, 4].Value.ToString(),
+                        BPCOutputCode = cells[i, 5].Value == null ? "" : cells[i, 5].Value.ToString(),
+                        BU = cells[i, 6].Value == null ? "" : cells[i, 6].Value.ToString(),
+                        Segment = cells[i, 7].Value == null ? "" : cells[i, 7].Value.ToString(),
+                        Department = CC,
+                        IsSubtotal = dc.FOL_ExpenseMappingManagement_.Where(x => x.GLBPCCode.ToLower() == cells[i, 0].Value.ToString().ToLower().Trim()).FirstOrDefault().Formulas ?? "",
+
+                        Period1 = Convert.ToDouble(cells[i, 8].Value ?? 0),
+                        Period2 = Convert.ToDouble(cells[i, 9].Value ?? 0),
+                        Period3 = Convert.ToDouble(cells[i, 10].Value ?? 0),
+                        Period4 = Convert.ToDouble(cells[i, 11].Value ?? 0),
+                        Period5 = Convert.ToDouble(cells[i, 12].Value ?? 0),
+                        Period6 = Convert.ToDouble(cells[i, 13].Value ?? 0),
+                        Period7 = Convert.ToDouble(cells[i, 14].Value ?? 0),
+                        Period8 = Convert.ToDouble(cells[i, 15].Value ?? 0),
+                        Period9 = Convert.ToDouble(cells[i, 16].Value ?? 0),
+                        Period10 = Convert.ToDouble(cells[i, 17].Value ?? 0),
+                        Period11 = Convert.ToDouble(cells[i, 18].Value ?? 0),
+                        Period12 = Convert.ToDouble(cells[i, 19].Value ?? 0),
+                        Period13 = Convert.ToDouble(cells[i, 20].Value ?? 0),
+                        Period14 = Convert.ToDouble(cells[i, 21].Value ?? 0),
+                        Period15 = Convert.ToDouble(cells[i, 22].Value ?? 0),
+                        Period16 = Convert.ToDouble(cells[i, 23].Value ?? 0),
+
+                        InsertDate = System.DateTime.Now,
+                        InsertUser = "",
+                        Version = version,
+                        Type = insertType,
+                    };
+                    list.Add(item);
+                }
+
+                dc.FOL_Input_6_0_TotalMOH.DeleteAllOnSubmit(dc.FOL_Input_6_0_TotalMOH.Where(x => x.Version == version && x.Type == insertType && x.Department == CC).ToList());
+                dc.FOL_Input_6_0_TotalMOH.InsertAllOnSubmit(list);
                 dc.SubmitChanges();
                 return "Success";
             }
@@ -414,6 +505,7 @@ namespace ApiForFOL.Controllers
     {
         public int Id { get; set; }
         public string DataType { get; set; }
+        public string MenuType { get; set; }
         public float Period1 { get; set; }
         public float Period2 { get; set; }
         public float Period3 { get; set; }

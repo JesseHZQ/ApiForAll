@@ -2,30 +2,6 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 17.75" name="FOLDataClasses">
   <DataContextMoniker Name="/FOLDataClassesDataContext" />
   <nestedChildShapes>
-    <classShape Id="62aebf54-af85-4565-9b0c-6d3d7b4f88bd" absoluteBounds="0.5, 0.5, 2, 6.7707340494791657">
-      <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_Input_1_1" />
-      <nestedChildShapes>
-        <elementListCompartment Id="5c098c84-f43d-4029-987f-3f82fb16e441" absoluteBounds="0.51500000000000012, 0.96, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="b40f8376-737b-40b4-a7b8-3d06fb59a60c" absoluteBounds="2.625, 0.5, 2, 6.5784326171875">
-      <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_Input_2_1" />
-      <nestedChildShapes>
-        <elementListCompartment Id="d25dbbe7-36f5-4a29-abd6-ffdee93aa1ee" absoluteBounds="2.6399999999999997, 0.96, 1.9700000000000002, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="4b1ffa76-3e11-47b2-81ee-a4dc7f2a0928" absoluteBounds="4.75, 0.5, 2, 6.5784326171875">
-      <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_Input_3_1" />
-      <nestedChildShapes>
-        <elementListCompartment Id="05151f43-0052-4711-98b0-282af17206fa" absoluteBounds="4.765, 0.96, 1.9700000000000002, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="652ffac2-b34b-4472-8ec8-38cdd4087e3a" absoluteBounds="0.5, 7.375, 2, 6.9630354817708326">
-      <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_Input_6_0_TotalMOH" />
-      <nestedChildShapes>
-        <elementListCompartment Id="58cd8b4a-2780-45a6-a2d5-b8d8ad7b02bf" absoluteBounds="0.515, 7.835, 1.9700000000000002, 6.403035481770833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="78ffc493-546e-40d0-b995-20bda27f16ce" absoluteBounds="2.625, 7.25, 2, 1.7708968098958331">
       <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_CCMapping" />
       <nestedChildShapes>
@@ -48,6 +24,36 @@
       <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_Input_6_1" />
       <nestedChildShapes>
         <elementListCompartment Id="29467e2a-4aa8-421f-972b-399f42c6405d" absoluteBounds="4.765, 11.335, 1.9700000000000002, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9ad40725-cac3-4d3f-9ea3-1b23504bbcdb" absoluteBounds="0.5, 14.5, 2, 2.5401025390625">
+      <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_ExpenseMappingManagement_" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8e3206a6-6958-4eba-8eef-7fe347777a4d" absoluteBounds="0.51500000000000012, 14.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a6426c56-d3c6-4004-8d28-d3c1e6404c1f" absoluteBounds="0.5, 8.625, 2, 6.9630354817708326">
+      <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_Input_6_0_TotalMOH" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2c69a68b-a1ca-4c5e-878d-e1cbd6ba7b31" absoluteBounds="0.515, 9.085, 1.9700000000000002, 6.403035481770833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ffb8f60e-a8ab-4c06-af44-ccfd015d9a11" absoluteBounds="0.5, 0.5, 2, 6.9630354817708326">
+      <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_Input_1_1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d50ebd46-5be6-448c-a06a-a8d0c82ba1c1" absoluteBounds="0.515, 0.96, 1.9700000000000002, 6.403035481770833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4862813c-25e3-48fb-9826-813989a9e6b1" absoluteBounds="2.625, 0.5, 2, 6.7707340494791657">
+      <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_Input_2_1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c089cba9-dc95-44c1-9d39-30f51791c96a" absoluteBounds="2.64, 0.96, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="09db7f66-8467-46f1-9044-b126744c88ba" absoluteBounds="4.75, 0.5, 2, 6.7707340494791657">
+      <DataClassMoniker Name="/FOLDataClassesDataContext/FOL_Input_3_1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3c80be4d-c9cf-4efe-b681-d1815d799136" absoluteBounds="4.765, 0.96, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

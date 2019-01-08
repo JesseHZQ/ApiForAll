@@ -36,6 +36,13 @@ namespace ApiForMinioneMiscShipping.Controllers
             return resp;
         }
 
+
+        [System.Web.Http.HttpGet]
+        public string getBaiduToken()
+        {
+            baiduAI ba = new baiduAI();
+            return ba.HttpGet("https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=qTUkez1yb2MjDemBNOaeSVXZ&client_secret=9eBwPRq9xf3ulFRXIMuCniYqeOGq6lIH", "");
+        }
         /// <summary>
         /// 接收前端上传单个文件
         /// </summary>
@@ -49,7 +56,7 @@ namespace ApiForMinioneMiscShipping.Controllers
             file.SaveAs(filePath);
             RespWithPath resp = new RespWithPath();
             resp.Path = Path.GetFileName(file.FileName);
-            string token = "24.af28dd056f4ec0d136df87cf5b266037.2592000.1545982236.282335-14817751";
+            string token = httpRequest.Form["token"];
             string strbaser64 = ImgToBase64String(filePath);
             string host = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic?access_token=" + token;
             Encoding encoding = Encoding.Default;
@@ -96,8 +103,8 @@ namespace ApiForMinioneMiscShipping.Controllers
         private string ImgToBase64String(string Imagefilename)
         {
             Bitmap bmp = new Bitmap(Imagefilename);
-            FileStream fs = new FileStream(Imagefilename + ".txt", FileMode.Create);
-            StreamWriter sw = new StreamWriter(fs);
+            //FileStream fs = new FileStream(Imagefilename + ".txt", FileMode.Create);
+            //StreamWriter sw = new StreamWriter(fs);
 
             MemoryStream ms = new MemoryStream();
             bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -106,11 +113,11 @@ namespace ApiForMinioneMiscShipping.Controllers
             ms.Read(arr, 0, (int)ms.Length);
             ms.Close();
             String strbaser64 = Convert.ToBase64String(arr);
-            sw.Write(strbaser64);
-            sw.Flush();
-            sw.Close();
-            fs.Dispose();
-            fs.Close();
+            //sw.Write(strbaser64);
+            //sw.Flush();
+            //sw.Close();
+            //fs.Dispose();
+            //fs.Close();
             return strbaser64;
         }
         public class Board
