@@ -62,18 +62,18 @@ namespace CheckSlot
 
         private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
         {
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday)
-            {
-                if (DateTime.Now.Hour == 16 && DateTime.Now.Minute == 30)
-                {
-                    MailTask.SendMail();
-                }
-            }
+            //if (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday)
+            //{
+            //    if (DateTime.Now.Hour == 16 && DateTime.Now.Minute == 30)
+            //    {
+            //        MailTask.SendMail();
+            //    }
+            //}
             //if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday)
             //{
             //    if (DateTime.Now.Hour == 08)
             //    {
-            //        MailTask.SendMail();
+            MailTask.SendMail();
             //    }
             //}
 

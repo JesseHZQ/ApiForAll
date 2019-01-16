@@ -130,6 +130,9 @@ namespace ApiForAllProjects.Controllers.VOP
                 item.Detail = model.Detail;
                 item.PODetail = model.PODetail;
                 item.TotalCost = model.TotalCost;
+                item.PlanCost = model.PlanCost;
+                item.IDMCost = model.IDMCost;
+                item.TotalPercent = model.TotalPercent;
                 dc.SubmitChanges();
                 resp.Code = 200;
                 resp.Data = null;
@@ -144,6 +147,9 @@ namespace ApiForAllProjects.Controllers.VOP
                     Detail = model.Detail,
                     PODetail = model.PODetail,
                     TotalCost = model.TotalCost,
+                    PlanCost = model.PlanCost,
+                    IDMCost = model.IDMCost,
+                    TotalPercent = model.TotalPercent
                 };
                 dc.VOP_Result.InsertOnSubmit(item);
                 dc.SubmitChanges();

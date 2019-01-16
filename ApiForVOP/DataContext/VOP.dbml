@@ -7,6 +7,9 @@
       <Column Name="Detail" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="PODetail" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="TotalCost" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PlanCost" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="IDMCost" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TotalPercent" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

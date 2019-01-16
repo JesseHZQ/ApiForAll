@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiForFOL", "ApiForFOL\ApiF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiForMinione", "ApiForMinione\ApiForMinione.csproj", "{9B5B3DEE-88B5-438A-903B-EB426C8B4DF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiForFAI", "ApiForFAI\ApiForFAI.csproj", "{AD5CAF9B-938D-44F1-ADC2-6F1E9E1A7115}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{9B5B3DEE-88B5-438A-903B-EB426C8B4DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B5B3DEE-88B5-438A-903B-EB426C8B4DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B5B3DEE-88B5-438A-903B-EB426C8B4DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD5CAF9B-938D-44F1-ADC2-6F1E9E1A7115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5CAF9B-938D-44F1-ADC2-6F1E9E1A7115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5CAF9B-938D-44F1-ADC2-6F1E9E1A7115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5CAF9B-938D-44F1-ADC2-6F1E9E1A7115}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

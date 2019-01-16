@@ -90,6 +90,12 @@ namespace ApiForVOP.DataContext
 		
 		private System.Nullable<double> _TotalCost;
 		
+		private System.Nullable<double> _PlanCost;
+		
+		private System.Nullable<double> _IDMCost;
+		
+		private string _TotalPercent;
+		
     #region 可扩展性方法定义
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -104,6 +110,12 @@ namespace ApiForVOP.DataContext
     partial void OnPODetailChanged();
     partial void OnTotalCostChanging(System.Nullable<double> value);
     partial void OnTotalCostChanged();
+    partial void OnPlanCostChanging(System.Nullable<double> value);
+    partial void OnPlanCostChanged();
+    partial void OnIDMCostChanging(System.Nullable<double> value);
+    partial void OnIDMCostChanged();
+    partial void OnTotalPercentChanging(string value);
+    partial void OnTotalPercentChanged();
     #endregion
 		
 		public VOP_Result()
@@ -207,6 +219,66 @@ namespace ApiForVOP.DataContext
 					this._TotalCost = value;
 					this.SendPropertyChanged("TotalCost");
 					this.OnTotalCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanCost", DbType="Float")]
+		public System.Nullable<double> PlanCost
+		{
+			get
+			{
+				return this._PlanCost;
+			}
+			set
+			{
+				if ((this._PlanCost != value))
+				{
+					this.OnPlanCostChanging(value);
+					this.SendPropertyChanging();
+					this._PlanCost = value;
+					this.SendPropertyChanged("PlanCost");
+					this.OnPlanCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDMCost", DbType="Float")]
+		public System.Nullable<double> IDMCost
+		{
+			get
+			{
+				return this._IDMCost;
+			}
+			set
+			{
+				if ((this._IDMCost != value))
+				{
+					this.OnIDMCostChanging(value);
+					this.SendPropertyChanging();
+					this._IDMCost = value;
+					this.SendPropertyChanged("IDMCost");
+					this.OnIDMCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalPercent", DbType="NVarChar(50)")]
+		public string TotalPercent
+		{
+			get
+			{
+				return this._TotalPercent;
+			}
+			set
+			{
+				if ((this._TotalPercent != value))
+				{
+					this.OnTotalPercentChanging(value);
+					this.SendPropertyChanging();
+					this._TotalPercent = value;
+					this.SendPropertyChanged("TotalPercent");
+					this.OnTotalPercentChanged();
 				}
 			}
 		}

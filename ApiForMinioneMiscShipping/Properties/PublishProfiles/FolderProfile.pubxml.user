@@ -85,10 +85,10 @@
       <publishTime>12/12/2018 13:01:32</publishTime>
     </File>
     <File Include="bin/ApiForMinioneMiscShipping.dll">
-      <publishTime>01/07/2019 17:20:44</publishTime>
+      <publishTime>01/11/2019 08:18:37</publishTime>
     </File>
     <File Include="bin/ApiForMinioneMiscShipping.pdb">
-      <publishTime>01/07/2019 17:20:44</publishTime>
+      <publishTime>01/11/2019 08:18:37</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>12/12/2018 13:01:32</publishTime>

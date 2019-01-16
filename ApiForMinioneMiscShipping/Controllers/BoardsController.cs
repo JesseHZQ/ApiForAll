@@ -36,6 +36,18 @@ namespace ApiForMinioneMiscShipping.Controllers
             return resp;
         }
 
+        [System.Web.Http.HttpGet]
+        public Resp GetStatus()
+        {
+            DataTable dt = new DataTable();
+            dt = bc.ReadTable("SELECT * FROM [172.21.194.214].[EKW].[dbo].[UFLEX] WHERE Line LIKE 'line%'");
+            Resp resp = new Resp();
+            resp.Code = 200;
+            resp.Data = dt;
+            resp.Message = "查询成功";
+            return resp;
+        }
+
 
         [System.Web.Http.HttpGet]
         public string getBaiduToken()
