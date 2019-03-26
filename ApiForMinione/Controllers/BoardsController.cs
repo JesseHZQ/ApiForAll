@@ -33,10 +33,38 @@ namespace ApiForMinione.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public Resp get(string sn)
+        public Resp getInfoBySN(string sn)
         {
             DataTable dt = new DataTable();
-            dt = SqlHelper.ExecuteDataTable("SELECT * FROM[172.21.194.214].[PCBA].[dbo].[Failuar] WHERE SN = '" + sn + "'");
+            dt = SqlHelper.ExecuteDataTable("SELECT * FROM [172.21.194.214].[PCBA].[dbo].[Failuar] a JOIN [172.21.194.214].[PCBA].[dbo].[Boards] b ON a.SN = b.SN WHERE a.SN = '" + sn + "' ORDER BY a.Date");
+            Resp resp = new Resp();
+            resp.Code = 200;
+            resp.Data = dt;
+            resp.Message = "查询成功";
+            return resp;
+        }
+
+        [System.Web.Http.HttpGet]
+        public Resp getInfoByDate(long begin, long end)
+        {
+            DateTime dt1 = ConvertTime(begin);
+            DateTime dt2 = ConvertTime(end);
+            DataTable dt = new DataTable();
+            dt = SqlHelper.ExecuteDataTable("SELECT * FROM [172.21.194.214].[PCBA].[dbo].[Failuar] a JOIN [172.21.194.214].[PCBA].[dbo].[Boards] b ON a.SN = b.SN WHERE ((a.Location = 'LeanProcess' and a.NextLocation = 'LeanRack') or (a.Location = 'LeanProcess' and a.NextLocation = 'Verifying') or (a.Location = 'PreBurnIn') or (a.Location = 'Misc' and a.NextLocation = 'MC') or (a.Location = 'Misc' and a.NextLocation = 'Verifying')) and (Date between '" + dt1 + "' and '" + dt2 + "') ORDER BY a.SN");
+            Resp resp = new Resp();
+            resp.Code = 200;
+            resp.Data = dt;
+            resp.Message = "查询成功";
+            return resp;
+        }
+
+        [System.Web.Http.HttpGet]
+        public Resp getSlotInfoByDate(long begin, long end)
+        {
+            DateTime dt1 = ConvertTime(begin);
+            DateTime dt2 = ConvertTime(end);
+            DataTable dt = new DataTable();
+            dt = SqlHelper.ExecuteDataTable("SELECT * FROM [172.21.194.214].[PCBA].[dbo].[Failuar] a JOIN [172.21.194.214].[PCBA].[dbo].[Boards] b ON a.SN = b.SN WHERE ((a.Location = 'Shipping' and a.NextLocation = 'Shipping') or (a.Location = 'tester' and a.NextLocation = 'Verifying ')) and (Date between '" + dt1 + "' and '" + dt2 + "') ORDER BY a.SN");
             Resp resp = new Resp();
             resp.Code = 200;
             resp.Data = dt;
@@ -48,12 +76,49 @@ namespace ApiForMinione.Controllers
         public Resp getSnList(string sn)
         {
             DataTable dt = new DataTable();
-            dt = SqlHelper.ExecuteDataTable("SELECT distinct SN FROM[172.21.194.214].[PCBA].[dbo].[Failuar] WHERE SN like '%" + sn + "%'");
+            dt = SqlHelper.ExecuteDataTable("SELECT distinct top 1000 SN FROM[172.21.194.214].[PCBA].[dbo].[Failuar] WHERE SN like '%" + sn + "%'");
             Resp resp = new Resp();
             resp.Code = 200;
             resp.Data = dt;
             resp.Message = "查询成功";
             return resp;
+        }
+
+        [System.Web.Http.HttpGet]
+        public Resp getSystemList()
+        {
+            DataTable dt = new DataTable();
+            dt = SqlHelper.ExecuteDataTable("SELECT distinct TesterID FROM[172.21.194.214].[PCBA].[dbo].[Failuar] order by TesterID");
+            Resp resp = new Resp();
+            resp.Code = 200;
+            resp.Data = dt;
+            resp.Message = "查询成功";
+            return resp;
+        }
+
+        [System.Web.Http.HttpPost]
+        public Resp getInfoBySystem(SystemListModel model)
+        {
+            string str = "(";
+            foreach (var item in model.systemList)
+            {
+                str += "'" + item + "',";
+            }
+            str = str.Substring(0, str.Length - 1);
+            str += ")";
+            DataTable dt = new DataTable();
+            dt = SqlHelper.ExecuteDataTable("SELECT * FROM[172.21.194.214].[PCBA].[dbo].[Failuar] a JOIN [172.21.194.214].[PCBA].[dbo].[Boards] b ON a.SN = b.SN where a.TesterID in " + str);
+            Resp resp = new Resp();
+            resp.Code = 200;
+            resp.Data = dt;
+            resp.Message = "查询成功";
+            return resp;
+        }
+
+        public DateTime ConvertTime(long milliTime)
+        {
+            long timeTricks = new DateTime(1970, 1, 1).Ticks + milliTime * 10000 + TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours * 3600 * (long)10000000;
+            return new DateTime(timeTricks);
         }
 
         public class Board
@@ -66,6 +131,11 @@ namespace ApiForMinione.Controllers
             public DateTime Date { get; set; }
             public string Owner { get; set; }
 
+        }
+
+        public class SystemListModel
+        {
+            public List<string> systemList { get; set; }
         }
 
         public class Resp

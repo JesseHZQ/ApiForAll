@@ -1157,6 +1157,7 @@ namespace ApiForFOL
             #endregion
             List<FOL_Input_1_1> list = new List<FOL_Input_1_1>();
             message = Calculate7_1_Percent(version, type);
+            if (message != "Success") { return message; }
             List<FOL_Input_2_1> list_percent = dc.FOL_Input_2_1.Where(x => x.Type == type && x.Version == version).ToList();
             string GLDescription = dc.FOL_ExpenseMappingManagement_.Where(x => x.GLBPCCode == cc).FirstOrDefault().GLBPCDescription;
             try
@@ -1214,12 +1215,17 @@ namespace ApiForFOL
             string message = "";
             //Caculate percent
             List<FOL_Input_1_1> projectList1 = dc.FOL_Input_1_1.Where(x => x.Type == "1.1 Gross Sales - External($)" && x.Version == version).ToList();
+            if (projectList1.Count() == 0) { message = "1.1 is empty!"; return message; }
             List<FOL_Input_1_1> projectList2 = dc.FOL_Input_1_1.Where(x => x.Type == "1.2 Gross Sales - Interco($)" && x.Version == version).ToList();
+            if (projectList2.Count() == 0) { message = "1.2 is empty!"; return message; }
             List<FOL_Input_1_1> projectList3 = dc.FOL_Input_1_1.Where(x => x.Type == "1.3 Gross Sales - Recoveries($)" && x.Version == version).ToList();
+            if (projectList3.Count() == 0) { message = "1.3 is empty!"; return message; }
             List<FOL_Input_2_1> percentList2_1 = dc.FOL_Input_2_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
+            if (percentList2_1.Count() == 0) { message = "2.1 percent is empty!"; return message; }
             List<FOL_Input_1_1> projectList2_1 = dc.FOL_Input_1_1.Where(x => x.Type == "2.1 Std VAM % from Ops(%)" && x.Version == version).ToList();
+            if (projectList2_1.Count() == 0) { message = "2.1 forecast is empty!"; return message; }
             List<FOL_Input_1_1> projectList1_0 = dc.FOL_Input_1_1.Where(x => x.Type == "1.0 Total Sales($)" && x.Version == version).ToList();
-
+            if (projectList1_0.Count() == 0) { message = "1.0 is empty!"; return message; }
             FOL_Input_1_1 site1 = new FOL_Input_1_1();
             FOL_Input_1_1 site2 = new FOL_Input_1_1();
             FOL_Input_1_1 site3 = new FOL_Input_1_1();

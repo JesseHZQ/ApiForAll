@@ -14,7 +14,7 @@ namespace ApiForMaterialKitting.Controllers
         public Resp inRack(int rackId, int KittingId, string RackName)
         {
             int count = SqlHelper.ExecuteNonQuery("update MaterialKittingRack set kittingid = '" + KittingId + "' where id = '" + rackId + "'");
-            int ct = SqlHelper.ExecuteNonQuery("update MaterialKitting set RackName = '" + RackName + "', AssignDate = '" + DateTime.Now + "' where id = '" + KittingId + "'");
+            int ct = SqlHelper.ExecuteNonQuery("update MaterialKitting set RackName = '" + RackName + "', FinishDate = '" + DateTime.Now + "' where id = '" + KittingId + "'");
             Resp resp = new Resp();
             if (count > 0 && ct > 0)
             {

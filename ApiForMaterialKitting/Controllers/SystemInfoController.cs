@@ -152,6 +152,17 @@ namespace ApiForMaterialKitting.Controllers
             return resp;
         }
 
+        [System.Web.Http.HttpGet]
+        public Resp finishSingleAssign(int id)
+        {
+            SqlHelper.ExecuteNonQuery("update MaterialKitting set AssignDate = '" + DateTime.Now + "' where id = '" + id + "'");
+            Resp resp = new Resp();
+            resp.Code = 200;
+            resp.Data = null;
+            resp.Message = "执行成功";
+            return resp;
+        }
+
         [System.Web.Http.HttpPost]
         public Resp finishAssign(MultipleId model)
         {
@@ -215,9 +226,10 @@ namespace ApiForMaterialKitting.Controllers
             str += "<th width='80' style='border-style: solid; border-width: 1px'>Type</th>";
             str += "<th width='120' style='border-style: solid; border-width: 1px'>Customer</th>";
             str += "<th width='100' style='border-style: solid; border-width: 1px'>PO</th>";
-            str += "<th width='80' style='border-style: solid; border-width: 1px'>Station</th>";
-            str += "<th width='120' style='border-style: solid; border-width: 1px'>Demand time</th>";
-            str += "<th width='100' style='border-style: solid; border-width: 1px'>Requester</th></tr>";
+            str += "<th width='100' style='border-style: solid; border-width: 1px'>Station</th>";
+            str += "<th width='140' style='border-style: solid; border-width: 1px'>Demand time</th>";
+            str += "<th width='100' style='border-style: solid; border-width: 1px'>Requester</th>";
+            str += "<th width='140' style='border-style: solid; border-width: 1px'>Remark</th></tr>";
             str += "</thead><tbody>";
             str += "<tr style='font-size: 14px; height: 24px; text-align: center;'>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.SystemSlot + "</td>";
@@ -227,6 +239,7 @@ namespace ApiForMaterialKitting.Controllers
             str += "<td style='border-style: solid; border-width: 1px'>" + model.Station.ToUpper() + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + dt.ToLocalTime() + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + requester + "</td>";
+            str += "<td style='border-style: solid; border-width: 1px'>" + model.Remark + "</td>";
             str += "</tr>";
             str += "</tbody></table>";
             str += "<a href='http://suznt004:8082/materialkitting'>详情请点击跳转，建议使用chrome浏览器</a>";
@@ -253,9 +266,9 @@ namespace ApiForMaterialKitting.Controllers
                     "jane.zhang1@flex.com",
                     "rachel.wang2@flex.com",
                     "zhihong.zhang@flex.com",
-                    "lisa.qian@flex.com",
                     "chris.liu1@flex.com",
                     "eric.lin2@flex.com",
+                    "lisa.qian@flex.com",
                     "Jesse.He@flex.com"
                 };
                 int result = SendMail("Material-Kitting@flex.com", model.SystemSlot.Substring(0, 2) + " system 增料", list, cclist, str);

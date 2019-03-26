@@ -54,6 +54,15 @@ namespace ApiForFOL
     partial void InsertFOL_Input_3_1(FOL_Input_3_1 instance);
     partial void UpdateFOL_Input_3_1(FOL_Input_3_1 instance);
     partial void DeleteFOL_Input_3_1(FOL_Input_3_1 instance);
+    partial void InsertFOL_OutputByProject_CurFcst(FOL_OutputByProject_CurFcst instance);
+    partial void UpdateFOL_OutputByProject_CurFcst(FOL_OutputByProject_CurFcst instance);
+    partial void DeleteFOL_OutputByProject_CurFcst(FOL_OutputByProject_CurFcst instance);
+    partial void InsertFOL_OutputByProject_Actuals(FOL_OutputByProject_Actuals instance);
+    partial void UpdateFOL_OutputByProject_Actuals(FOL_OutputByProject_Actuals instance);
+    partial void DeleteFOL_OutputByProject_Actuals(FOL_OutputByProject_Actuals instance);
+    partial void InsertFOL_OutputModulesByCustomer(FOL_OutputModulesByCustomer instance);
+    partial void UpdateFOL_OutputModulesByCustomer(FOL_OutputModulesByCustomer instance);
+    partial void DeleteFOL_OutputModulesByCustomer(FOL_OutputModulesByCustomer instance);
     #endregion
 		
 		public FOLDataClassesDataContext() : 
@@ -155,6 +164,30 @@ namespace ApiForFOL
 			get
 			{
 				return this.GetTable<FOL_Input_3_1>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FOL_OutputByProject_CurFcst> FOL_OutputByProject_CurFcst
+		{
+			get
+			{
+				return this.GetTable<FOL_OutputByProject_CurFcst>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FOL_OutputByProject_Actuals> FOL_OutputByProject_Actuals
+		{
+			get
+			{
+				return this.GetTable<FOL_OutputByProject_Actuals>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FOL_OutputModulesByCustomer> FOL_OutputModulesByCustomer
+		{
+			get
+			{
+				return this.GetTable<FOL_OutputModulesByCustomer>();
 			}
 		}
 	}
@@ -5499,6 +5532,1248 @@ namespace ApiForFOL
 					this._Department = value;
 					this.SendPropertyChanged("Department");
 					this.OnDepartmentChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FOL_OutputByProject_CurFcst")]
+	public partial class FOL_OutputByProject_CurFcst : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<int> _No;
+		
+		private string _BPCCode;
+		
+		private string _BPCDescription;
+		
+		private string _ForecastDataSource;
+		
+		private int _IsForcast;
+		
+		private System.Nullable<int> _IsAct;
+		
+		private string _Isbold;
+		
+		private string _ProjectName;
+		
+		private string _Version;
+		
+		private string _Formulas;
+		
+		private System.Nullable<double> _Period1Fcst;
+		
+		private System.Nullable<double> _Period2Fcst;
+		
+		private System.Nullable<double> _Period3Fcst;
+		
+		private System.Nullable<double> _Period4Fcst;
+		
+		private System.Nullable<double> _Period5Fcst;
+		
+		private System.Nullable<double> _Period6Fcst;
+		
+		private System.Nullable<double> _Period7Fcst;
+		
+		private System.Nullable<double> _Period8Fcst;
+		
+		private System.Nullable<double> _Period9Fcst;
+		
+		private System.Nullable<double> _Period10Fcst;
+		
+		private System.Nullable<double> _Period11Fcst;
+		
+		private System.Nullable<double> _Period12Fcst;
+		
+		private System.Nullable<double> _Period13Fcst;
+		
+		private System.Nullable<double> _Period14Fcst;
+		
+		private System.Nullable<double> _Period15Fcst;
+		
+		private System.Nullable<double> _Period16Fcst;
+		
+		private System.Nullable<System.DateTime> _InsertTime;
+		
+		private string _InsertUser;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNoChanging(System.Nullable<int> value);
+    partial void OnNoChanged();
+    partial void OnBPCCodeChanging(string value);
+    partial void OnBPCCodeChanged();
+    partial void OnBPCDescriptionChanging(string value);
+    partial void OnBPCDescriptionChanged();
+    partial void OnForecastDataSourceChanging(string value);
+    partial void OnForecastDataSourceChanged();
+    partial void OnIsForcastChanging(int value);
+    partial void OnIsForcastChanged();
+    partial void OnIsActChanging(System.Nullable<int> value);
+    partial void OnIsActChanged();
+    partial void OnIsboldChanging(string value);
+    partial void OnIsboldChanged();
+    partial void OnProjectNameChanging(string value);
+    partial void OnProjectNameChanged();
+    partial void OnVersionChanging(string value);
+    partial void OnVersionChanged();
+    partial void OnFormulasChanging(string value);
+    partial void OnFormulasChanged();
+    partial void OnPeriod1FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod1FcstChanged();
+    partial void OnPeriod2FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod2FcstChanged();
+    partial void OnPeriod3FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod3FcstChanged();
+    partial void OnPeriod4FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod4FcstChanged();
+    partial void OnPeriod5FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod5FcstChanged();
+    partial void OnPeriod6FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod6FcstChanged();
+    partial void OnPeriod7FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod7FcstChanged();
+    partial void OnPeriod8FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod8FcstChanged();
+    partial void OnPeriod9FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod9FcstChanged();
+    partial void OnPeriod10FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod10FcstChanged();
+    partial void OnPeriod11FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod11FcstChanged();
+    partial void OnPeriod12FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod12FcstChanged();
+    partial void OnPeriod13FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod13FcstChanged();
+    partial void OnPeriod14FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod14FcstChanged();
+    partial void OnPeriod15FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod15FcstChanged();
+    partial void OnPeriod16FcstChanging(System.Nullable<double> value);
+    partial void OnPeriod16FcstChanged();
+    partial void OnInsertTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnInsertTimeChanged();
+    partial void OnInsertUserChanging(string value);
+    partial void OnInsertUserChanged();
+    #endregion
+		
+		public FOL_OutputByProject_CurFcst()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_No", DbType="Int")]
+		public System.Nullable<int> No
+		{
+			get
+			{
+				return this._No;
+			}
+			set
+			{
+				if ((this._No != value))
+				{
+					this.OnNoChanging(value);
+					this.SendPropertyChanging();
+					this._No = value;
+					this.SendPropertyChanged("No");
+					this.OnNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPCCode", DbType="VarChar(50)")]
+		public string BPCCode
+		{
+			get
+			{
+				return this._BPCCode;
+			}
+			set
+			{
+				if ((this._BPCCode != value))
+				{
+					this.OnBPCCodeChanging(value);
+					this.SendPropertyChanging();
+					this._BPCCode = value;
+					this.SendPropertyChanged("BPCCode");
+					this.OnBPCCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPCDescription", DbType="VarChar(500)")]
+		public string BPCDescription
+		{
+			get
+			{
+				return this._BPCDescription;
+			}
+			set
+			{
+				if ((this._BPCDescription != value))
+				{
+					this.OnBPCDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._BPCDescription = value;
+					this.SendPropertyChanged("BPCDescription");
+					this.OnBPCDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ForecastDataSource", DbType="VarChar(500)")]
+		public string ForecastDataSource
+		{
+			get
+			{
+				return this._ForecastDataSource;
+			}
+			set
+			{
+				if ((this._ForecastDataSource != value))
+				{
+					this.OnForecastDataSourceChanging(value);
+					this.SendPropertyChanging();
+					this._ForecastDataSource = value;
+					this.SendPropertyChanged("ForecastDataSource");
+					this.OnForecastDataSourceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsForcast", DbType="Int NOT NULL")]
+		public int IsForcast
+		{
+			get
+			{
+				return this._IsForcast;
+			}
+			set
+			{
+				if ((this._IsForcast != value))
+				{
+					this.OnIsForcastChanging(value);
+					this.SendPropertyChanging();
+					this._IsForcast = value;
+					this.SendPropertyChanged("IsForcast");
+					this.OnIsForcastChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAct", DbType="Int")]
+		public System.Nullable<int> IsAct
+		{
+			get
+			{
+				return this._IsAct;
+			}
+			set
+			{
+				if ((this._IsAct != value))
+				{
+					this.OnIsActChanging(value);
+					this.SendPropertyChanging();
+					this._IsAct = value;
+					this.SendPropertyChanged("IsAct");
+					this.OnIsActChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Isbold", DbType="VarChar(50)")]
+		public string Isbold
+		{
+			get
+			{
+				return this._Isbold;
+			}
+			set
+			{
+				if ((this._Isbold != value))
+				{
+					this.OnIsboldChanging(value);
+					this.SendPropertyChanging();
+					this._Isbold = value;
+					this.SendPropertyChanged("Isbold");
+					this.OnIsboldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectName", DbType="VarChar(500)")]
+		public string ProjectName
+		{
+			get
+			{
+				return this._ProjectName;
+			}
+			set
+			{
+				if ((this._ProjectName != value))
+				{
+					this.OnProjectNameChanging(value);
+					this.SendPropertyChanging();
+					this._ProjectName = value;
+					this.SendPropertyChanged("ProjectName");
+					this.OnProjectNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Version", DbType="VarChar(500)")]
+		public string Version
+		{
+			get
+			{
+				return this._Version;
+			}
+			set
+			{
+				if ((this._Version != value))
+				{
+					this.OnVersionChanging(value);
+					this.SendPropertyChanging();
+					this._Version = value;
+					this.SendPropertyChanged("Version");
+					this.OnVersionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Formulas", DbType="VarChar(500)")]
+		public string Formulas
+		{
+			get
+			{
+				return this._Formulas;
+			}
+			set
+			{
+				if ((this._Formulas != value))
+				{
+					this.OnFormulasChanging(value);
+					this.SendPropertyChanging();
+					this._Formulas = value;
+					this.SendPropertyChanged("Formulas");
+					this.OnFormulasChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period1Fcst", DbType="Float")]
+		public System.Nullable<double> Period1Fcst
+		{
+			get
+			{
+				return this._Period1Fcst;
+			}
+			set
+			{
+				if ((this._Period1Fcst != value))
+				{
+					this.OnPeriod1FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period1Fcst = value;
+					this.SendPropertyChanged("Period1Fcst");
+					this.OnPeriod1FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period2Fcst", DbType="Float")]
+		public System.Nullable<double> Period2Fcst
+		{
+			get
+			{
+				return this._Period2Fcst;
+			}
+			set
+			{
+				if ((this._Period2Fcst != value))
+				{
+					this.OnPeriod2FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period2Fcst = value;
+					this.SendPropertyChanged("Period2Fcst");
+					this.OnPeriod2FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period3Fcst", DbType="Float")]
+		public System.Nullable<double> Period3Fcst
+		{
+			get
+			{
+				return this._Period3Fcst;
+			}
+			set
+			{
+				if ((this._Period3Fcst != value))
+				{
+					this.OnPeriod3FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period3Fcst = value;
+					this.SendPropertyChanged("Period3Fcst");
+					this.OnPeriod3FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period4Fcst", DbType="Float")]
+		public System.Nullable<double> Period4Fcst
+		{
+			get
+			{
+				return this._Period4Fcst;
+			}
+			set
+			{
+				if ((this._Period4Fcst != value))
+				{
+					this.OnPeriod4FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period4Fcst = value;
+					this.SendPropertyChanged("Period4Fcst");
+					this.OnPeriod4FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period5Fcst", DbType="Float")]
+		public System.Nullable<double> Period5Fcst
+		{
+			get
+			{
+				return this._Period5Fcst;
+			}
+			set
+			{
+				if ((this._Period5Fcst != value))
+				{
+					this.OnPeriod5FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period5Fcst = value;
+					this.SendPropertyChanged("Period5Fcst");
+					this.OnPeriod5FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period6Fcst", DbType="Float")]
+		public System.Nullable<double> Period6Fcst
+		{
+			get
+			{
+				return this._Period6Fcst;
+			}
+			set
+			{
+				if ((this._Period6Fcst != value))
+				{
+					this.OnPeriod6FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period6Fcst = value;
+					this.SendPropertyChanged("Period6Fcst");
+					this.OnPeriod6FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period7Fcst", DbType="Float")]
+		public System.Nullable<double> Period7Fcst
+		{
+			get
+			{
+				return this._Period7Fcst;
+			}
+			set
+			{
+				if ((this._Period7Fcst != value))
+				{
+					this.OnPeriod7FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period7Fcst = value;
+					this.SendPropertyChanged("Period7Fcst");
+					this.OnPeriod7FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period8Fcst", DbType="Float")]
+		public System.Nullable<double> Period8Fcst
+		{
+			get
+			{
+				return this._Period8Fcst;
+			}
+			set
+			{
+				if ((this._Period8Fcst != value))
+				{
+					this.OnPeriod8FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period8Fcst = value;
+					this.SendPropertyChanged("Period8Fcst");
+					this.OnPeriod8FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period9Fcst", DbType="Float")]
+		public System.Nullable<double> Period9Fcst
+		{
+			get
+			{
+				return this._Period9Fcst;
+			}
+			set
+			{
+				if ((this._Period9Fcst != value))
+				{
+					this.OnPeriod9FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period9Fcst = value;
+					this.SendPropertyChanged("Period9Fcst");
+					this.OnPeriod9FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period10Fcst", DbType="Float")]
+		public System.Nullable<double> Period10Fcst
+		{
+			get
+			{
+				return this._Period10Fcst;
+			}
+			set
+			{
+				if ((this._Period10Fcst != value))
+				{
+					this.OnPeriod10FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period10Fcst = value;
+					this.SendPropertyChanged("Period10Fcst");
+					this.OnPeriod10FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period11Fcst", DbType="Float")]
+		public System.Nullable<double> Period11Fcst
+		{
+			get
+			{
+				return this._Period11Fcst;
+			}
+			set
+			{
+				if ((this._Period11Fcst != value))
+				{
+					this.OnPeriod11FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period11Fcst = value;
+					this.SendPropertyChanged("Period11Fcst");
+					this.OnPeriod11FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period12Fcst", DbType="Float")]
+		public System.Nullable<double> Period12Fcst
+		{
+			get
+			{
+				return this._Period12Fcst;
+			}
+			set
+			{
+				if ((this._Period12Fcst != value))
+				{
+					this.OnPeriod12FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period12Fcst = value;
+					this.SendPropertyChanged("Period12Fcst");
+					this.OnPeriod12FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period13Fcst", DbType="Float")]
+		public System.Nullable<double> Period13Fcst
+		{
+			get
+			{
+				return this._Period13Fcst;
+			}
+			set
+			{
+				if ((this._Period13Fcst != value))
+				{
+					this.OnPeriod13FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period13Fcst = value;
+					this.SendPropertyChanged("Period13Fcst");
+					this.OnPeriod13FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period14Fcst", DbType="Float")]
+		public System.Nullable<double> Period14Fcst
+		{
+			get
+			{
+				return this._Period14Fcst;
+			}
+			set
+			{
+				if ((this._Period14Fcst != value))
+				{
+					this.OnPeriod14FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period14Fcst = value;
+					this.SendPropertyChanged("Period14Fcst");
+					this.OnPeriod14FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period15Fcst", DbType="Float")]
+		public System.Nullable<double> Period15Fcst
+		{
+			get
+			{
+				return this._Period15Fcst;
+			}
+			set
+			{
+				if ((this._Period15Fcst != value))
+				{
+					this.OnPeriod15FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period15Fcst = value;
+					this.SendPropertyChanged("Period15Fcst");
+					this.OnPeriod15FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period16Fcst", DbType="Float")]
+		public System.Nullable<double> Period16Fcst
+		{
+			get
+			{
+				return this._Period16Fcst;
+			}
+			set
+			{
+				if ((this._Period16Fcst != value))
+				{
+					this.OnPeriod16FcstChanging(value);
+					this.SendPropertyChanging();
+					this._Period16Fcst = value;
+					this.SendPropertyChanged("Period16Fcst");
+					this.OnPeriod16FcstChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> InsertTime
+		{
+			get
+			{
+				return this._InsertTime;
+			}
+			set
+			{
+				if ((this._InsertTime != value))
+				{
+					this.OnInsertTimeChanging(value);
+					this.SendPropertyChanging();
+					this._InsertTime = value;
+					this.SendPropertyChanged("InsertTime");
+					this.OnInsertTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertUser", DbType="VarChar(500)")]
+		public string InsertUser
+		{
+			get
+			{
+				return this._InsertUser;
+			}
+			set
+			{
+				if ((this._InsertUser != value))
+				{
+					this.OnInsertUserChanging(value);
+					this.SendPropertyChanging();
+					this._InsertUser = value;
+					this.SendPropertyChanged("InsertUser");
+					this.OnInsertUserChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FOL_OutputByProject_Actuals")]
+	public partial class FOL_OutputByProject_Actuals : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Version;
+		
+		private string _BU;
+		
+		private string _Value;
+		
+		private string _Project;
+		
+		private string _Type;
+		
+		private string _FileType;
+		
+		private string _InsertTime;
+		
+		private string _InsertUser;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnVersionChanging(string value);
+    partial void OnVersionChanged();
+    partial void OnBUChanging(string value);
+    partial void OnBUChanged();
+    partial void OnValueChanging(string value);
+    partial void OnValueChanged();
+    partial void OnProjectChanging(string value);
+    partial void OnProjectChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnFileTypeChanging(string value);
+    partial void OnFileTypeChanged();
+    partial void OnInsertTimeChanging(string value);
+    partial void OnInsertTimeChanged();
+    partial void OnInsertUserChanging(string value);
+    partial void OnInsertUserChanged();
+    #endregion
+		
+		public FOL_OutputByProject_Actuals()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Version", DbType="VarChar(50)")]
+		public string Version
+		{
+			get
+			{
+				return this._Version;
+			}
+			set
+			{
+				if ((this._Version != value))
+				{
+					this.OnVersionChanging(value);
+					this.SendPropertyChanging();
+					this._Version = value;
+					this.SendPropertyChanged("Version");
+					this.OnVersionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BU", DbType="VarChar(50)")]
+		public string BU
+		{
+			get
+			{
+				return this._BU;
+			}
+			set
+			{
+				if ((this._BU != value))
+				{
+					this.OnBUChanging(value);
+					this.SendPropertyChanging();
+					this._BU = value;
+					this.SendPropertyChanged("BU");
+					this.OnBUChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="VarChar(MAX)")]
+		public string Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Project", DbType="VarChar(500)")]
+		public string Project
+		{
+			get
+			{
+				return this._Project;
+			}
+			set
+			{
+				if ((this._Project != value))
+				{
+					this.OnProjectChanging(value);
+					this.SendPropertyChanging();
+					this._Project = value;
+					this.SendPropertyChanged("Project");
+					this.OnProjectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(500)")]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileType", DbType="VarChar(500)")]
+		public string FileType
+		{
+			get
+			{
+				return this._FileType;
+			}
+			set
+			{
+				if ((this._FileType != value))
+				{
+					this.OnFileTypeChanging(value);
+					this.SendPropertyChanging();
+					this._FileType = value;
+					this.SendPropertyChanged("FileType");
+					this.OnFileTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertTime", DbType="VarChar(500)")]
+		public string InsertTime
+		{
+			get
+			{
+				return this._InsertTime;
+			}
+			set
+			{
+				if ((this._InsertTime != value))
+				{
+					this.OnInsertTimeChanging(value);
+					this.SendPropertyChanging();
+					this._InsertTime = value;
+					this.SendPropertyChanged("InsertTime");
+					this.OnInsertTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsertUser", DbType="VarChar(500)")]
+		public string InsertUser
+		{
+			get
+			{
+				return this._InsertUser;
+			}
+			set
+			{
+				if ((this._InsertUser != value))
+				{
+					this.OnInsertUserChanging(value);
+					this.SendPropertyChanging();
+					this._InsertUser = value;
+					this.SendPropertyChanged("InsertUser");
+					this.OnInsertUserChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FOL_OutputModulesByCustomer")]
+	public partial class FOL_OutputModulesByCustomer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<int> _No;
+		
+		private string _BPCCode;
+		
+		private string _BPCDescription;
+		
+		private string _ForecastDataSource;
+		
+		private int _IsForcast;
+		
+		private System.Nullable<int> _IsAct;
+		
+		private string _Formulas;
+		
+		private string _Remark;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNoChanging(System.Nullable<int> value);
+    partial void OnNoChanged();
+    partial void OnBPCCodeChanging(string value);
+    partial void OnBPCCodeChanged();
+    partial void OnBPCDescriptionChanging(string value);
+    partial void OnBPCDescriptionChanged();
+    partial void OnForecastDataSourceChanging(string value);
+    partial void OnForecastDataSourceChanged();
+    partial void OnIsForcastChanging(int value);
+    partial void OnIsForcastChanged();
+    partial void OnIsActChanging(System.Nullable<int> value);
+    partial void OnIsActChanged();
+    partial void OnFormulasChanging(string value);
+    partial void OnFormulasChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    #endregion
+		
+		public FOL_OutputModulesByCustomer()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_No", DbType="Int")]
+		public System.Nullable<int> No
+		{
+			get
+			{
+				return this._No;
+			}
+			set
+			{
+				if ((this._No != value))
+				{
+					this.OnNoChanging(value);
+					this.SendPropertyChanging();
+					this._No = value;
+					this.SendPropertyChanged("No");
+					this.OnNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPCCode", DbType="VarChar(50)")]
+		public string BPCCode
+		{
+			get
+			{
+				return this._BPCCode;
+			}
+			set
+			{
+				if ((this._BPCCode != value))
+				{
+					this.OnBPCCodeChanging(value);
+					this.SendPropertyChanging();
+					this._BPCCode = value;
+					this.SendPropertyChanged("BPCCode");
+					this.OnBPCCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPCDescription", DbType="VarChar(500)")]
+		public string BPCDescription
+		{
+			get
+			{
+				return this._BPCDescription;
+			}
+			set
+			{
+				if ((this._BPCDescription != value))
+				{
+					this.OnBPCDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._BPCDescription = value;
+					this.SendPropertyChanged("BPCDescription");
+					this.OnBPCDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ForecastDataSource", DbType="VarChar(500)")]
+		public string ForecastDataSource
+		{
+			get
+			{
+				return this._ForecastDataSource;
+			}
+			set
+			{
+				if ((this._ForecastDataSource != value))
+				{
+					this.OnForecastDataSourceChanging(value);
+					this.SendPropertyChanging();
+					this._ForecastDataSource = value;
+					this.SendPropertyChanged("ForecastDataSource");
+					this.OnForecastDataSourceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsForcast", DbType="Int NOT NULL")]
+		public int IsForcast
+		{
+			get
+			{
+				return this._IsForcast;
+			}
+			set
+			{
+				if ((this._IsForcast != value))
+				{
+					this.OnIsForcastChanging(value);
+					this.SendPropertyChanging();
+					this._IsForcast = value;
+					this.SendPropertyChanged("IsForcast");
+					this.OnIsForcastChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAct", DbType="Int")]
+		public System.Nullable<int> IsAct
+		{
+			get
+			{
+				return this._IsAct;
+			}
+			set
+			{
+				if ((this._IsAct != value))
+				{
+					this.OnIsActChanging(value);
+					this.SendPropertyChanging();
+					this._IsAct = value;
+					this.SendPropertyChanged("IsAct");
+					this.OnIsActChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Formulas", DbType="VarChar(500)")]
+		public string Formulas
+		{
+			get
+			{
+				return this._Formulas;
+			}
+			set
+			{
+				if ((this._Formulas != value))
+				{
+					this.OnFormulasChanging(value);
+					this.SendPropertyChanging();
+					this._Formulas = value;
+					this.SendPropertyChanged("Formulas");
+					this.OnFormulasChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
 				}
 			}
 		}

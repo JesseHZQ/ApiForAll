@@ -250,4 +250,63 @@
       <Column Name="Department" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.FOL_OutputByProject_CurFcst" Member="FOL_OutputByProject_CurFcst">
+    <Type Name="FOL_OutputByProject_CurFcst">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BPCCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BPCDescription" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ForecastDataSource" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="IsForcast" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsAct" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Isbold" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ProjectName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Formulas" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Period1Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period2Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period3Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period4Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period5Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period6Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period7Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period8Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period9Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period10Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period11Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period12Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period13Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period14Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period15Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Period16Fcst" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="InsertTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="InsertUser" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FOL_OutputByProject_Actuals" Member="FOL_OutputByProject_Actuals">
+    <Type Name="FOL_OutputByProject_Actuals">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Project" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FileType" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="InsertTime" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="InsertUser" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FOL_OutputModulesByCustomer" Member="FOL_OutputModulesByCustomer">
+    <Type Name="FOL_OutputModulesByCustomer">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BPCCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BPCDescription" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ForecastDataSource" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="IsForcast" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsAct" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Formulas" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

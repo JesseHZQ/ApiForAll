@@ -25,12 +25,6 @@ namespace ApiForFOL.Controllers
             {
                 dt1 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_6_0_TotalMOH] where version= '" + version + " ' and type like '%" + type + "%' and Department ='" + cc + "'");
             }
-            else if (type == "6.1 IDL(%&#)")
-            {
-                dt1 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_1_1] where version= '" + version + " ' and type like '%" + type + "%' and Department ='" + cc + "'");
-                dt2 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_2_1] where version= '" + version + " ' and type like '%" + type + "%' and Department ='" + cc + "'");
-                dt3 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_3_1] where version= '" + version + " ' and type like '%" + type + "%' and Department ='" + cc + "'");
-            }
             else
             {
                 dt1 = SqlHelper.ExecuteDataTable("select * from [test1].[dbo].[FOL_Input_1_1] where version= '" + version + " ' and type like '%" + type + "%'");
@@ -150,6 +144,10 @@ namespace ApiForFOL.Controllers
             {
                 message = fi.Calculate6_2(version, type);
             }
+            else if (type == "7.1 G.A.(%)" || type == "7.2 S.M.(%)")
+            {
+                message = fi.Calculate7_1(version, type, cc);
+            }
             else
             {
                 switch (type)
@@ -181,7 +179,6 @@ namespace ApiForFOL.Controllers
                     case "6.1 IDL(%&#)":
                         message = fi.Calculate6_1(version, type, cc);
                         break;
-
                     //case "8.0 Corp. Alloc.(%)":
                     //    message = fi.Calculate8_0(version, type);
                     //    break;

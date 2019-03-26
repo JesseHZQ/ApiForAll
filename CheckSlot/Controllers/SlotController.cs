@@ -53,6 +53,11 @@ namespace CheckSlot.Controllers
             return resp;
         }
 
+        [System.Web.Http.HttpGet]
+        public void sendMail()
+        {
+            MailTask.SendMail();
+        }
     }
 
     public class Resp
