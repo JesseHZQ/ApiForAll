@@ -48,6 +48,7 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\roslyn\vb
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\roslyn\vbc.rsp
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\roslyn\VBCSCompiler.exe
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\AipSdk.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\Antlr3.Runtime.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\Microsoft.AI.DependencyCollector.dll
@@ -105,4 +106,3 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\obj\Debug\Api
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\obj\Debug\ApiForMinioneMiscShipping.csproj.CopyComplete
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\obj\Debug\ApiForMinioneMiscShipping.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\obj\Debug\ApiForMinioneMiscShipping.pdb
-C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMinioneMiscShipping\bin\AipSdk.dll

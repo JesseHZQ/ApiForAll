@@ -65,11 +65,11 @@ namespace ApiForMaterialKitting.Controllers
             int wk = GetWeekOfYear(DateTime.Now) + 3;
             if (type == "all")
             {
-                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join SummaryH b on b.SystemSlot = a.Slot order by DemandDate");
+                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join (select SystemSlot, PO, Lock from SummaryH union select SystemSlot, PO, Lock from SummaryHIM) b on b.SystemSlot = a.Slot where b.Lock = 0 order by DemandDate");
             }
             else
             {
-                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join SummaryH b on b.SystemSlot = a.Slot where a.station = '" + type + "' order by DemandDate");
+                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join (select SystemSlot, PO, Lock from SummaryH union select SystemSlot, PO, Lock from SummaryHIM) b on b.SystemSlot = a.Slot where a.station = '" + type + "' and b.Lock = 0 order by DemandDate");
             }
             Resp resp = new Resp();
             resp.Code = 200;

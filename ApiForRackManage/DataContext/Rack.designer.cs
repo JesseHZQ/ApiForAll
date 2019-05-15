@@ -39,6 +39,15 @@ namespace ApiForRackManage.DataContext
     partial void InsertRack(Rack instance);
     partial void UpdateRack(Rack instance);
     partial void DeleteRack(Rack instance);
+    partial void InsertInstrument(Instrument instance);
+    partial void UpdateInstrument(Instrument instance);
+    partial void DeleteInstrument(Instrument instance);
+    partial void InsertJ750(J750 instance);
+    partial void UpdateJ750(J750 instance);
+    partial void DeleteJ750(J750 instance);
+    partial void InsertJ750_Board(J750_Board instance);
+    partial void UpdateJ750_Board(J750_Board instance);
+    partial void DeleteJ750_Board(J750_Board instance);
     #endregion
 		
 		public RackDataContext() : 
@@ -92,6 +101,30 @@ namespace ApiForRackManage.DataContext
 			get
 			{
 				return this.GetTable<Rack>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Instrument> Instrument
+		{
+			get
+			{
+				return this.GetTable<Instrument>();
+			}
+		}
+		
+		public System.Data.Linq.Table<J750> J750
+		{
+			get
+			{
+				return this.GetTable<J750>();
+			}
+		}
+		
+		public System.Data.Linq.Table<J750_Board> J750_Board
+		{
+			get
+			{
+				return this.GetTable<J750_Board>();
 			}
 		}
 	}
@@ -713,6 +746,1152 @@ namespace ApiForRackManage.DataContext
 					this._Command = value;
 					this.SendPropertyChanged("Command");
 					this.OnCommandChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Instrument")]
+	public partial class Instrument : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _PN;
+		
+		private string _DES;
+		
+		private string _MFR;
+		
+		private string _OTC;
+		
+		private System.Nullable<int> _DAY;
+		
+		private System.Nullable<int> _R;
+		
+		private System.Nullable<int> _Y;
+		
+		private System.Nullable<int> _G;
+		
+		private System.Nullable<int> _ARQ;
+		
+		private System.Nullable<int> _QTY;
+		
+		private string _TYPE;
+		
+		private int _ID;
+		
+		private System.Nullable<int> _BI;
+		
+		private string _Remark;
+		
+		private string _RemarkBy;
+		
+		private System.Nullable<bool> _SendMail;
+		
+		private System.Nullable<int> _MOQ;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPNChanging(string value);
+    partial void OnPNChanged();
+    partial void OnDESChanging(string value);
+    partial void OnDESChanged();
+    partial void OnMFRChanging(string value);
+    partial void OnMFRChanged();
+    partial void OnOTCChanging(string value);
+    partial void OnOTCChanged();
+    partial void OnDAYChanging(System.Nullable<int> value);
+    partial void OnDAYChanged();
+    partial void OnRChanging(System.Nullable<int> value);
+    partial void OnRChanged();
+    partial void OnYChanging(System.Nullable<int> value);
+    partial void OnYChanged();
+    partial void OnGChanging(System.Nullable<int> value);
+    partial void OnGChanged();
+    partial void OnARQChanging(System.Nullable<int> value);
+    partial void OnARQChanged();
+    partial void OnQTYChanging(System.Nullable<int> value);
+    partial void OnQTYChanged();
+    partial void OnTYPEChanging(string value);
+    partial void OnTYPEChanged();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnBIChanging(System.Nullable<int> value);
+    partial void OnBIChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnRemarkByChanging(string value);
+    partial void OnRemarkByChanged();
+    partial void OnSendMailChanging(System.Nullable<bool> value);
+    partial void OnSendMailChanged();
+    partial void OnMOQChanging(System.Nullable<int> value);
+    partial void OnMOQChanged();
+    #endregion
+		
+		public Instrument()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PN", DbType="NVarChar(50)")]
+		public string PN
+		{
+			get
+			{
+				return this._PN;
+			}
+			set
+			{
+				if ((this._PN != value))
+				{
+					this.OnPNChanging(value);
+					this.SendPropertyChanging();
+					this._PN = value;
+					this.SendPropertyChanged("PN");
+					this.OnPNChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DES", DbType="NVarChar(200)")]
+		public string DES
+		{
+			get
+			{
+				return this._DES;
+			}
+			set
+			{
+				if ((this._DES != value))
+				{
+					this.OnDESChanging(value);
+					this.SendPropertyChanging();
+					this._DES = value;
+					this.SendPropertyChanged("DES");
+					this.OnDESChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MFR", DbType="NVarChar(200)")]
+		public string MFR
+		{
+			get
+			{
+				return this._MFR;
+			}
+			set
+			{
+				if ((this._MFR != value))
+				{
+					this.OnMFRChanging(value);
+					this.SendPropertyChanging();
+					this._MFR = value;
+					this.SendPropertyChanged("MFR");
+					this.OnMFRChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OTC", DbType="NVarChar(200)")]
+		public string OTC
+		{
+			get
+			{
+				return this._OTC;
+			}
+			set
+			{
+				if ((this._OTC != value))
+				{
+					this.OnOTCChanging(value);
+					this.SendPropertyChanging();
+					this._OTC = value;
+					this.SendPropertyChanged("OTC");
+					this.OnOTCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DAY", DbType="Int")]
+		public System.Nullable<int> DAY
+		{
+			get
+			{
+				return this._DAY;
+			}
+			set
+			{
+				if ((this._DAY != value))
+				{
+					this.OnDAYChanging(value);
+					this.SendPropertyChanging();
+					this._DAY = value;
+					this.SendPropertyChanged("DAY");
+					this.OnDAYChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_R", DbType="Int")]
+		public System.Nullable<int> R
+		{
+			get
+			{
+				return this._R;
+			}
+			set
+			{
+				if ((this._R != value))
+				{
+					this.OnRChanging(value);
+					this.SendPropertyChanging();
+					this._R = value;
+					this.SendPropertyChanged("R");
+					this.OnRChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Y", DbType="Int")]
+		public System.Nullable<int> Y
+		{
+			get
+			{
+				return this._Y;
+			}
+			set
+			{
+				if ((this._Y != value))
+				{
+					this.OnYChanging(value);
+					this.SendPropertyChanging();
+					this._Y = value;
+					this.SendPropertyChanged("Y");
+					this.OnYChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_G", DbType="Int")]
+		public System.Nullable<int> G
+		{
+			get
+			{
+				return this._G;
+			}
+			set
+			{
+				if ((this._G != value))
+				{
+					this.OnGChanging(value);
+					this.SendPropertyChanging();
+					this._G = value;
+					this.SendPropertyChanged("G");
+					this.OnGChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARQ", DbType="Int")]
+		public System.Nullable<int> ARQ
+		{
+			get
+			{
+				return this._ARQ;
+			}
+			set
+			{
+				if ((this._ARQ != value))
+				{
+					this.OnARQChanging(value);
+					this.SendPropertyChanging();
+					this._ARQ = value;
+					this.SendPropertyChanged("ARQ");
+					this.OnARQChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QTY", DbType="Int")]
+		public System.Nullable<int> QTY
+		{
+			get
+			{
+				return this._QTY;
+			}
+			set
+			{
+				if ((this._QTY != value))
+				{
+					this.OnQTYChanging(value);
+					this.SendPropertyChanging();
+					this._QTY = value;
+					this.SendPropertyChanged("QTY");
+					this.OnQTYChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TYPE", DbType="NVarChar(50)")]
+		public string TYPE
+		{
+			get
+			{
+				return this._TYPE;
+			}
+			set
+			{
+				if ((this._TYPE != value))
+				{
+					this.OnTYPEChanging(value);
+					this.SendPropertyChanging();
+					this._TYPE = value;
+					this.SendPropertyChanged("TYPE");
+					this.OnTYPEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BI", DbType="Int")]
+		public System.Nullable<int> BI
+		{
+			get
+			{
+				return this._BI;
+			}
+			set
+			{
+				if ((this._BI != value))
+				{
+					this.OnBIChanging(value);
+					this.SendPropertyChanging();
+					this._BI = value;
+					this.SendPropertyChanged("BI");
+					this.OnBIChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemarkBy", DbType="NVarChar(50)")]
+		public string RemarkBy
+		{
+			get
+			{
+				return this._RemarkBy;
+			}
+			set
+			{
+				if ((this._RemarkBy != value))
+				{
+					this.OnRemarkByChanging(value);
+					this.SendPropertyChanging();
+					this._RemarkBy = value;
+					this.SendPropertyChanged("RemarkBy");
+					this.OnRemarkByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendMail", DbType="Bit")]
+		public System.Nullable<bool> SendMail
+		{
+			get
+			{
+				return this._SendMail;
+			}
+			set
+			{
+				if ((this._SendMail != value))
+				{
+					this.OnSendMailChanging(value);
+					this.SendPropertyChanging();
+					this._SendMail = value;
+					this.SendPropertyChanged("SendMail");
+					this.OnSendMailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MOQ", DbType="Int")]
+		public System.Nullable<int> MOQ
+		{
+			get
+			{
+				return this._MOQ;
+			}
+			set
+			{
+				if ((this._MOQ != value))
+				{
+					this.OnMOQChanging(value);
+					this.SendPropertyChanging();
+					this._MOQ = value;
+					this.SendPropertyChanged("MOQ");
+					this.OnMOQChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.J750")]
+	public partial class J750 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _PN;
+		
+		private string _DES;
+		
+		private string _MFR;
+		
+		private string _OTC;
+		
+		private System.Nullable<int> _DAY;
+		
+		private System.Nullable<int> _ARQ;
+		
+		private System.Nullable<int> _QTY;
+		
+		private int _ID;
+		
+		private System.Nullable<int> _BI;
+		
+		private string _Remark;
+		
+		private string _RemarkBy;
+		
+		private System.Nullable<bool> _SendMail;
+		
+		private System.Nullable<int> _MOQ;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPNChanging(string value);
+    partial void OnPNChanged();
+    partial void OnDESChanging(string value);
+    partial void OnDESChanged();
+    partial void OnMFRChanging(string value);
+    partial void OnMFRChanged();
+    partial void OnOTCChanging(string value);
+    partial void OnOTCChanged();
+    partial void OnDAYChanging(System.Nullable<int> value);
+    partial void OnDAYChanged();
+    partial void OnARQChanging(System.Nullable<int> value);
+    partial void OnARQChanged();
+    partial void OnQTYChanging(System.Nullable<int> value);
+    partial void OnQTYChanged();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnBIChanging(System.Nullable<int> value);
+    partial void OnBIChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnRemarkByChanging(string value);
+    partial void OnRemarkByChanged();
+    partial void OnSendMailChanging(System.Nullable<bool> value);
+    partial void OnSendMailChanged();
+    partial void OnMOQChanging(System.Nullable<int> value);
+    partial void OnMOQChanged();
+    #endregion
+		
+		public J750()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PN", DbType="NVarChar(50)")]
+		public string PN
+		{
+			get
+			{
+				return this._PN;
+			}
+			set
+			{
+				if ((this._PN != value))
+				{
+					this.OnPNChanging(value);
+					this.SendPropertyChanging();
+					this._PN = value;
+					this.SendPropertyChanged("PN");
+					this.OnPNChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DES", DbType="NVarChar(200)")]
+		public string DES
+		{
+			get
+			{
+				return this._DES;
+			}
+			set
+			{
+				if ((this._DES != value))
+				{
+					this.OnDESChanging(value);
+					this.SendPropertyChanging();
+					this._DES = value;
+					this.SendPropertyChanged("DES");
+					this.OnDESChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MFR", DbType="NVarChar(200)")]
+		public string MFR
+		{
+			get
+			{
+				return this._MFR;
+			}
+			set
+			{
+				if ((this._MFR != value))
+				{
+					this.OnMFRChanging(value);
+					this.SendPropertyChanging();
+					this._MFR = value;
+					this.SendPropertyChanged("MFR");
+					this.OnMFRChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OTC", DbType="NVarChar(200)")]
+		public string OTC
+		{
+			get
+			{
+				return this._OTC;
+			}
+			set
+			{
+				if ((this._OTC != value))
+				{
+					this.OnOTCChanging(value);
+					this.SendPropertyChanging();
+					this._OTC = value;
+					this.SendPropertyChanged("OTC");
+					this.OnOTCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DAY", DbType="Int")]
+		public System.Nullable<int> DAY
+		{
+			get
+			{
+				return this._DAY;
+			}
+			set
+			{
+				if ((this._DAY != value))
+				{
+					this.OnDAYChanging(value);
+					this.SendPropertyChanging();
+					this._DAY = value;
+					this.SendPropertyChanged("DAY");
+					this.OnDAYChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARQ", DbType="Int")]
+		public System.Nullable<int> ARQ
+		{
+			get
+			{
+				return this._ARQ;
+			}
+			set
+			{
+				if ((this._ARQ != value))
+				{
+					this.OnARQChanging(value);
+					this.SendPropertyChanging();
+					this._ARQ = value;
+					this.SendPropertyChanged("ARQ");
+					this.OnARQChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QTY", DbType="Int")]
+		public System.Nullable<int> QTY
+		{
+			get
+			{
+				return this._QTY;
+			}
+			set
+			{
+				if ((this._QTY != value))
+				{
+					this.OnQTYChanging(value);
+					this.SendPropertyChanging();
+					this._QTY = value;
+					this.SendPropertyChanged("QTY");
+					this.OnQTYChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BI", DbType="Int")]
+		public System.Nullable<int> BI
+		{
+			get
+			{
+				return this._BI;
+			}
+			set
+			{
+				if ((this._BI != value))
+				{
+					this.OnBIChanging(value);
+					this.SendPropertyChanging();
+					this._BI = value;
+					this.SendPropertyChanged("BI");
+					this.OnBIChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemarkBy", DbType="NVarChar(50)")]
+		public string RemarkBy
+		{
+			get
+			{
+				return this._RemarkBy;
+			}
+			set
+			{
+				if ((this._RemarkBy != value))
+				{
+					this.OnRemarkByChanging(value);
+					this.SendPropertyChanging();
+					this._RemarkBy = value;
+					this.SendPropertyChanged("RemarkBy");
+					this.OnRemarkByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendMail", DbType="Bit")]
+		public System.Nullable<bool> SendMail
+		{
+			get
+			{
+				return this._SendMail;
+			}
+			set
+			{
+				if ((this._SendMail != value))
+				{
+					this.OnSendMailChanging(value);
+					this.SendPropertyChanging();
+					this._SendMail = value;
+					this.SendPropertyChanged("SendMail");
+					this.OnSendMailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MOQ", DbType="Int")]
+		public System.Nullable<int> MOQ
+		{
+			get
+			{
+				return this._MOQ;
+			}
+			set
+			{
+				if ((this._MOQ != value))
+				{
+					this.OnMOQChanging(value);
+					this.SendPropertyChanging();
+					this._MOQ = value;
+					this.SendPropertyChanged("MOQ");
+					this.OnMOQChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.J750_Board")]
+	public partial class J750_Board : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _PN;
+		
+		private string _DES;
+		
+		private string _MFR;
+		
+		private string _OTC;
+		
+		private System.Nullable<int> _DAY;
+		
+		private System.Nullable<int> _ARQ;
+		
+		private System.Nullable<int> _QTY;
+		
+		private int _ID;
+		
+		private System.Nullable<int> _BI;
+		
+		private string _Remark;
+		
+		private string _RemarkBy;
+		
+		private System.Nullable<bool> _SendMail;
+		
+		private System.Nullable<int> _MOQ;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPNChanging(string value);
+    partial void OnPNChanged();
+    partial void OnDESChanging(string value);
+    partial void OnDESChanged();
+    partial void OnMFRChanging(string value);
+    partial void OnMFRChanged();
+    partial void OnOTCChanging(string value);
+    partial void OnOTCChanged();
+    partial void OnDAYChanging(System.Nullable<int> value);
+    partial void OnDAYChanged();
+    partial void OnARQChanging(System.Nullable<int> value);
+    partial void OnARQChanged();
+    partial void OnQTYChanging(System.Nullable<int> value);
+    partial void OnQTYChanged();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnBIChanging(System.Nullable<int> value);
+    partial void OnBIChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnRemarkByChanging(string value);
+    partial void OnRemarkByChanged();
+    partial void OnSendMailChanging(System.Nullable<bool> value);
+    partial void OnSendMailChanged();
+    partial void OnMOQChanging(System.Nullable<int> value);
+    partial void OnMOQChanged();
+    #endregion
+		
+		public J750_Board()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PN", DbType="NVarChar(50)")]
+		public string PN
+		{
+			get
+			{
+				return this._PN;
+			}
+			set
+			{
+				if ((this._PN != value))
+				{
+					this.OnPNChanging(value);
+					this.SendPropertyChanging();
+					this._PN = value;
+					this.SendPropertyChanged("PN");
+					this.OnPNChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DES", DbType="NVarChar(200)")]
+		public string DES
+		{
+			get
+			{
+				return this._DES;
+			}
+			set
+			{
+				if ((this._DES != value))
+				{
+					this.OnDESChanging(value);
+					this.SendPropertyChanging();
+					this._DES = value;
+					this.SendPropertyChanged("DES");
+					this.OnDESChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MFR", DbType="NVarChar(200)")]
+		public string MFR
+		{
+			get
+			{
+				return this._MFR;
+			}
+			set
+			{
+				if ((this._MFR != value))
+				{
+					this.OnMFRChanging(value);
+					this.SendPropertyChanging();
+					this._MFR = value;
+					this.SendPropertyChanged("MFR");
+					this.OnMFRChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OTC", DbType="NVarChar(200)")]
+		public string OTC
+		{
+			get
+			{
+				return this._OTC;
+			}
+			set
+			{
+				if ((this._OTC != value))
+				{
+					this.OnOTCChanging(value);
+					this.SendPropertyChanging();
+					this._OTC = value;
+					this.SendPropertyChanged("OTC");
+					this.OnOTCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DAY", DbType="Int")]
+		public System.Nullable<int> DAY
+		{
+			get
+			{
+				return this._DAY;
+			}
+			set
+			{
+				if ((this._DAY != value))
+				{
+					this.OnDAYChanging(value);
+					this.SendPropertyChanging();
+					this._DAY = value;
+					this.SendPropertyChanged("DAY");
+					this.OnDAYChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARQ", DbType="Int")]
+		public System.Nullable<int> ARQ
+		{
+			get
+			{
+				return this._ARQ;
+			}
+			set
+			{
+				if ((this._ARQ != value))
+				{
+					this.OnARQChanging(value);
+					this.SendPropertyChanging();
+					this._ARQ = value;
+					this.SendPropertyChanged("ARQ");
+					this.OnARQChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QTY", DbType="Int")]
+		public System.Nullable<int> QTY
+		{
+			get
+			{
+				return this._QTY;
+			}
+			set
+			{
+				if ((this._QTY != value))
+				{
+					this.OnQTYChanging(value);
+					this.SendPropertyChanging();
+					this._QTY = value;
+					this.SendPropertyChanged("QTY");
+					this.OnQTYChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BI", DbType="Int")]
+		public System.Nullable<int> BI
+		{
+			get
+			{
+				return this._BI;
+			}
+			set
+			{
+				if ((this._BI != value))
+				{
+					this.OnBIChanging(value);
+					this.SendPropertyChanging();
+					this._BI = value;
+					this.SendPropertyChanged("BI");
+					this.OnBIChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemarkBy", DbType="NVarChar(50)")]
+		public string RemarkBy
+		{
+			get
+			{
+				return this._RemarkBy;
+			}
+			set
+			{
+				if ((this._RemarkBy != value))
+				{
+					this.OnRemarkByChanging(value);
+					this.SendPropertyChanging();
+					this._RemarkBy = value;
+					this.SendPropertyChanged("RemarkBy");
+					this.OnRemarkByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendMail", DbType="Bit")]
+		public System.Nullable<bool> SendMail
+		{
+			get
+			{
+				return this._SendMail;
+			}
+			set
+			{
+				if ((this._SendMail != value))
+				{
+					this.OnSendMailChanging(value);
+					this.SendPropertyChanging();
+					this._SendMail = value;
+					this.SendPropertyChanged("SendMail");
+					this.OnSendMailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MOQ", DbType="Int")]
+		public System.Nullable<int> MOQ
+		{
+			get
+			{
+				return this._MOQ;
+			}
+			set
+			{
+				if ((this._MOQ != value))
+				{
+					this.OnMOQChanging(value);
+					this.SendPropertyChanging();
+					this._MOQ = value;
+					this.SendPropertyChanged("MOQ");
+					this.OnMOQChanged();
 				}
 			}
 		}

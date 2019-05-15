@@ -34,4 +34,59 @@
       <Column Name="Command" Type="System.String" DbType="NVarChar(555)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Instrument" Member="Instrument">
+    <Type Name="Instrument">
+      <Column Name="PN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DES" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="MFR" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="OTC" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="DAY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="R" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Y" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="G" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ARQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="QTY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TYPE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BI" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="RemarkBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SendMail" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MOQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.J750" Member="J750">
+    <Type Name="J750">
+      <Column Name="PN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DES" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="MFR" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="OTC" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="DAY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ARQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="QTY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BI" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="RemarkBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SendMail" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MOQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.J750_Board" Member="J750_Board">
+    <Type Name="J750_Board">
+      <Column Name="PN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DES" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="MFR" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="OTC" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="DAY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ARQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="QTY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BI" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="RemarkBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SendMail" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MOQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

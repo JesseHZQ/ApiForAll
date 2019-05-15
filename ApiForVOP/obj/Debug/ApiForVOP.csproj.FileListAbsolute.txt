@@ -110,3 +110,5 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForVOP\obj\Debug\ApiForVOP.pdb
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForVOP\bin\EntityFramework.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForVOP\bin\EntityFramework.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForVOP\bin\zh-Hans\EntityFramework.resources.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForVOP\bin\Aspose.Cells.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForVOP\bin\Aspose.Cells.xml

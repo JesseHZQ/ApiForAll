@@ -23,10 +23,52 @@ namespace ApiForMinioneMiscShipping.Controllers
             foreach (var item in model.list)
             {
                 DataTable dt = new DataTable();
-                dt = sqlkb.ExecuteDataTable("select * from SummaryHDragon where SystemModel = '" + item.Slot + "'");
+                dt = sqlkb.ExecuteDataTable("select * from SummaryHDragon where SystemSlot = '" + item.Slot + "'");
                 if (dt.Rows.Count == 0)
                 {
-                    sqlkb.ExecuteNonQuery("Insert into SummaryHDragon (SystemSlot, SystemModel, Customer, PO, SO, Lock, IsMore) values ('" + item.Slot + "', '" + item.Model + "','" + item.Customer + "','" + item.PO + "', '" + item.SO + "', 0, 'True')");
+                    sqlkb.ExecuteNonQuery("Insert into SummaryHDragon (SystemSlot, SystemModel, Customer, SO, ShipWeek, Lock, IsMore) values ('" + item.Slot + "', '" + item.Model + "','" + item.Customer + "','" + item.SO + "','" + item.MRP + "', 0, 'True')");
+                }
+                else
+                {
+                    sqlkb.ExecuteNonQuery("Update SummaryHDragon set SO = '" + item.SO + "', ShipWeek = '" + item.MRP + "' where SystemSlot = '" + item.Slot + "'");
+                }
+            }
+            Resp resp = new Resp();
+            resp.Code = 200;
+            resp.Message = "Success";
+            resp.Data = null;
+            return resp;
+        }
+
+        [System.Web.Http.HttpPost]
+        public Resp UploadDragonCorc(CorcList model)
+        {
+            foreach (var item in model.list)
+            {
+                DataTable dt = new DataTable();
+                dt = sqlkb.ExecuteDataTable("select * from SummaryHDragon where SystemSlot = '" + item.Slot + "'");
+                if (dt.Rows.Count != 0)
+                {
+                    sqlkb.ExecuteNonQuery("Update SummaryHDragon set CORC = '" + item.Status + "', OpenIssue = '" + item.Issue + "' where SystemSlot = '" + item.Slot + "'");
+                }
+            }
+            Resp resp = new Resp();
+            resp.Code = 200;
+            resp.Message = "Success";
+            resp.Data = null;
+            return resp;
+        }
+
+        [System.Web.Http.HttpPost]
+        public Resp UploadDragonConfig(ConfigList model)
+        {
+            foreach (var item in model.list)
+            {
+                DataTable dt = new DataTable();
+                dt = sqlkb.ExecuteDataTable("select * from SummaryHDragon where SystemSlot = '" + item.Slot + "'");
+                if (dt.Rows.Count != 0 && (dt.Rows[0]["SB25"] == null))
+                {
+                    sqlkb.ExecuteNonQuery("Update SummaryHDragon set Paradise = '" + item.Paradise + "', TeslaHC = '" + item.TeslaHC + "', SB25 = '" + item.SB25 + "', Tesla = '" + item.TeslaHD + "', Myone = '" + item.DSI + "' where SystemSlot = '" + item.Slot + "'");
                 }
             }
             Resp resp = new Resp();
@@ -179,13 +221,42 @@ namespace ApiForMinioneMiscShipping.Controllers
             public string Slot { get; set; }
             public string Model { get; set; }
             public string Customer { get; set; }
-            public string PO { get; set; }
             public string SO { get; set; }
+            public string MRP { get; set; }
+            public string PD { get; set; }
+            public string PO { get; set; }
+        }
+
+        public class CORC
+        {
+            public string Slot { get; set; }
+            public string Status { get; set; }
+            public string Issue { get; set; }
+        }
+
+        public class ConfigInfo
+        {
+            public string Slot { get; set; }
+            public string Paradise { get; set; }
+            public string TeslaHD { get; set; }
+            public string TeslaHC { get; set; }
+            public string SB25 { get; set; }
+            public string DSI { get; set; }
+        }
+
+        public class CorcList
+        {
+            public List<CORC> list { get; set; }
         }
 
         public class SystemList
         {
             public List<SystemInfo> list { get; set; }
+        }
+
+        public class ConfigList
+        {
+            public List<ConfigInfo> list { get; set; }
         }
     }
 }
