@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Release\Publish</_PublishTargetUrl>
+    <_PublishTargetUrl>\\suznt004\backup\jesse\ApiAll\RackManager\</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -82,13 +82,16 @@
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiForRackManage.dll">
-      <publishTime>04/17/2019 13:51:22</publishTime>
+      <publishTime>05/27/2019 09:44:58</publishTime>
     </File>
     <File Include="bin/ApiForRackManage.pdb">
-      <publishTime>04/17/2019 13:51:22</publishTime>
+      <publishTime>05/27/2019 09:44:58</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>09/10/2018 10:59:47</publishTime>
+    </File>
+    <File Include="bin/Dapper.dll">
+      <publishTime>03/30/2019 17:21:38</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>06/27/2017 12:59:34</publishTime>
@@ -421,7 +424,7 @@
       <publishTime>09/10/2018 10:59:31</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/11/2018 09:04:23</publishTime>
+      <publishTime>05/16/2019 10:39:48</publishTime>
     </File>
   </ItemGroup>
 </Project>

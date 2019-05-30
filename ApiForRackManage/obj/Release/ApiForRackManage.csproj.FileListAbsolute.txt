@@ -105,3 +105,5 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\obj\Release\ApiForRack
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\obj\Release\ApiForRackManage.csproj.CopyComplete
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\obj\Release\ApiForRackManage.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\obj\Release\ApiForRackManage.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Dapper.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Dapper.xml

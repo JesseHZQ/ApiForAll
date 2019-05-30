@@ -30,9 +30,11 @@ namespace ApiForCommonTools.Controllers
                 {
                     FileName = fileName
                 };
+                //stream.Dispose();
+                //stream.Close();
                 return response;
             }
-            catch
+            catch (Exception)
             {
                 return new HttpResponseMessage(HttpStatusCode.NoContent);
             }

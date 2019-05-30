@@ -82,12 +82,13 @@ namespace ApiForRackManage.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public Resp AddOrUpdateVOP(Rack model)
+        public Resp Update(Rack model)
         {
             Rack item = new Rack();
             Resp resp = new Resp();
             item = dc.Rack.FirstOrDefault(x => x.ID == model.ID);
             item.PN = model.PN;
+            item.ActualQTY = model.ActualQTY;
             item.Size = model.Size;
             item.SNView = model.SNView;
             item.SlotView = model.SlotView;
