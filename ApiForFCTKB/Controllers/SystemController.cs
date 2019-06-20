@@ -17,6 +17,7 @@ namespace ApiForFCTKB.Controllers
     public partial class SystemController : ApiController
     {
         public IDbConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["FCTKB"].ConnectionString);
+        public IDbConnection connMinione = new SqlConnection(ConfigurationManager.ConnectionStrings["Minione"].ConnectionString);
 
         /// <summary>
         /// 查询kanban
@@ -24,9 +25,15 @@ namespace ApiForFCTKB.Controllers
         [HttpGet]
         public Resp GetUFSystem(string type)
         {
-            string sqlplan = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE = '" + type + "'";
+            string sqlplan = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE = '" + type + "' AND ISNULL(ShippingDate, 0) = '0'";
             string sqlshortage = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE SLOT LIKE ('" + type + "%') AND IsReceived = 0";
             string sqlconfig = "SELECT * FROM KANBAN_SLOTCONFIG WHERE SLOT LIKE ('" + type + "%')";
+            if (type == "IF")
+            {
+                sqlplan = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE IN ( 'IF', 'MF') AND ISNULL(ShippingDate, 0) = '0'";
+                sqlshortage = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE (SLOT LIKE ('IF%') OR SLOT LIKE('MF%')) AND IsReceived = 0";
+                sqlconfig = "SELECT * FROM KANBAN_SLOTCONFIG WHERE (SLOT LIKE ('IF%') OR SLOT LIKE('MF%'))";
+            }
             Resp resp = new Resp();
             resp.slotPlans = conn.Query<SlotPlan>(sqlplan).ToList();
             resp.slotShortages = conn.Query<SlotShortage>(sqlshortage).ToList();
@@ -44,13 +51,11 @@ namespace ApiForFCTKB.Controllers
             // 注册Aspose License
             Aspose.Cells.License license = new Aspose.Cells.License();
             license.SetLicense("Aspose.Cells.lic");
-
             List<SlotPlan> list_slotplan = GetSlotPlan();
             List<SlotPO> list_slotpo = GetPO();
             List<SlotCORCIssue> list_corcissue = GetCORCIssue();
             List<SlotShortage> list_shortage = GetShortage();
-            List<SlotConfig> list_config = GetConfig();
-            List<SlotConfig> list_config_new = new List<SlotConfig>();
+            List<SlotConfig> list_config = GetConfig(list_slotplan);
 
             // 遍历SlotPlan中所有的Slot
             foreach (SlotPlan slot in list_slotplan)
@@ -74,15 +79,6 @@ namespace ApiForFCTKB.Controllers
                     }
                 }
 
-                // 遍历Config 只获取对应Slot的config
-                foreach (SlotConfig config in list_config)
-                {
-                    if (config.Slot == slot.Slot)
-                    {
-                        list_config_new.Add(config);
-                    }
-                }
-
                 // 添加默认的一个0-pin
                 SlotConfig pin = new SlotConfig();
                 pin.Slot = slot.Slot;
@@ -90,9 +86,9 @@ namespace ApiForFCTKB.Controllers
                 pin.Description = "0-Pin";
                 pin.QTY = "1";
                 pin.DelayTips = "";
-                pin.IsReady = false;
+                pin.IsReady = true;
 
-                list_config_new.Add(pin);
+                list_config.Add(pin);
 
                 Status status = new Status();
                 if (slot.Slot.IndexOf("UF") > -1)
@@ -108,6 +104,19 @@ namespace ApiForFCTKB.Controllers
                 slot.QFAA = status.QFAA;
                 slot.BU = status.BU;
                 slot.Pack = status.Pack;
+
+                string sql = "SELECT * FROM [172.21.194.214].[PCBA].[dbo].[Boards] WHERE TESTERID = @TESTERID";
+                MinioneConfig mc = new MinioneConfig();
+                mc.TesterID = slot.Slot;
+                List<MinioneConfig> MinioneList = connMinione.Query<MinioneConfig>(sql, mc).ToList();
+                if (MinioneList.Count > 0)
+                {
+                    slot.IsLoad = true;
+                }
+                else
+                {
+                    slot.IsLoad = false;
+                }
             }
 
             // 插入更新Slotplan
@@ -117,8 +126,8 @@ namespace ApiForFCTKB.Controllers
             InsertOrUpdateSlotShortage(list_shortage);
 
             // 插入更新config
-            InsertOrUpdateSlotConfig(list_config_new);
-            
+            InsertOrUpdateSlotConfig(list_config);
+
             return "OK";
         }
 
@@ -130,7 +139,7 @@ namespace ApiForFCTKB.Controllers
             // 读取slot plan
             List<SlotPlan> list = new List<SlotPlan>();
             // slot plan 文件夹路径
-            string dirPath = @"\\Suznt036\special_data\BU8 TER FCT\FCT E-KANBAN Database\Slot Plan";
+            string dirPath = @"\\10.194.51.14\backup\jesse\FCT E-KANBAN Database\Slot Plan";
             // 定义slot type: UF IF MF D
             string slotType = "";
             DirectoryInfo dir = new DirectoryInfo(dirPath);
@@ -208,12 +217,12 @@ namespace ApiForFCTKB.Controllers
                 List<SlotPlan> slotlist = conn.Query<SlotPlan>(query, item).ToList();
                 if (slotlist.Count > 0)
                 {
-                    string update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, PO = @PO, SO = @SO, MRP = @MRP, PD = @PD, CORC = @CORC, Launch = @Launch, CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack, CORC_Issue = @CORC_Issue WHERE SLOT = @SLOT";
+                    string update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, PO = @PO, SO = @SO, MRP = @MRP, PD = @PD, CORC = @CORC, Launch = @Launch, CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack, CORC_Issue = @CORC_Issue, IsLoad = @IsLoad WHERE SLOT = @SLOT";
                     conn.Execute(update, item);
                 }
                 else
                 {
-                    string update = "INSERT INTO KANBAN_SLOTPLAN (SLOT, TYPE, MODEL, CUSTOMER, PO, SO, MRP, PD, CORC, Launch, CoreBU, PV, OI, TestBU, CSW, QFAA, BU, Pack, CORC_Issue) VALUES (@SLOT, @TYPE, @MODEL, @CUSTOMER, @PO, @SO, @MRP, @PD, @CORC, @Launch, @CoreBU, @PV, @OI, @TestBU, @CSW, @QFAA, @BU, @Pack, @CORC_Issue)";
+                    string update = "INSERT INTO KANBAN_SLOTPLAN (SLOT, TYPE, MODEL, CUSTOMER, PO, SO, MRP, PD, CORC, Launch, CoreBU, PV, OI, TestBU, CSW, QFAA, BU, Pack, CORC_Issue, IsLoad) VALUES (@SLOT, @TYPE, @MODEL, @CUSTOMER, @PO, @SO, @MRP, @PD, @CORC, @Launch, @CoreBU, @PV, @OI, @TestBU, @CSW, @QFAA, @BU, @Pack, @CORC_Issue, @IsLoad)";
                     conn.Execute(update, item);
                 }
             }
@@ -225,7 +234,7 @@ namespace ApiForFCTKB.Controllers
         public List<SlotPO> GetPO()
         {
             // 读取open_po
-            string path = @"\\Suznt036\special_data\BU8 TER FCT\FCT E-KANBAN Database\Open_PO";
+            string path = @"\\10.194.51.14\backup\jesse\FCT E-KANBAN Database\Open_PO";
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
@@ -283,7 +292,7 @@ namespace ApiForFCTKB.Controllers
             }
             return list;
         }
-        
+
         /// <summary>
         /// 插入或更新Shortage
         /// </summary>
@@ -335,7 +344,7 @@ namespace ApiForFCTKB.Controllers
         /// </summary>
         public List<SlotCORCIssue> GetCORCIssue()
         {
-            string path = @"\\Suznt036\special_data\BU8 TER FCT\FCT E-KANBAN Database\SO&CORC Issue Report";
+            string path = @"\\10.194.51.14\backup\jesse\FCT E-KANBAN Database\SO&CORC Issue Report";
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
@@ -372,7 +381,7 @@ namespace ApiForFCTKB.Controllers
         /// </summary>
         public List<SlotShortage> GetShortage()
         {
-            string path = @"\\Suznt036\special_data\BU8 TER FCT\FCT E-KANBAN Database\CSO";
+            string path = @"\\10.194.51.14\backup\jesse\FCT E-KANBAN Database\CSO";
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
@@ -408,41 +417,121 @@ namespace ApiForFCTKB.Controllers
         /// <summary>
         /// 获取Shortage
         /// </summary>
-        public List<SlotConfig> GetConfig()
+        //public List<SlotConfig> GetConfig2()
+        //{
+        //    List<SlotConfig> list = new List<SlotConfig>();
+        //    string path = @"\\10.194.51.14\backup\jesse\FCT E-KANBAN Database\E_KANBAN";
+        //    DirectoryInfo dir = new DirectoryInfo(path);
+        //    FileInfo[] files = dir.GetFiles();
+        //    foreach (FileInfo file in files)
+        //    {
+        //        if (file.Name.IndexOf("kanban") > -1)
+        //        {
+        //            path = file.FullName;
+        //            Workbook wb = new Workbook(path);
+        //            Cells cells = wb.Worksheets[wb.Worksheets.Count - 1].Cells;
+        //            DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+        //            DataRow dr = dt.Rows[0];
+        //            foreach (DataRow item in dt.Rows)
+        //            {
+        //                if (dt.Rows.IndexOf(item) != 0)
+        //                {
+        //                    foreach (DataColumn col in dt.Columns)
+        //                    {
+        //                        if (col.ColumnName.IndexOf("Column") == -1 && item[col.Ordinal].ToString() != "")
+        //                        {
+        //                            SlotConfig info = new SlotConfig();
+        //                            info.Slot = item[0].ToString();
+        //                            info.PN = col.ColumnName;
+        //                            info.Description = dr[col.Ordinal].ToString();
+        //                            info.QTY = item[col.Ordinal].ToString();
+        //                            info.DelayTips = "";
+        //                            info.IsReady = false;
+        //                            list.Add(info);
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return list;
+        //}
+
+        public List<SlotConfig> GetConfig(List<SlotPlan> list_slotplan)
         {
+            string[] PN_List = new string[] {
+                "TDN-974-221-20",
+                "TDN-974-221-30",
+                "TDN-604-356-01",
+                "TDN-604-356-03",
+                "TDN-604-356-04",
+                "TDN-805-052-05",
+                "TDN-974-294-30",
+                "TDN-604-375-02",
+                "TDN-605-743-01",
+                "TDN-974-217-30",
+                "TDN-974-390-02",
+                "TDN-974-230-00",
+                "TDN-974-232-00",
+                "TDN-630-036-30",
+                "TDN-631-938-02",
+                "TDN-632-627-01",
+                "TDN-632-629-01",
+                "TDN-633-246-00",
+                "TDN-636-752-01",
+                "TDN-639-210-01",
+                "TDN-974-296-30",
+                "TDN-632-859-21",
+                "TDN-633-675-03",
+                "TDN-630-035-40",
+                "TDN-617-743-00",
+                "TDN-617-744-00",
+                "TDN-974-245-40",
+                "TDN-604-375-12",
+                "TDN-625-393-51",
+                "TDN-639-209-02",
+                "TDN-654-990-00",
+                //"TDN-202-000-01",
+                //"TDN-866-999-02",
+                //"TDN-866-911-10",
+                //"TDN-866-653-00",
+                "TDN-805-002-60",
+                "TDN-805-003-11",
+                "TDN-805-003-50",
+                "TDN-805-229-61",
+                "TDN-805-230-60",
+                "TDN-805-251-50",
+                "TDN-805-333-50",
+                "TDN-805-386-01",
+                "TDN-805-740-50",
+                "TDN-949-974-50"
+            };
             List<SlotConfig> list = new List<SlotConfig>();
-            string path = @"\\Suznt036\special_data\BU8 TER FCT\FCT E-KANBAN Database\E_KANBAN";
+            string path = @"\\10.194.51.14\backup\jesse\FCT E-KANBAN Database\E-Slot";
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
             {
-                if (file.Name.IndexOf("kanban") > -1)
+                if (file.FullName.Contains("Slot"))
                 {
                     path = file.FullName;
-                    Workbook wb = new Workbook(path);
-                    Cells cells = wb.Worksheets[wb.Worksheets.Count - 1].Cells;
-                    DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
-                    DataRow dr = dt.Rows[0];
-                    foreach (DataRow item in dt.Rows)
-                    {
-                        if (dt.Rows.IndexOf(item) != 0)
-                        {
-                            foreach (DataColumn col in dt.Columns)
-                            {
-                                if (col.ColumnName.IndexOf("Column") == -1 && item[col.Ordinal].ToString() != "")
-                                {
-                                    SlotConfig info = new SlotConfig();
-                                    info.Slot = item[0].ToString();
-                                    info.PN = col.ColumnName;
-                                    info.Description = dr[col.Ordinal].ToString();
-                                    info.QTY = item[col.Ordinal].ToString();
-                                    info.DelayTips = "";
-                                    info.IsReady = false;
-                                    list.Add(info);
-                                }
-                            }
-                        }
-                    }
+                    break;
+                }
+            }
+            Workbook wb = new Workbook(path);
+            Cells cells = wb.Worksheets["Slot"].Cells;
+            DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+            foreach (DataRow item in dt.Rows)
+            {
+                if (list_slotplan.FindAll(x => x.Slot == item["Slot"].ToString()).Count > 0 && PN_List.Contains(item["Component"].ToString()))
+                {
+                    SlotConfig info = new SlotConfig();
+                    info.Slot = item["Slot"].ToString();
+                    info.PN = item["Component"].ToString().Substring(4);
+                    info.QTY = item["Extended Qty"].ToString();
+                    info.DelayTips = "";
+                    info.IsReady = false;
+                    list.Add(info);
                 }
             }
             return list;

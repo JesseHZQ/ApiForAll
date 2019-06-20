@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Web.Http;
 
 namespace ApiForCommonTools.Controllers
@@ -36,7 +37,9 @@ namespace ApiForCommonTools.Controllers
             }
             foreach (string item in mailSender.FilePathList)
             {
-                mess.Attachments.Add(new Attachment(item));
+                Attachment at = new Attachment(@item, MediaTypeNames.Application.Octet);
+                at.Name = item.Substring(item.LastIndexOf('/'));
+                mess.Attachments.Add(at);
             }
             mess.Body = string.Format(mailSender.Content);
             MailResp resp = new MailResp();

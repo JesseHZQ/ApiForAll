@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 
 namespace ApiForCommonTools.Controllers
@@ -38,6 +39,24 @@ namespace ApiForCommonTools.Controllers
             {
                 return new HttpResponseMessage(HttpStatusCode.NoContent);
             }
+        }
+
+        /// <summary>
+        /// 接收前端上传单个文件
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public string uploadFile()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            HttpPostedFile file = httpRequest.Files[0];
+            if (!Directory.Exists(HttpContext.Current.Server.MapPath("../../Uploads")))
+            {
+                Directory.CreateDirectory(HttpContext.Current.Server.MapPath("../../Uploads"));
+            }
+            string filePath = Path.Combine(HttpContext.Current.Server.MapPath("../../Uploads"), Path.GetFileName(file.FileName));
+            file.SaveAs(filePath);
+            return filePath;
         }
     }
 }

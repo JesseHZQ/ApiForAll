@@ -3,6 +3,8 @@
     public class SlotPlan
     {
         public int ID { get; set; }
+        public string PlanShipDate { get; set; }
+        public string ShippingDate { get; set; }
         public string Slot { get; set; }
         public string Type { get; set; }
         public string Model { get; set; }
@@ -24,5 +26,6 @@
         public string CORC_Issue { get; set; }
         public string Engineering_Issue { get; set; }
         public string Remark { get; set; }
+        public bool IsLoad { get; set; }
     }
 }

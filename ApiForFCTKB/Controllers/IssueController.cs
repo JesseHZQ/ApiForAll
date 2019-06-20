@@ -30,5 +30,21 @@ namespace ApiForFCTKB.Controllers
             conn.Execute(update, slot);
             return "ok";
         }
+
+        [HttpPost]
+        public string UpdatePlanShip(SlotPlan slot)
+        {
+            string update = "UPDATE KANBAN_SLOTPLAN SET PlanShipDate = @PlanShipDate WHERE ID = @ID";
+            conn.Execute(update, slot);
+            return "ok";
+        }
+
+        [HttpPost]
+        public string UpdateShippingDate(SlotPlan slot)
+        {
+            string update = "UPDATE KANBAN_SLOTPLAN SET ShippingDate = @ShippingDate WHERE ID = @ID";
+            conn.Execute(update, slot);
+            return "ok";
+        }
     }
 }
