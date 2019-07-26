@@ -27,5 +27,7 @@
         public string Engineering_Issue { get; set; }
         public string Remark { get; set; }
         public bool IsLoad { get; set; }
+        public string LoadInfo { get; set; }
+        public string GroupNum { get; set; }
     }
 }

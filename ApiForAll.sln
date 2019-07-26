@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiForCommonTools", "ApiFor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiForFCTKB", "ApiForFCTKB\ApiForFCTKB.csproj", "{8290EB5A-D074-4723-9EA6-4DC133F0F4D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiForControlTower", "ApiForControlTower\ApiForControlTower.csproj", "{484D9B30-E60D-4CAF-9F7D-29CF84DDA6D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{8290EB5A-D074-4723-9EA6-4DC133F0F4D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8290EB5A-D074-4723-9EA6-4DC133F0F4D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8290EB5A-D074-4723-9EA6-4DC133F0F4D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{484D9B30-E60D-4CAF-9F7D-29CF84DDA6D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{484D9B30-E60D-4CAF-9F7D-29CF84DDA6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{484D9B30-E60D-4CAF-9F7D-29CF84DDA6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{484D9B30-E60D-4CAF-9F7D-29CF84DDA6D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

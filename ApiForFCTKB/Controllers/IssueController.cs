@@ -46,5 +46,21 @@ namespace ApiForFCTKB.Controllers
             conn.Execute(update, slot);
             return "ok";
         }
+
+        [HttpPost]
+        public string UpdateGroup(SlotPlan slot)
+        {
+            string update = "UPDATE KANBAN_SLOTPLAN SET GroupNum = @GroupNum WHERE ID = @ID";
+            conn.Execute(update, slot);
+            return "ok";
+        }
+
+        [HttpPost]
+        public string UpdateLaunch(SlotPlan slot)
+        {
+            string update = "UPDATE KANBAN_SLOTPLAN SET Launch = @Launch WHERE ID = @ID";
+            conn.Execute(update, slot);
+            return "ok";
+        }
     }
 }

@@ -31,15 +31,21 @@ namespace ApiForCommonTools.Controllers
             {
                 mess.To.Add(item);
             }
-            foreach (string item in mailSender.CCList)
+            if (mailSender.CCList != null)
             {
-                mess.CC.Add(item);
+                foreach (string item in mailSender.CCList)
+                {
+                    mess.CC.Add(item);
+                }
             }
-            foreach (string item in mailSender.FilePathList)
+            if (mailSender.FilePathList != null)
             {
-                Attachment at = new Attachment(@item, MediaTypeNames.Application.Octet);
-                at.Name = item.Substring(item.LastIndexOf('/'));
-                mess.Attachments.Add(at);
+                foreach (string item in mailSender.FilePathList)
+                {
+                    Attachment at = new Attachment(@item, MediaTypeNames.Application.Octet);
+                    at.Name = item.Substring(item.LastIndexOf('/'));
+                    mess.Attachments.Add(at);
+                }
             }
             mess.Body = string.Format(mailSender.Content);
             MailResp resp = new MailResp();

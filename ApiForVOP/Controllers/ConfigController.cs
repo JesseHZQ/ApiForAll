@@ -102,7 +102,7 @@ namespace ApiForVOP.Controllers
                 cells[y, 1].PutValue(list.BOM);
                 cells[y, 2].PutValue(list.QTY);
             }
-            string filePath = @"\\suznt004\Backup\Jesse\VOP\Files\BOM_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_") + DateTime.Now.Millisecond + ".xlsx";
+            string filePath = @"\\suznt004\Backup\Jesse\FrontAll\VOP\Files\BOM_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_") + DateTime.Now.Millisecond + ".xlsx";
             wb.Save(filePath);
             Resp resp = new Resp();
             resp.message = filePath;
