@@ -19,5 +19,7 @@ namespace ApiForControlTower.Models
         public string Solution { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime CloseTime { get; set; }
+        public string Creator { get; set; }
+        public string UserName { get; set; }
     }
 }

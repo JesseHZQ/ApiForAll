@@ -82,10 +82,10 @@
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiForCommonTools.dll">
-      <publishTime>07/03/2019 14:24:12</publishTime>
+      <publishTime>08/01/2019 16:24:22</publishTime>
     </File>
     <File Include="bin/ApiForCommonTools.pdb">
-      <publishTime>07/03/2019 14:24:12</publishTime>
+      <publishTime>08/01/2019 16:24:22</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>05/15/2019 14:31:34</publishTime>

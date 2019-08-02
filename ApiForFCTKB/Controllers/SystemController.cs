@@ -21,11 +21,121 @@ namespace ApiForFCTKB.Controllers
         public IDbConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["FCTKB"].ConnectionString);
         public IDbConnection connMinione = new SqlConnection(ConfigurationManager.ConnectionStrings["Minione"].ConnectionString);
 
+        /// <summary>
+        /// 刷新看板
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public string RefreshSystem()
+        {
+            // 注册Aspose License
+            Aspose.Cells.License license = new Aspose.Cells.License();
+            license.SetLicense("Aspose.Cells.lic");
+            List<SlotPlan> list_slotplan_all = GetSlotPlan();
+            List<SlotPlan> list_slotplan = list_slotplan_all.Where(x => GetTimeValidate(x.MRP) == true).ToList();
+            List<SlotPO> list_slotpo = GetPO();
+            List<SlotCORCIssue> list_corcissue = GetCORCIssue();
+            List<SlotShortage> list_shortage = GetShortage();
+            List<SlotConfig> list_config = GetConfig(list_slotplan);
+
+            foreach (SlotPlan slot in list_slotplan_all)
+            {
+                // 遍历po匹配
+                foreach (SlotPO po in list_slotpo)
+                {
+                    if (slot.Slot == po.Slot)
+                    {
+                        slot.PO = po.PO;
+                    }
+                }
+            }
+
+
+            // 遍历SlotPlan中所有的Slot
+            foreach (SlotPlan slot in list_slotplan)
+            {
+                // 遍历corc匹配
+                foreach (SlotCORCIssue corc in list_corcissue)
+                {
+                    if (slot.Slot == corc.Slot)
+                    {
+                        slot.CORC = corc.CorcStatus;
+                        slot.CORC_Issue = corc.CorcIssue;
+                    }
+                }
+
+                if (slot.Slot[slot.Slot.Length - 1] != 'C')
+                {
+                    // 添加默认的一个0-pin
+                    SlotConfig pin = new SlotConfig();
+                    pin.Slot = slot.Slot;
+                    pin.PN = "";
+                    pin.Description = "0-Pin";
+                    pin.QTY = "1";
+                    pin.DelayTips = "";
+                    pin.IsReady = false;
+
+                    list_config.Add(pin);
+                }
+
+                Status status = new Status();
+                if (slot.Model.IndexOf("24") > -1)
+                {
+                    status = GetUF24Status(slot.Slot);
+                }
+                if (slot.Model.IndexOf("12") > -1)
+                {
+                    status = GetUF12Status(slot.Slot);
+                }
+                //slot.Launch = status.Launch;
+                slot.CoreBU = status.CorBU;
+                slot.PV = status.PV;
+                slot.OI = status.OI;
+                slot.TestBU = status.TestBU;
+                slot.CSW = status.CSW;
+                slot.QFAA = status.QFAA;
+                slot.BU = status.BU;
+                slot.Pack = status.Pack;
+
+                // 判断系统是否已经装载了这些板子
+                string sql = "SELECT * FROM [172.21.194.214].[PCBA].[dbo].[Boards] WHERE TESTERID = @TESTERID";
+                MinioneConfig mc = new MinioneConfig();
+                mc.TesterID = slot.Slot;
+                List<MinioneConfig> MinioneList = connMinione.Query<MinioneConfig>(sql, mc).ToList();
+                if (MinioneList.Count > 0)
+                {
+                    slot.IsLoad = true;
+                    slot.LoadInfo = "";
+                    foreach (MinioneConfig config in MinioneList)
+                    {
+                        slot.LoadInfo = slot.LoadInfo + "," + config.PN;
+                    }
+                    slot.LoadInfo = slot.LoadInfo.Substring(1);
+                }
+                else
+                {
+                    slot.IsLoad = false;
+                    slot.LoadInfo = "";
+                }
+            }
+
+            // 插入更新Slotplan
+            InsertOrUpdateSlotPlan(list_slotplan_all);
+
+            // 插入更新Shortage
+            InsertOrUpdateSlotShortage(list_shortage);
+
+            // 插入更新config
+            InsertOrUpdateSlotConfig(list_config);
+
+            return "OK";
+        }
+
         [HttpGet]
         public List<SlotPlan> GetAllSystem()
         {
             string sql = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTPLAN] WHERE ISNULL(ShippingDate, 0) = '0' ORDER BY PD";
-            return conn.Query<SlotPlan>(sql).ToList();
+            return conn.Query<SlotPlan>(sql).ToList().Where(x => GetValidate(x.MRP) == true).ToList();
         }
 
         /// <summary>
@@ -156,115 +266,10 @@ namespace ApiForFCTKB.Controllers
             Resp resp = new Resp();
             List<SlotPlan> l1 = conn.Query<SlotPlan>(sqlplan1).ToList();
             List<SlotPlan> l2 = conn.Query<SlotPlan>(sqlplan2).ToList();
-            resp.slotPlans = l1.Union(l2).ToList();
+            resp.slotPlans = l1.Union(l2).ToList().Where(x => GetValidate(x.MRP) == true).ToList();
             resp.slotShortages = conn.Query<SlotShortage>(sqlshortage).ToList();
             resp.slotConfigs = conn.Query<SlotConfig>(sqlconfig).ToList();
             return resp;
-        }
-
-        /// <summary>
-        /// 刷新看板
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public string RefreshSystem()
-        {
-            // 注册Aspose License
-            Aspose.Cells.License license = new Aspose.Cells.License();
-            license.SetLicense("Aspose.Cells.lic");
-            List<SlotPlan> list_slotplan = GetSlotPlan();
-            List<SlotPO> list_slotpo = GetPO();
-            List<SlotCORCIssue> list_corcissue = GetCORCIssue();
-            List<SlotShortage> list_shortage = GetShortage();
-            List<SlotConfig> list_config = GetConfig(list_slotplan);
-
-            // 遍历SlotPlan中所有的Slot
-            foreach (SlotPlan slot in list_slotplan)
-            {
-                // 遍历po匹配
-                foreach (SlotPO po in list_slotpo)
-                {
-                    if (slot.Slot == po.Slot)
-                    {
-                        slot.PO = po.PO;
-                    }
-                }
-
-                // 遍历corc匹配
-                foreach (SlotCORCIssue corc in list_corcissue)
-                {
-                    if (slot.Slot == corc.Slot)
-                    {
-                        slot.CORC = corc.CorcStatus;
-                        slot.CORC_Issue = corc.CorcIssue;
-                    }
-                }
-
-                if (slot.Slot[slot.Slot.Length - 1] != 'C')
-                {
-                    // 添加默认的一个0-pin
-                    SlotConfig pin = new SlotConfig();
-                    pin.Slot = slot.Slot;
-                    pin.PN = "";
-                    pin.Description = "0-Pin";
-                    pin.QTY = "1";
-                    pin.DelayTips = "";
-                    pin.IsReady = false;
-
-                    list_config.Add(pin);
-                }
-
-                Status status = new Status();
-                if (slot.Model.IndexOf("24") > -1)
-                {
-                    status = GetUF24Status(slot.Slot);
-                }
-                if (slot.Model.IndexOf("12") > -1)
-                {
-                    status = GetUF12Status(slot.Slot);
-                }
-                //slot.Launch = status.Launch;
-                slot.CoreBU = status.CorBU;
-                slot.PV = status.PV;
-                slot.OI = status.OI;
-                slot.TestBU = status.TestBU;
-                slot.CSW = status.CSW;
-                slot.QFAA = status.QFAA;
-                slot.BU = status.BU;
-                slot.Pack = status.Pack;
-
-                // 判断系统是否已经装载了这些板子
-                string sql = "SELECT * FROM [172.21.194.214].[PCBA].[dbo].[Boards] WHERE TESTERID = @TESTERID";
-                MinioneConfig mc = new MinioneConfig();
-                mc.TesterID = slot.Slot;
-                List<MinioneConfig> MinioneList = connMinione.Query<MinioneConfig>(sql, mc).ToList();
-                if (MinioneList.Count > 0)
-                {
-                    slot.IsLoad = true;
-                    slot.LoadInfo = "";
-                    foreach (MinioneConfig config in MinioneList)
-                    {
-                        slot.LoadInfo = slot.LoadInfo + "," + config.PN;
-                    }
-                    slot.LoadInfo = slot.LoadInfo.Substring(1);
-                }
-                else
-                {
-                    slot.IsLoad = false;
-                    slot.LoadInfo = "";
-                }
-            }
-
-            // 插入更新Slotplan
-            InsertOrUpdateSlotPlan(list_slotplan);
-
-            // 插入更新Shortage
-            InsertOrUpdateSlotShortage(list_shortage);
-
-            // 插入更新config
-            InsertOrUpdateSlotConfig(list_config);
-
-            return "OK";
         }
 
         /// <summary>
@@ -284,11 +289,20 @@ namespace ApiForFCTKB.Controllers
             {
                 string filePath = "";
                 string sheetName = "";
+                // 过滤临时文件
+                if (file.FullName.Contains("~"))
+                {
+                    continue;
+                }
                 if (file.FullName.Contains("UFLEX"))
                 {
                     filePath = file.FullName;
                     sheetName = "Current Week";
                     slotType = "UF";
+                }
+                if (file.FullName.Contains("IFLEX"))
+                {
+                    filePath = file.FullName;
                 }
                 if (file.FullName.Contains("Dragon"))
                 {
@@ -318,6 +332,7 @@ namespace ApiForFCTKB.Controllers
                             {
                                 wkRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
                             }
+                            wkRange = true;
                             // TST == STS 并且 抓取5周内的数据
                             if (wkRange && item[dt.Columns.IndexOf("TST")].ToString() == "STS")
                             {
@@ -351,6 +366,7 @@ namespace ApiForFCTKB.Controllers
                             {
                                 wkRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
                             }
+                            wkRange = true;
                             // TST == STS 并且 抓取5周内的数据
                             if (wkRange && item[dt.Columns.IndexOf("TST")].ToString() == "STS")
                             {
@@ -372,33 +388,34 @@ namespace ApiForFCTKB.Controllers
                         Cells cells = wb.Worksheets[sheetName].Cells;
                         DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
                         foreach (DataRow item in dt.Rows)
-                    {
-                        int week = Tool.WeekOfYear(DateTime.Now); // 获取当前周别
-                        float mrp = float.Parse(item[dt.Columns.IndexOf("MRP")].ToString()); // 获取MRP
-                        int range = 5; // 抓取的周范围 后期改成可修改
-                        bool wkRange = true; // 定义周范围的Bool
-                        if (week + range <= 54) // 年底之前逻辑简单
                         {
-                            wkRange = (mrp >= week && mrp <= week + range);
+                            int week = Tool.WeekOfYear(DateTime.Now); // 获取当前周别
+                            float mrp = float.Parse(item[dt.Columns.IndexOf("MRP")].ToString()); // 获取MRP
+                            int range = 5; // 抓取的周范围 后期改成可修改
+                            bool wkRange = true; // 定义周范围的Bool
+                            if (week + range <= 54) // 年底之前逻辑简单
+                            {
+                                wkRange = (mrp >= week && mrp <= week + range);
+                            }
+                            else // 年底的时候周别逻辑
+                            {
+                                wkRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
+                            }
+                            wkRange = true;
+                            // TST == STS
+                            if (wkRange && item[dt.Columns.IndexOf("TST")].ToString() == "STS")
+                            {
+                                SlotPlan info = new SlotPlan();
+                                info.Slot = item[dt.Columns.IndexOf("Slot #")].ToString();
+                                info.Type = slotType;
+                                info.Model = item[dt.Columns.IndexOf("Product Model")].ToString();
+                                info.Customer = item[dt.Columns.IndexOf("Customer")].ToString();
+                                info.SO = item[dt.Columns.IndexOf("S/O #")].ToString();
+                                info.MRP = item[dt.Columns.IndexOf("MRP")].ToString();
+                                info.PD = item[dt.Columns.IndexOf("PD")].ToString();
+                                list.Add(info);
+                            }
                         }
-                        else // 年底的时候周别逻辑
-                        {
-                            wkRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
-                        }
-                        // TST == STS 并且 抓取5周内的数据
-                        if (wkRange && item[dt.Columns.IndexOf("TST")].ToString() == "STS")
-                        {
-                            SlotPlan info = new SlotPlan();
-                            info.Slot = item[dt.Columns.IndexOf("Slot #")].ToString();
-                            info.Type = slotType;
-                            info.Model = item[dt.Columns.IndexOf("Product Model")].ToString();
-                            info.Customer = item[dt.Columns.IndexOf("Customer")].ToString();
-                            info.SO = item[dt.Columns.IndexOf("S/O #")].ToString();
-                            info.MRP = item[dt.Columns.IndexOf("MRP")].ToString();
-                            info.PD = item[dt.Columns.IndexOf("PD")].ToString();
-                            list.Add(info);
-                        }
-                    }
                     }
                 }
             }
@@ -411,19 +428,33 @@ namespace ApiForFCTKB.Controllers
         /// <param name="slotplan"></param>
         public void InsertOrUpdateSlotPlan(List<SlotPlan> slotplan)
         {
+            //int week = Tool.WeekOfYear(DateTime.Now.AddDays(-7)); // 获取当前周别
+            //string queryAll = "SELECT * FROM KANBAN_SLOTPLAN WHERE ShippingDate is null and AND CONVERT(float, MRP) < " + week;
+            //List<SlotPlan> slotlistall = conn.Query<SlotPlan>(queryAll).ToList();
+            //foreach (SlotPlan slot in slotlistall)
+            //{
+            //    SlotPlan sp = slotplan.Where(x => x.Slot == slot.Slot).SingleOrDefault();
+            //    if (sp == null)
+            //    {
+            //        string del = "DELETE FROM KANBAN_SLOTPLAN WHERE ID = " + slot.ID;
+            //        conn.Execute(del);
+            //    }
+            //}
             foreach (SlotPlan item in slotplan)
             {
-                string query = "SELECT * FROM KANBAN_SLOTPLAN WHERE SLOT = @SLOT";
-                List<SlotPlan> slotlist = conn.Query<SlotPlan>(query, item).ToList();
-                if (slotlist.Count > 0)
+                string query = "SELECT * FROM KANBAN_SLOTPLAN";
+                List<SlotPlan> slotlist = conn.Query<SlotPlan>(query).ToList();
+                SlotPlan sp = slotlist.Where(x => x.Slot == item.Slot).SingleOrDefault();
+                if (sp != null)
                 {
-                    string update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, PO = @PO, SO = @SO, MRP = @MRP, PD = @PD, CORC = @CORC, CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack, CORC_Issue = @CORC_Issue, IsLoad = @IsLoad, LoadInfo = @LoadInfo WHERE SLOT = @SLOT";
+                    item.ID = sp.ID;
+                    string update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, PO = @PO, SO = @SO, MRP = @MRP, PD = @PD, CORC = @CORC, CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack, CORC_Issue = @CORC_Issue, IsLoad = @IsLoad, LoadInfo = @LoadInfo WHERE ID = @ID";
                     conn.Execute(update, item);
                 }
                 else
                 {
-                    string update = "INSERT INTO KANBAN_SLOTPLAN (SLOT, TYPE, MODEL, CUSTOMER, PO, SO, MRP, PD, CORC, CoreBU, PV, OI, TestBU, CSW, QFAA, BU, Pack, CORC_Issue, IsLoad, LoadInfo) VALUES (@SLOT, @TYPE, @MODEL, @CUSTOMER, @PO, @SO, @MRP, @PD, @CORC, @CoreBU, @PV, @OI, @TestBU, @CSW, @QFAA, @BU, @Pack, @CORC_Issue, @IsLoad, @LoadInfo)";
-                    conn.Execute(update, item);
+                    string insert = "INSERT INTO KANBAN_SLOTPLAN (SLOT, TYPE, MODEL, CUSTOMER, PO, SO, MRP, PD, CORC, CoreBU, PV, OI, TestBU, CSW, QFAA, BU, Pack, CORC_Issue, IsLoad, LoadInfo) VALUES (@SLOT, @TYPE, @MODEL, @CUSTOMER, @PO, @SO, @MRP, @PD, @CORC, @CoreBU, @PV, @OI, @TestBU, @CSW, @QFAA, @BU, @Pack, @CORC_Issue, @IsLoad, @LoadInfo)";
+                    conn.Execute(insert, item);
                 }
             }
         }
@@ -549,6 +580,10 @@ namespace ApiForFCTKB.Controllers
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
             {
+                if (file.FullName.Contains("~"))
+                {
+                    continue;
+                }
                 if (file.FullName.Contains("SO&CORC"))
                 {
                     path = file.FullName;
@@ -600,9 +635,9 @@ namespace ApiForFCTKB.Controllers
             {
                 int week = Tool.WeekOfYear(DateTime.Now); // 获取当前周别
                 // Type = P  Shortage != 0  Slot not contain Misc
-                if (item[dt.Columns.IndexOf("Type")].ToString() == "P" 
-                    && item[dt.Columns.IndexOf("Shortage")].ToString() != "0" 
-                    && item[dt.Columns.IndexOf("Slot")].ToString().IndexOf("Misc") == -1 
+                if (item[dt.Columns.IndexOf("Type")].ToString() == "P"
+                    && item[dt.Columns.IndexOf("Shortage")].ToString() != "0"
+                    && item[dt.Columns.IndexOf("Slot")].ToString().IndexOf("Misc") == -1
                     && item[dt.Columns.IndexOf("WK")].ToString() == "WK" + week)
                 {
                     SlotShortage info = new SlotShortage();
@@ -782,6 +817,40 @@ namespace ApiForFCTKB.Controllers
             status.BU = GetStatusByItem(slot, "1.1打开Test Head 的门,确认门侧有2个Dangerous 标签且无缺损脏污", "Ultraflex 12Slot Assembly Button up Checklist", "Check_12Slot");
             status.Pack = GetStatusByItem(slot, "1. 木箱检查：检查没有多余文字或者图，没有大面积划伤（图1）；检查没有多余的毛刺毛边杂物，如果有需要清理干净（图2,3,4）。检查木箱所有钉子已经钉好，没有外漏，如果有需要拔出来重新钉（图5,6,7）。", "Ultraflex 12Slot Packing Checklist", "Check_12Slot");
             return status;
+        }
+
+        public bool GetTimeValidate(string mrpStr)
+        {
+            int week = Tool.WeekOfYear(DateTime.Now); // 获取当前周别
+            float mrp = float.Parse(mrpStr); // 获取MRP
+            int range = 5; // 抓取的周范围 后期改成可修改
+            bool wkRange = true; // 定义周范围的Bool
+            if (week + range <= 54) // 年底之前逻辑简单
+            {
+                wkRange = (mrp >= week && mrp <= week + range);
+            }
+            else // 年底的时候周别逻辑
+            {
+                wkRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
+            }
+            return wkRange;
+        }
+
+        public bool GetValidate(string mrpStr)
+        {
+            int week = Tool.WeekOfYear(DateTime.Now.AddDays(-7)); // 获取当前周别
+            float mrp = float.Parse(mrpStr); // 获取MRP
+            int range = 6; // 抓取的周范围 后期改成可修改
+            bool wkRange = true; // 定义周范围的Bool
+            if (week + range <= 54) // 年底之前逻辑简单
+            {
+                wkRange = (mrp >= week && mrp <= week + range);
+            }
+            else // 年底的时候周别逻辑
+            {
+                wkRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
+            }
+            return wkRange;
         }
     }
 }

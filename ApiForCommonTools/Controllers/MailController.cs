@@ -26,7 +26,7 @@ namespace ApiForCommonTools.Controllers
             mess.BodyEncoding = System.Text.Encoding.UTF8;
             SmtpClient client = new SmtpClient();
             client.Host = "10.194.51.14";
-            client.Credentials = new System.Net.NetworkCredential("SMTPUser", "User_001");
+            client.Credentials = new System.Net.NetworkCredential("root", "Flex_1969");
             foreach (string item in mailSender.ToList)
             {
                 mess.To.Add(item);

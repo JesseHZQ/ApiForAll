@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ApiForControlTower.Models
 {
-    public class LED
+    public class LED: User
     {
         public int Id { get; set; }
         public int Item { get; set; }
@@ -14,6 +14,7 @@ namespace ApiForControlTower.Models
         public string Station { get; set; }
         public string ShippingTime { get; set; }
         public string IP { get; set; }
+        public int OwnerId { get; set; }
         public string PlanShipDate { get; set; }
         public string ShippingDate { get; set; }
         public string Slot { get; set; }
