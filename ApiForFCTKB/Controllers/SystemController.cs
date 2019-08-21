@@ -32,7 +32,7 @@ namespace ApiForFCTKB.Controllers
             Aspose.Cells.License license = new Aspose.Cells.License();
             license.SetLicense("Aspose.Cells.lic");
             List<SlotPlan> list_slotplan_all = GetSlotPlan();
-            List<SlotPlan> list_slotplan = list_slotplan_all.Where(x => GetTimeValidate(x.MRP) == true).ToList();
+            List<SlotPlan> list_slotplan = list_slotplan_all.Where(x => GetValidate(x.MRP) == true).ToList();
             List<SlotPO> list_slotpo = GetPO();
             List<SlotCORCIssue> list_corcissue = GetCORCIssue();
             List<SlotShortage> list_shortage = GetShortage();
@@ -49,7 +49,6 @@ namespace ApiForFCTKB.Controllers
                     }
                 }
             }
-
 
             // 遍历SlotPlan中所有的Slot
             foreach (SlotPlan slot in list_slotplan)
@@ -129,6 +128,15 @@ namespace ApiForFCTKB.Controllers
             InsertOrUpdateSlotConfig(list_config);
 
             return "OK";
+        }
+
+        [HttpGet]
+        public PSBSSB GetPSBSSBQty()
+        {
+            PSBSSB obj = new PSBSSB();
+            obj.PSBQty = GetPSBQty();
+            obj.SSBQty = GetSSBQty();
+            return obj;
         }
 
         [HttpGet]
@@ -448,7 +456,30 @@ namespace ApiForFCTKB.Controllers
                 if (sp != null)
                 {
                     item.ID = sp.ID;
-                    string update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, PO = @PO, SO = @SO, MRP = @MRP, PD = @PD, CORC = @CORC, CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack, CORC_Issue = @CORC_Issue, IsLoad = @IsLoad, LoadInfo = @LoadInfo WHERE ID = @ID";
+                    string update = "";
+                    if (sp.Type == "UF")
+                    {
+                        if (item.PO != "" && item.PO != null)
+                        {
+                            update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, PO = @PO, SO = @SO, MRP = @MRP, PD = @PD, CORC = @CORC, CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack, CORC_Issue = @CORC_Issue, IsLoad = @IsLoad, LoadInfo = @LoadInfo WHERE ID = @ID";
+                        }
+                        else
+                        {
+                            update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, SO = @SO, MRP = @MRP, PD = @PD, CORC = @CORC, CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack, CORC_Issue = @CORC_Issue, IsLoad = @IsLoad, LoadInfo = @LoadInfo WHERE ID = @ID";
+
+                        }
+                    }
+                    else
+                    {
+                        if (item.PO != "" && item.PO != null)
+                        {
+                            update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, PO = @PO, SO = @SO, MRP = @MRP, PD = @PD, CORC = @CORC, CORC_Issue = @CORC_Issue, IsLoad = @IsLoad, LoadInfo = @LoadInfo WHERE ID = @ID";
+                        }
+                        else
+                        {
+                            update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, SO = @SO, MRP = @MRP, PD = @PD, CORC = @CORC, CORC_Issue = @CORC_Issue, IsLoad = @IsLoad, LoadInfo = @LoadInfo WHERE ID = @ID";
+                        }
+                    }
                     conn.Execute(update, item);
                 }
                 else
@@ -819,38 +850,77 @@ namespace ApiForFCTKB.Controllers
             return status;
         }
 
-        public bool GetTimeValidate(string mrpStr)
-        {
-            int week = Tool.WeekOfYear(DateTime.Now); // 获取当前周别
-            float mrp = float.Parse(mrpStr); // 获取MRP
-            int range = 5; // 抓取的周范围 后期改成可修改
-            bool wkRange = true; // 定义周范围的Bool
-            if (week + range <= 54) // 年底之前逻辑简单
-            {
-                wkRange = (mrp >= week && mrp <= week + range);
-            }
-            else // 年底的时候周别逻辑
-            {
-                wkRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
-            }
-            return wkRange;
-        }
-
         public bool GetValidate(string mrpStr)
         {
-            int week = Tool.WeekOfYear(DateTime.Now.AddDays(-7)); // 获取当前周别
+            int week = Tool.WeekOfYear(DateTime.Now.AddDays(-7)); // 获取上周周别
             float mrp = float.Parse(mrpStr); // 获取MRP
             int range = 6; // 抓取的周范围 后期改成可修改
-            bool wkRange = true; // 定义周范围的Bool
+            bool IsRange = true; // 定义周范围的Bool
             if (week + range <= 54) // 年底之前逻辑简单
             {
-                wkRange = (mrp >= week && mrp <= week + range);
+                IsRange = (mrp >= week && mrp <= week + range);
             }
             else // 年底的时候周别逻辑
             {
-                wkRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
+                IsRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
             }
-            return wkRange;
+            return IsRange;
+        }
+
+        public int GetPSBQty()
+        {
+            int qty = 0;
+            List<SlotConfig> list = new List<SlotConfig>();
+            string path = @"\\10.194.51.14\TER\FCT E-KANBAN Database\E-Slot";
+            DirectoryInfo dir = new DirectoryInfo(path);
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                if (file.FullName.Contains("Slot"))
+                {
+                    path = file.FullName;
+                    break;
+                }
+            }
+            Workbook wb = new Workbook(path);
+            Cells cells = wb.Worksheets["Slot"].Cells;
+            DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+            foreach (DataRow item in dt.Rows)
+            {
+                if ((item["Slot"].ToString() == "FCT burning 24sl" || item["Slot"].ToString() == "FCT burning SC3.0" || item["Slot"].ToString() == "FCT verify 12sl") && item["Component"].ToString() == "TDN-974-221-20")
+                {
+                    qty += int.Parse(item["Extended Qty"].ToString());
+                }
+            }
+            return qty;
+        }
+
+        public int GetSSBQty()
+        {
+            int qty = 0;
+            List<SlotConfig> list = new List<SlotConfig>();
+            string path = @"\\10.194.51.14\TER\FCT E-KANBAN Database\E-Slot";
+            DirectoryInfo dir = new DirectoryInfo(path);
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                if (file.FullName.Contains("Slot"))
+                {
+                    path = file.FullName;
+                    break;
+                }
+            }
+            Workbook wb = new Workbook(path);
+            Cells cells = wb.Worksheets["Slot"].Cells;
+            DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+            foreach (DataRow item in dt.Rows)
+            {
+                if ((item["Slot"].ToString() == "FCT burning 24sl" || item["Slot"].ToString() == "FCT burning SC3.0" || item["Slot"].ToString() == "FCT verify 12sl") && item["Component"].ToString() == "TDN-974-221-30")
+                {
+                    qty += int.Parse(item["Extended Qty"].ToString());
+                }
+            }
+            return qty;
         }
     }
 }

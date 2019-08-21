@@ -16,6 +16,7 @@ namespace ApiForRackManage.Controllers
     {
         RackDataContext dc = new RackDataContext();
         public IDbConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Minione"].ConnectionString);
+        public IDbConnection connPNINOUT = new SqlConnection(ConfigurationManager.ConnectionStrings["PNINOUT"].ConnectionString);
 
         [System.Web.Http.HttpGet]
         public Resp getSystemList()
@@ -32,6 +33,20 @@ namespace ApiForRackManage.Controllers
             return resp;
         }
 
+        [HttpPost]
+        public int UpdateSystem(SysList list)
+        {
+            string sql = "UPDATE Instrument SET QTY = @total, BI = @BI where PN = @PN";
+            return connPNINOUT.Execute(sql, list.list);
+        }
+
+        [HttpPost]
+        public int Update750System(SysList list)
+        {
+            string sql = "UPDATE J750_Board SET QTY = @total, BI = @BI where PN = @PN";
+            return connPNINOUT.Execute(sql, list.list);
+        }
+
         [System.Web.Http.HttpGet]
         public RespBI getBurnIn()
         {
@@ -42,6 +57,18 @@ namespace ApiForRackManage.Controllers
             resp.Message = "success";
             return resp;
         }
+    }
+
+    public class Sys
+    {
+        public string PN { get; set; }
+        public int total { get; set; }
+        public int BI { get; set; }
+    }
+
+    public class SysList
+    {
+        public List<Sys> list { get; set; }
     }
 
     public class Resp

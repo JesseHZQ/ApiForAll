@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ApiForControlTower.Models
 {
-    public class Task
+    public class TaskWork
     {
         public int Id { get; set; }
         public string BayName { get; set; }

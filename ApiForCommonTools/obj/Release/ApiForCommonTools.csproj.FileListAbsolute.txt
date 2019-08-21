@@ -105,3 +105,6 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForCommonTools\obj\Release\ApiForCom
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForCommonTools\obj\Release\ApiForCommonTools.csproj.CopyComplete
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForCommonTools\obj\Release\ApiForCommonTools.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForCommonTools\obj\Release\ApiForCommonTools.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForCommonTools\bin\System.Web.Cors.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForCommonTools\bin\System.Web.Http.Cors.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForCommonTools\bin\System.Web.Http.Cors.xml

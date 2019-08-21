@@ -15,40 +15,53 @@ namespace ApiForControlTower.Controllers
     public class LEDController : ApiController
     {
         public IDbConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ControlTower"].ConnectionString);
+        public IDbConnection connEM = new SqlConnection(ConfigurationManager.ConnectionStrings["EMLED"].ConnectionString);
 
         [HttpGet]
         public List<LED> GetLEDList()
         {
-            string sql = "SELECT * FROM CT_LED A LEFT JOIN [SlotKB].[dbo].[KANBAN_SLOTPLAN] B ON A.SystemName = B.Slot LEFT JOIN CT_User C ON A.OwnerId = C.UserId ORDER BY A.Item";
+            string sql = "SELECT * FROM CT_LEDMaster A " +
+                         "LEFT JOIN [SlotKB].[dbo].[KANBAN_SLOTPLAN] B " +
+                         "ON A.SystemName = B.Slot " +
+                         "LEFT JOIN CT_User C " +
+                         "ON A.OwnerId = C.UserId " +
+                         "ORDER BY A.Item";
             return conn.Query<LED>(sql).ToList();
         }
 
         [HttpGet]
         public List<LED> GetLEDListByOwnerId(int Id)
         {
-            string sql = "SELECT * FROM CT_LED A LEFT JOIN [SlotKB].[dbo].[KANBAN_SLOTPLAN] B ON A.SystemName = B.Slot LEFT JOIN CT_User C ON A.OwnerId = C.UserId WHERE A.OwnerId = " + Id + " ORDER BY A.Item";
+            string sql = "SELECT * FROM CT_LEDMaster WHERE OwnerId = " + Id + " ORDER BY Item";
             return conn.Query<LED>(sql).ToList();
         }
 
         [HttpGet]
         public int FinishWork(int Item)
         {
-            string sql = "UPDATE CT_LED SET OwnerId = NULL WHERE Item = " + Item;
+            string sql = "UPDATE CT_LEDMaster SET OwnerId = NULL WHERE Item = " + Item;
             return conn.Execute(sql);
         }
 
         [HttpPost]
         public int AssignWork(LED led)
         {
-            string sql = "UPDATE CT_LED SET OwnerId = @OwnerId WHERE Item = @Item";
+            string sql = "UPDATE CT_LEDMaster SET OwnerId = @OwnerId WHERE Item = @Item";
             return conn.Execute(sql, led);
         }
 
         [HttpGet]
         public List<EMLED> GetEMLEDList()
         {
-            string sql = "SELECT * FROM [suznt004].[FCT_LED_KanBan].[dbo].[Station] WHERE ID < 6";
+            string sql = "SELECT * FROM [suznt004].[FCT_LED_KanBan].[dbo].[Station] WHERE ID < 6 OR ID IN (9, 13)";
             return conn.Query<EMLED>(sql).ToList();
+        }
+
+        [HttpGet]
+        public List<EMKB> GetEMKBList()
+        {
+            string sql = "exec sp_emkb";
+            return connEM.Query<EMKB>(sql).ToList();
         }
     }
 }

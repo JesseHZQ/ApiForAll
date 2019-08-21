@@ -190,6 +190,8 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CALController.cs" />
     <Compile Include="Controllers\ConfigController.cs" />
+    <Compile Include="Controllers\DragonController.cs" />
+    <Compile Include="Models\Dragon.cs" />
     <Compile Include="Models\E_Issue_Array.cs" />
     <Compile Include="Models\E_Issue.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="Models\CAL.cs" />
     <Compile Include="Models\MinioneConfig.cs" />
     <Compile Include="Controllers\ShortageController.cs" />
+    <Compile Include="Models\PSBSSB.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\SingleStatus.cs" />
     <Compile Include="Models\Resp.cs" />

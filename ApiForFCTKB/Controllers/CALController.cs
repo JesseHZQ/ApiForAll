@@ -65,7 +65,7 @@ namespace ApiForFCTKB.Controllers
                 cells[row, 17].PutValue(cal.N7);
             }
 
-            wb.Save(@"\\suznt004\TER\Mechanical PE\CAL Software database(No deletion)\result.xlsx");
+            wb.Save(@"\\suznt004\TER\Mechanical PE\BU7校准数据转存\CAL数据汇总\result.xlsx");
             return "OK";
         }
 
@@ -73,7 +73,7 @@ namespace ApiForFCTKB.Controllers
         public List<CAL> GetCSVData()
         {
             List<CAL> list = new List<CAL>();
-            string path = @"\\10.194.51.14\TER\Mechanical PE\CAL Software database(No deletion)\RowData";
+            string path = @"\\10.194.51.14\TER\Mechanical PE\BU7校准数据转存\CAL数据汇总\CSV";
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
