@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\suzjeshe\source\repos\ApiForAll\ApiForMaterialKitting\bin\Release\Publish</_PublishTargetUrl>
+    <_PublishTargetUrl>\\suznt004\Backup\Jesse\ApiAll\MaterialKitting</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -85,10 +85,10 @@
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiForMaterialKitting.dll">
-      <publishTime>04/15/2019 09:11:50</publishTime>
+      <publishTime>08/29/2019 12:26:05</publishTime>
     </File>
     <File Include="bin/ApiForMaterialKitting.pdb">
-      <publishTime>04/15/2019 09:11:50</publishTime>
+      <publishTime>08/29/2019 12:26:05</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>10/09/2018 16:46:25</publishTime>

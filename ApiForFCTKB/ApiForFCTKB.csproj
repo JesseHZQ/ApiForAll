@@ -191,6 +191,7 @@
     <Compile Include="Controllers\CALController.cs" />
     <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\DragonController.cs" />
+    <Compile Include="MailTask.cs" />
     <Compile Include="Models\Dragon.cs" />
     <Compile Include="Models\E_Issue_Array.cs" />
     <Compile Include="Models\E_Issue.cs" />

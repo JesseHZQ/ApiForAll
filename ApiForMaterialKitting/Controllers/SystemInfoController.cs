@@ -23,26 +23,20 @@ namespace ApiForMaterialKitting.Controllers
             if (wk > wknow)
             {
                 dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from" +
-                    "(SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryHHM where Lock = 0 and ShipWeek <= " + wk + " and ShipWeek >= " + wknow + " " +
-                    "union SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " and ShipWeek >= " + wknow + " " +
-                    "union Select SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate from SummaryHIM where Lock = 0 and ShipWeek <= " + wk + " and ShipWeek >= " + wknow + ")" +
+                    "(SELECT Slot, Model, Customer, PO, SO, PD, PlanShipDate FROM KANBAN_SLOTPLAN where ShippingDate is null and PD <= " + wk + " and PD >= " + wknow + ") " +
                     "a left join " +
                     "(select * from MaterialKitting where IsDel = 0)b " +
-                    "on a.SystemSlot = b.Slot " +
-                    "order by a.ShipWeek");
+                    "on a.Slot = b.Slot " +
+                    "order by a.PD");
             } 
             else
             {
-                //dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM SummaryH where Lock = 0 and ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ")a left join (select * from MaterialKitting where IsDel = 0)b on a.SystemSlot = b.Slot order by a.ShipWeek");
-
                 dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from" +
-                    "(SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryHHM where Lock = 0 and (ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ") " +
-                    "union SELECT SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate FROM SummaryH where Lock = 0 and (ShipWeek <= " + wk + " or ShipWeek >= " + wknow + ") " +
-                    "union Select SystemSlot, SystemModel, Customer, PO, SO, ShipWeek, ShipDate from SummaryHIM where Lock = 0 and (ShipWeek <= " + wk + " or ShipWeek >= " + wknow + "))" +
+                    "(SELECT Slot, Model, Customer, PO, SO, PD, PlanShipDate FROM KANBAN_SLOTPLAN where ShippingDate is null and (PD <= " + wk + " or PD >= " + wknow + ") " +
                     "a left join " +
                     "(select * from MaterialKitting where IsDel = 0)b " +
-                    "on a.SystemSlot = b.Slot " +
-                    "order by a.ShipWeek");
+                    "on a.Slot = b.Slot " +
+                    "order by a.PD");
             }
             Resp resp = new Resp();
             resp.Code = 200;
@@ -65,11 +59,11 @@ namespace ApiForMaterialKitting.Controllers
             int wk = GetWeekOfYear(DateTime.Now) + 3;
             if (type == "all")
             {
-                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join (select SystemSlot, PO, Lock from SummaryH union select SystemSlot, PO, Lock from SummaryHIM) b on b.SystemSlot = a.Slot where b.Lock = 0 order by DemandDate");
+                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join (select Slot, PO, ShippingDate, PD from KANBAN_SLOTPLAN) b on b.Slot = a.Slot where b.ShippingDate is null order by DemandDate");
             }
             else
             {
-                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join (select SystemSlot, PO, Lock from SummaryH union select SystemSlot, PO, Lock from SummaryHIM) b on b.SystemSlot = a.Slot where a.station = '" + type + "' and b.Lock = 0 order by DemandDate");
+                dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join (select Slot, PO, ShippingDate, PD from KANBAN_SLOTPLAN) b on b.Slot = a.Slot where a.station = '" + type + "' and b.ShippingDate is null order by DemandDate");
             }
             Resp resp = new Resp();
             resp.Code = 200;
@@ -83,7 +77,7 @@ namespace ApiForMaterialKitting.Controllers
         {
             DataTable dt = new DataTable();
             int wk = GetWeekOfYear(DateTime.Now) + 3;
-            dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join SummaryH b on b.SystemSlot = a.Slot where a.id = '" + id + "'");
+            dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from(SELECT * FROM MaterialKitting where IsDel = 0)a left join KANBAN_SLOTPLAN b on b.Slot = a.Slot where a.id = '" + id + "'");
             Resp resp = new Resp();
             resp.Code = 200;
             resp.Data = dt;
@@ -232,8 +226,8 @@ namespace ApiForMaterialKitting.Controllers
             str += "<th width='140' style='border-style: solid; border-width: 1px'>Remark</th></tr>";
             str += "</thead><tbody>";
             str += "<tr style='font-size: 14px; height: 24px; text-align: center;'>";
-            str += "<td style='border-style: solid; border-width: 1px'>" + model.SystemSlot + "</td>";
-            str += "<td style='border-style: solid; border-width: 1px'>" + model.SystemSlot.Substring(0, 2) + "</td>";
+            str += "<td style='border-style: solid; border-width: 1px'>" + model.Slot + "</td>";
+            str += "<td style='border-style: solid; border-width: 1px'>" + model.Slot.Substring(0, 2) + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.Customer + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.PO + "</td>";
             str += "<td style='border-style: solid; border-width: 1px'>" + model.Station.ToUpper() + "</td>";
@@ -244,7 +238,7 @@ namespace ApiForMaterialKitting.Controllers
             str += "</tbody></table>";
             str += "<a href='http://suznt004:8082/materialkitting'>详情请点击跳转，建议使用chrome浏览器</a>";
 
-            int index = SqlHelper.ExecuteNonQuery("insert into MaterialKitting (Slot, PO, Station, Remark, DemandDate, InformDate, IsDel) values ('" + model.SystemSlot + "','" + model.PO + "','" + model.Station + "','" + model.Remark + "','" + dt.ToLocalTime() + "','" + DateTime.Now + "', 0)");
+            int index = SqlHelper.ExecuteNonQuery("insert into MaterialKitting (Slot, PO, Station, Remark, DemandDate, InformDate, IsDel) values ('" + model.Slot + "','" + model.PO + "','" + model.Station + "','" + model.Remark + "','" + dt.ToLocalTime() + "','" + DateTime.Now + "', 0)");
             if (index != 0)
             {
                 string[] list = new string[] {
@@ -271,7 +265,7 @@ namespace ApiForMaterialKitting.Controllers
                     "lisa.qian@flex.com",
                     "Jesse.He@flex.com"
                 };
-                int result = SendMail("Material-Kitting@flex.com", model.SystemSlot.Substring(0, 2) + " system 增料", list, cclist, str);
+                int result = SendMail("Material-Kitting@flex.com", model.Slot.Substring(0, 2) + " system 增料", list, cclist, str);
                 if (result == 1)
                 {
                     resp.Code = 200;
@@ -372,7 +366,7 @@ namespace ApiForMaterialKitting.Controllers
 
         public class KittingModel
         {
-            public string SystemSlot { get; set; }
+            public string Slot { get; set; }
             public string PO { get; set; }
             public string Station { get; set; }
             public string Customer { get; set; }

@@ -58,10 +58,59 @@ namespace ApiForControlTower.Controllers
         }
 
         [HttpGet]
+        public List<EMLEDSteps> GetEMLEDStepsByLogID(int LogID)
+        {
+            string sql = "SELECT * FROM Steplog WHERE Aslog = " + LogID + " and EndTime is not null";
+            return connEM.Query<EMLEDSteps>(sql).ToList();
+        }
+
+        [HttpGet]
         public List<EMKB> GetEMKBList()
         {
             string sql = "exec sp_emkb";
             return connEM.Query<EMKB>(sql).ToList();
+        }
+
+        [HttpGet]
+        public List<Config> GetConfigBySystemName(string SystemName)
+        {
+            string sql = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[Boards] WHERE TesterID = '" + SystemName + "' ORDER BY Slot";
+            return conn.Query<Config>(sql).ToList();
+        }
+
+        [HttpGet]
+        public List<Board> GetBoardsDetail(string Sn)
+        {
+            string sql = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[Failuar] WHERE SN = '" + Sn + "' ORDER BY Date";
+            return conn.Query<Board>(sql).ToList();
+        }
+
+        [HttpGet]
+        public List<PCBAShortage> GetShortageBySlot(string slot)
+        {
+            string sql = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTSHORTAGE] WHERE IsReceived = 0 AND Slot = '" + slot + "'";
+            return conn.Query<PCBAShortage>(sql).ToList();
+        }
+
+        [HttpGet]
+        public List<Instrument> GetInstrumentsStatus()
+        {
+            string sql = "SELECT * FROM [PNINOUT].[dbo].[Instrument] ORDER BY PN";
+            return conn.Query<Instrument>(sql).ToList();
+        }
+
+        [HttpGet]
+        public List<FA> GetFAList()
+        {
+            string sql = "SELECT * FROM [192.168.163.1].[FCT_Test].[dbo].[IKW_FA_MaterialTracking]";
+            return conn.Query<FA>(sql).ToList();
+        }
+
+        [HttpGet]
+        public List<PCBAShortage> GetShortageList()
+        {
+            string sql = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTSHORTAGE]";
+            return conn.Query<PCBAShortage>(sql).ToList();
         }
     }
 }

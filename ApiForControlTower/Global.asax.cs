@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApiForControlTower.Job;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,6 +15,10 @@ namespace ApiForControlTower
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
+            // 执行计划任务
+            JobScheduler.Start();
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

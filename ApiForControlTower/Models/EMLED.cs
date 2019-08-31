@@ -8,6 +8,8 @@ namespace ApiForControlTower.Models
     public class EMLED
     {
         public int ID { get; set; }
+        public string TempModel { get; set; }
+        public int LogID { get; set; }
         public string Tempdata { get; set; }
     }
 }
