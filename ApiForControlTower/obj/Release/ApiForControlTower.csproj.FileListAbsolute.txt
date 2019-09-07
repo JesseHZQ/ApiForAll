@@ -129,3 +129,12 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Microsoft.Owin.S
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Microsoft.Owin.Security.Cookies.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\System.Web.Http.Owin.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Common.Logging.Core.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Common.Logging.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Quartz.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Common.Logging.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Common.Logging.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Common.Logging.Core.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Common.Logging.Core.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Quartz.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Quartz.xml

@@ -48,12 +48,21 @@
     <Reference Include="Aspose.Cells, Version=19.5.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <HintPath>..\packages\Aspose.Cells.19.5.0\lib\net40\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=2.5.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -189,13 +198,19 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CALController.cs" />
+    <Compile Include="Controllers\SlotPlanController.cs" />
+    <Compile Include="Models\EIssue.cs" />
+    <Compile Include="Controllers\EIssueController.cs" />
+    <Compile Include="Models\ChecklistSystemInfo.cs" />
     <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\DragonController.cs" />
+    <Compile Include="Job\Mail.cs" />
+    <Compile Include="Job\Refresh.cs" />
+    <Compile Include="Job\JobScheduler.cs" />
     <Compile Include="MailTask.cs" />
     <Compile Include="Models\Dragon.cs" />
     <Compile Include="Models\E_Issue_Array.cs" />
     <Compile Include="Models\E_Issue.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IssueController.cs" />
     <Compile Include="Models\CAL.cs" />
     <Compile Include="Models\MinioneConfig.cs" />
@@ -212,7 +227,6 @@
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Models\Tool.cs" />
     <Compile Include="Models\UFSystem.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -251,6 +265,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

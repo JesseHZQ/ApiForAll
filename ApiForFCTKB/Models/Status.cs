@@ -2,7 +2,7 @@
 {
     public partial class SystemController
     {
-        public class Status
+        public class SlotStatus
         {
             public string Slot { get; set; }
             public string Launch { get; set; }

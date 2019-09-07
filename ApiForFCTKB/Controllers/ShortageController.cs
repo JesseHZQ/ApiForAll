@@ -15,12 +15,18 @@ namespace ApiForFCTKB.Controllers
     {
         public IDbConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["FCTKB"].ConnectionString);
 
+        [HttpGet]
+        public List<SlotShortage> GetShortageBySlot(string slot)
+        {
+            string sql = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE Slot = '" + slot + "'";
+            return conn.Query<SlotShortage>(sql).ToList();
+        }
+
         [HttpPost]
-        public string UpdateShortage(SlotShortage shortage)
+        public int UpdateShortage(SlotShortage shortage)
         {
             string update = "UPDATE KANBAN_SLOTSHORTAGE SET IsReceived = @IsReceived, ETA = @ETA WHERE ID = @ID";
-            conn.Execute(update, shortage);
-            return "ok";
+            return conn.Execute(update, shortage);
         }
     }
 }

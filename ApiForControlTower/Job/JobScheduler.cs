@@ -22,7 +22,7 @@ namespace ApiForControlTower.Job
             IJobDetail jobD = JobBuilder.Create<AutoAssignD>().Build();
             IJobDetail jobS = JobBuilder.Create<AutoAssignS>().Build();
             //创建触发器
-            ITrigger triggerD = TriggerBuilder.Create().WithIdentity("TimeTriggerD", "TimeGroupD").WithCronSchedule("0 0 8 ? * MON-FRI").Build();
+            ITrigger triggerD = TriggerBuilder.Create().WithIdentity("TimeTriggerD", "TimeGroupD").WithCronSchedule("0 35 8 ? * MON-FRI").Build();
             ITrigger triggerS = TriggerBuilder.Create().WithIdentity("TimeTriggerS", "TimeGroupS").WithCronSchedule("0 0 15 ? * MON-FRI").Build();
             scheduler.ScheduleJob(jobD, triggerD);
             scheduler.ScheduleJob(jobS, triggerS);

@@ -1,4 +1,6 @@
-﻿namespace ApiForFCTKB.Controllers
+﻿using System;
+
+namespace ApiForFCTKB.Controllers
 {
     public class SlotConfig
     {
@@ -9,5 +11,6 @@
         public string QTY { get; set; }
         public string DelayTips { get; set; }
         public bool IsReady { get; set; }
+        public DateTime LastUpdatedTime { get; set; }
     }
 }

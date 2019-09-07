@@ -9,5 +9,6 @@ namespace ApiForFCTKB.Models
     {
         public int PSBQty { get; set; }
         public int SSBQty { get; set; }
+        public DateTime LastUpdatedTime { get; set; }
     }
 }

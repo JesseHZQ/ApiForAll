@@ -109,3 +109,12 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\obj\Release\ApiForFCTKB.csp
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\obj\Release\ApiForFCTKB.csproj.CopyComplete
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\obj\Release\ApiForFCTKB.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\obj\Release\ApiForFCTKB.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Common.Logging.Core.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Common.Logging.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Quartz.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Common.Logging.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Common.Logging.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Common.Logging.Core.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Common.Logging.Core.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Quartz.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Quartz.xml
