@@ -29,13 +29,13 @@ namespace ApiForFCTKB.Controllers
             license.SetLicense("Aspose.Cells.lic");
 
             // 不超过一分钟
+            UpdatePSBSSBQty(); // 获取最早更新时间
             InsertOrUpdateSlotPlan();
             UpdateSlotPO();
             UpdateSlotCORC();
             InsertOrUpdateSlotShortage();
             InsertOrUpdateSlotConfig();
             UpdateSlotMinioneStatus();
-            UpdatePSBSSBQty();
             UpdateSlotStatus();
 
             return "OK";
@@ -67,14 +67,13 @@ namespace ApiForFCTKB.Controllers
             Workbook wb = new Workbook(@"\\suznt004\Backup\Jesse\FrontAll\FCT KANBAN\files\UFlex System Status.xls");
             Cells cells = wb.Worksheets[0].Cells;
             int y = 2;
-            string sql = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTPLAN] WHERE TYPE = '" + type + "' AND ShippingDate is null ORDER BY PD";
-            List<SlotPlan> list = conn.Query<SlotPlan>(sql).ToList();
-            list = list.Where(x => GetValidate(x.MRP) == true).ToList();
+            List<SlotPlan> list = GetSystemByType(type);
             foreach (SlotPlan s in list)
             {
                 for (int i = 0; i < 18; i++)
                 {
                     Style sty = cells[y, i].GetStyle();
+                    sty.Font.Size = 8;
                     sty.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
                     sty.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
                     sty.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
@@ -90,94 +89,74 @@ namespace ApiForFCTKB.Controllers
                 cells[y, 6].PutValue(s.PO);
                 cells[y, 14].PutValue(s.Launch);
                 cells[y, 15].PutValue(s.CORC);
-                string sqlShortage = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTSHORTAGE] WHERE SLOT = '" + s.Slot + "' AND IsReceived = 0";
-                List<SlotShortage> listShortage = conn.Query<SlotShortage>(sqlShortage).ToList();
-                string Shortage_Issue = "";
+                List<SlotShortage> listShortage = s.ShortageList;
+                string Shortage = "";
                 if (listShortage.Count > 0)
                 {
                     foreach (SlotShortage e in listShortage)
                     {
-                        Shortage_Issue = Shortage_Issue + e.PN + "---" + e.QTY + ";";
+                        Shortage = Shortage + e.PN + "---" + e.QTY + ";";
                     }
                 }
-                cells[y, 16].PutValue(Shortage_Issue);
+                cells[y, 16].PutValue(Shortage);
+                List<SlotEIssue> listEIssue = s.EIssueList;
                 string Engineering_Issue = "";
-                if (s.Engineering_Issue != null && s.Engineering_Issue != "[]" && s.Engineering_Issue != "")
+                if (listEIssue.Count > 0)
                 {
-                    var arrdata = Newtonsoft.Json.Linq.JArray.Parse(s.Engineering_Issue);
-                    List<E_Issue> arr = arrdata.ToObject<List<E_Issue>>();
-                    foreach (E_Issue e in arr)
+                    foreach (SlotEIssue e in listEIssue)
                     {
-                        Engineering_Issue = Engineering_Issue + e.Item + ";";
+                        Engineering_Issue = Engineering_Issue + e.Item;
                     }
                 }
                 cells[y, 17].PutValue(Engineering_Issue);
-                Style style = new CellsFactory().CreateStyle();
-                if (cells[y, 16].Value != null || cells[y, 17].Value != null)
-                {
-                    style.BackgroundColor = System.Drawing.Color.Red;
-                    style.Pattern = BackgroundType.Solid;
-                    style.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.LeftBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                }
-                else
-                {
-                    style.BackgroundColor = System.Drawing.Color.Green;
-                    style.Pattern = BackgroundType.Solid;
-                    style.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.LeftBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                }
+
                 if (s.Pack != "" && s.Pack != null)
                 {
                     cells[y, 7].PutValue(s.Pack);
-                    cells[y, 7].SetStyle(style);
+                    SetCellStyle(cells[y, 7], Shortage, Engineering_Issue);
                 }
                 else if (s.BU != "" && s.BU != null)
                 {
                     cells[y, 8].PutValue(s.BU);
-                    cells[y, 8].SetStyle(style);
+                    SetCellStyle(cells[y, 8], Shortage, Engineering_Issue);
                 }
                 else if (s.QFAA != "" && s.QFAA != null)
                 {
                     cells[y, 9].PutValue(s.QFAA);
-                    cells[y, 9].SetStyle(style);
+                    SetCellStyle(cells[y, 9], Shortage, Engineering_Issue);
                 }
                 else if (s.CSW != "" && s.CSW != null)
                 {
                     cells[y, 10].PutValue(s.CSW);
-                    cells[y, 10].SetStyle(style);
+                    SetCellStyle(cells[y, 10], Shortage, Engineering_Issue);
                 }
                 else if (s.TestBU != "" && s.TestBU != null)
                 {
                     cells[y, 11].PutValue(s.TestBU);
-                    cells[y, 11].SetStyle(style);
+                    SetCellStyle(cells[y, 11], Shortage, Engineering_Issue);
                 }
                 else if (s.OI != "" && s.OI != null)
                 {
                     cells[y, 12].PutValue(s.OI);
-                    cells[y, 12].SetStyle(style);
+                    SetCellStyle(cells[y, 12], Shortage, Engineering_Issue);
                 }
                 else if (s.CoreBU != "" && s.CoreBU != null)
                 {
                     cells[y, 13].PutValue(s.CoreBU);
-                    cells[y, 13].SetStyle(style);
+                    SetCellStyle(cells[y, 13], Shortage, Engineering_Issue);
                 }
                 y++;
             }
 
             Cells cellsShip = wb.Worksheets[1].Cells;
             int yShip = 2;
-            string sqlShip = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTPLAN] WHERE TYPE = '" + type + "' AND ShippingDate is not null ORDER BY PD";
-            List<SlotPlan> listShip = conn.Query<SlotPlan>(sqlShip).ToList();
+            List<SlotPlan> listShip = GetShippedSystemByType(type);
             foreach (SlotPlan s in listShip)
             {
                 for (int i = 0; i < 18; i++)
                 {
                     Style sty = cellsShip[yShip, i].GetStyle();
+                    sty.Font.Size = 8;
                     sty.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
                     sty.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
                     sty.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
@@ -193,87 +172,273 @@ namespace ApiForFCTKB.Controllers
                 cellsShip[yShip, 6].PutValue(s.PO);
                 cellsShip[yShip, 14].PutValue(s.Launch);
                 cellsShip[yShip, 15].PutValue(s.CORC);
-                string sqlShortage = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTSHORTAGE] WHERE SLOT = '" + s.Slot + "' AND IsReceived = 0";
-                List<SlotShortage> listShortage = conn.Query<SlotShortage>(sqlShortage).ToList();
-                string Shortage_Issue = "";
+                List<SlotShortage> listShortage = s.ShortageList;
+                string Shortage = "";
                 if (listShortage.Count > 0)
                 {
                     foreach (SlotShortage e in listShortage)
                     {
-                        Shortage_Issue = Shortage_Issue + e.PN + "---" + e.QTY + ";";
+                        Shortage = Shortage + e.PN + "---" + e.QTY + ";";
                     }
                 }
-                cellsShip[yShip, 16].PutValue(Shortage_Issue);
+                cellsShip[yShip, 16].PutValue(Shortage);
+                List<SlotEIssue> listEIssue = s.EIssueList;
                 string Engineering_Issue = "";
-                if (s.Engineering_Issue != null && s.Engineering_Issue != "[]" && s.Engineering_Issue != "")
+                if (listEIssue.Count > 0)
                 {
-                    var arrdata = Newtonsoft.Json.Linq.JArray.Parse(s.Engineering_Issue);
-                    List<E_Issue> arr = arrdata.ToObject<List<E_Issue>>();
-                    foreach (E_Issue e in arr)
+                    foreach (SlotEIssue e in listEIssue)
                     {
-                        Engineering_Issue = Engineering_Issue + e.Item + ";";
+                        Engineering_Issue = Engineering_Issue + e.Item;
                     }
                 }
                 cellsShip[yShip, 17].PutValue(Engineering_Issue);
-                Style style = new CellsFactory().CreateStyle();
-                if (cellsShip[yShip, 16].Value != null || cellsShip[yShip, 17].Value != null)
-                {
-                    style.BackgroundColor = System.Drawing.Color.Red;
-                    style.Pattern = BackgroundType.Solid;
-                    style.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.LeftBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                }
-                else
-                {
-                    style.BackgroundColor = System.Drawing.Color.Green;
-                    style.Pattern = BackgroundType.Solid;
-                    style.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                    style.SetBorder(BorderType.LeftBorder, CellBorderType.Thin, System.Drawing.Color.Black);
-                }
+
                 if (s.Pack != "" && s.Pack != null)
                 {
                     cellsShip[yShip, 7].PutValue(s.Pack);
-                    cellsShip[yShip, 7].SetStyle(style);
+                    SetCellStyle(cellsShip[yShip, 7], Shortage, Engineering_Issue);
                 }
                 else if (s.BU != "" && s.BU != null)
                 {
                     cellsShip[yShip, 8].PutValue(s.BU);
-                    cellsShip[yShip, 8].SetStyle(style);
+                    SetCellStyle(cellsShip[yShip, 8], Shortage, Engineering_Issue);
                 }
                 else if (s.QFAA != "" && s.QFAA != null)
                 {
                     cellsShip[yShip, 9].PutValue(s.QFAA);
-                    cellsShip[yShip, 9].SetStyle(style);
+                    SetCellStyle(cellsShip[yShip, 9], Shortage, Engineering_Issue);
                 }
                 else if (s.CSW != "" && s.CSW != null)
                 {
                     cellsShip[yShip, 10].PutValue(s.CSW);
-                    cellsShip[yShip, 10].SetStyle(style);
+                    SetCellStyle(cellsShip[yShip, 10], Shortage, Engineering_Issue);
                 }
                 else if (s.TestBU != "" && s.TestBU != null)
                 {
                     cellsShip[yShip, 11].PutValue(s.TestBU);
-                    cellsShip[yShip, 11].SetStyle(style);
+                    SetCellStyle(cellsShip[yShip, 11], Shortage, Engineering_Issue);
                 }
                 else if (s.OI != "" && s.OI != null)
                 {
                     cellsShip[yShip, 12].PutValue(s.OI);
-                    cellsShip[yShip, 12].SetStyle(style);
+                    SetCellStyle(cellsShip[yShip, 12], Shortage, Engineering_Issue);
                 }
                 else if (s.CoreBU != "" && s.CoreBU != null)
                 {
                     cellsShip[yShip, 13].PutValue(s.CoreBU);
-                    cellsShip[yShip, 13].SetStyle(style);
+                    SetCellStyle(cellsShip[yShip, 13], Shortage, Engineering_Issue);
+                }
+                yShip++;
+            }
+            string filePath = @"\\suznt004\Backup\Jesse\FrontAll\FCT KANBAN\files\SR_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_") + DateTime.Now.Millisecond.ToString() + new Random().Next(1, 10000).ToString() + ".xlsx";
+            wb.Save(filePath);
+            return filePath;
+        }
+
+        /// <summary>
+        /// 生成Shift Report
+        /// </summary>
+        [HttpGet]
+        public string generateExcelWithGroup(string type)
+        {
+            // 注册Aspose License
+            Aspose.Cells.License license = new Aspose.Cells.License();
+            license.SetLicense("Aspose.Cells.lic");
+            Workbook wb = new Workbook(@"\\suznt004\Backup\Jesse\FrontAll\FCT KANBAN\files\UFlex System Status With Group.xls");
+            Cells cells = wb.Worksheets[0].Cells;
+            int y = 2;
+            List<SlotPlan> list = GetSystemByType(type);
+            foreach (SlotPlan s in list)
+            {
+                for (int i = 0; i < 19; i++)
+                {
+                    Style sty = cells[y, i].GetStyle();
+                    sty.Font.Size = 8;
+                    sty.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                    sty.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                    sty.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                    sty.SetBorder(BorderType.LeftBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                    cells[y, i].SetStyle(sty);
+                }
+                cells[y, 0].PutValue(s.GroupNum);
+                cells[y, 1].PutValue(s.PD);
+                cells[y, 2].PutValue(s.PlanShipDate);
+                cells[y, 3].PutValue(s.Slot);
+                cells[y, 4].PutValue(s.Model);
+                cells[y, 5].PutValue(s.Customer);
+                cells[y, 6].PutValue(s.SO);
+                cells[y, 7].PutValue(s.PO);
+                cells[y, 15].PutValue(s.Launch);
+                cells[y, 16].PutValue(s.CORC);
+                List<SlotShortage> listShortage = s.ShortageList;
+                string Shortage = "";
+                if (listShortage.Count > 0)
+                {
+                    foreach (SlotShortage e in listShortage)
+                    {
+                        Shortage = Shortage + e.PN + "---" + e.QTY + ";";
+                    }
+                }
+                cells[y, 17].PutValue(Shortage);
+                List<SlotEIssue> listEIssue = s.EIssueList;
+                string Engineering_Issue = "";
+                if (listEIssue.Count > 0)
+                {
+                    foreach (SlotEIssue e in listEIssue)
+                    {
+                        Engineering_Issue = Engineering_Issue + e.Item;
+                    }
+                }
+                cells[y, 18].PutValue(Engineering_Issue);
+
+                if (s.Pack != "" && s.Pack != null)
+                {
+                    cells[y, 8].PutValue(s.Pack);
+                    SetCellStyle(cells[y, 8], Shortage, Engineering_Issue);
+                }
+                else if (s.BU != "" && s.BU != null)
+                {
+                    cells[y, 9].PutValue(s.BU);
+                    SetCellStyle(cells[y, 9], Shortage, Engineering_Issue);
+                }
+                else if (s.QFAA != "" && s.QFAA != null)
+                {
+                    cells[y, 10].PutValue(s.QFAA);
+                    SetCellStyle(cells[y, 10], Shortage, Engineering_Issue);
+                }
+                else if (s.CSW != "" && s.CSW != null)
+                {
+                    cells[y, 11].PutValue(s.CSW);
+                    SetCellStyle(cells[y, 11], Shortage, Engineering_Issue);
+                }
+                else if (s.TestBU != "" && s.TestBU != null)
+                {
+                    cells[y, 12].PutValue(s.TestBU);
+                    SetCellStyle(cells[y, 12], Shortage, Engineering_Issue);
+                }
+                else if (s.OI != "" && s.OI != null)
+                {
+                    cells[y, 13].PutValue(s.OI);
+                    SetCellStyle(cells[y, 13], Shortage, Engineering_Issue);
+                }
+                else if (s.CoreBU != "" && s.CoreBU != null)
+                {
+                    cells[y, 14].PutValue(s.CoreBU);
+                    SetCellStyle(cells[y, 14], Shortage, Engineering_Issue);
+                }
+                y++;
+            }
+
+            Cells cellsShip = wb.Worksheets[1].Cells;
+            int yShip = 2;
+            List<SlotPlan> listShip = GetShippedSystemByType(type);
+            foreach (SlotPlan s in listShip)
+            {
+                for (int i = 0; i < 19; i++)
+                {
+                    Style sty = cellsShip[yShip, i].GetStyle();
+                    sty.Font.Size = 8;
+                    sty.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                    sty.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                    sty.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                    sty.SetBorder(BorderType.LeftBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                    cellsShip[yShip, i].SetStyle(sty);
+                }
+                cellsShip[yShip, 0].PutValue(s.GroupNum);
+                cellsShip[yShip, 1].PutValue(s.PD);
+                cellsShip[yShip, 2].PutValue(s.PlanShipDate);
+                cellsShip[yShip, 3].PutValue(s.Slot);
+                cellsShip[yShip, 4].PutValue(s.Model);
+                cellsShip[yShip, 5].PutValue(s.Customer);
+                cellsShip[yShip, 6].PutValue(s.SO);
+                cellsShip[yShip, 7].PutValue(s.PO);
+                cellsShip[yShip, 15].PutValue(s.Launch);
+                cellsShip[yShip, 16].PutValue(s.CORC);
+                List<SlotShortage> listShortage = s.ShortageList;
+                string Shortage = "";
+                if (listShortage.Count > 0)
+                {
+                    foreach (SlotShortage e in listShortage)
+                    {
+                        Shortage = Shortage + e.PN + "---" + e.QTY + ";";
+                    }
+                }
+                cellsShip[yShip, 17].PutValue(Shortage);
+                List<SlotEIssue> listEIssue = s.EIssueList;
+                string Engineering_Issue = "";
+                if (listEIssue.Count > 0)
+                {
+                    foreach (SlotEIssue e in listEIssue)
+                    {
+                        Engineering_Issue = Engineering_Issue + e.Item;
+                    }
+                }
+                cellsShip[yShip, 18].PutValue(Engineering_Issue);
+
+                if (s.Pack != "" && s.Pack != null)
+                {
+                    cellsShip[yShip, 8].PutValue(s.Pack);
+                    SetCellStyle(cellsShip[yShip, 8], Shortage, Engineering_Issue);
+                }
+                else if (s.BU != "" && s.BU != null)
+                {
+                    cellsShip[yShip, 9].PutValue(s.BU);
+                    SetCellStyle(cellsShip[yShip, 9], Shortage, Engineering_Issue);
+                }
+                else if (s.QFAA != "" && s.QFAA != null)
+                {
+                    cellsShip[yShip, 10].PutValue(s.QFAA);
+                    SetCellStyle(cellsShip[yShip, 10], Shortage, Engineering_Issue);
+                }
+                else if (s.CSW != "" && s.CSW != null)
+                {
+                    cellsShip[yShip, 11].PutValue(s.CSW);
+                    SetCellStyle(cellsShip[yShip, 11], Shortage, Engineering_Issue);
+                }
+                else if (s.TestBU != "" && s.TestBU != null)
+                {
+                    cellsShip[yShip, 12].PutValue(s.TestBU);
+                    SetCellStyle(cellsShip[yShip, 12], Shortage, Engineering_Issue);
+                }
+                else if (s.OI != "" && s.OI != null)
+                {
+                    cellsShip[yShip, 13].PutValue(s.OI);
+                    SetCellStyle(cellsShip[yShip, 13], Shortage, Engineering_Issue);
+                }
+                else if (s.CoreBU != "" && s.CoreBU != null)
+                {
+                    cellsShip[yShip, 14].PutValue(s.CoreBU);
+                    SetCellStyle(cellsShip[yShip, 14], Shortage, Engineering_Issue);
                 }
                 yShip++;
             }
             string filePath = @"\\suznt004\Backup\Jesse\FrontAll\FCT KANBAN\files\SR_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_") + DateTime.Now.Millisecond + ".xlsx";
             wb.Save(filePath);
             return filePath;
+        }
+
+        public void SetCellStyle(Cell cell, string shortage, string issue)
+        {
+            Style sty = cell.GetStyle();
+            if (shortage != "" || issue != "")
+            {
+                sty.BackgroundColor = System.Drawing.Color.Red;
+                sty.Pattern = BackgroundType.Solid;
+                sty.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                sty.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                sty.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                sty.SetBorder(BorderType.LeftBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+            }
+            else
+            {
+                sty.BackgroundColor = System.Drawing.Color.Green;
+                sty.Pattern = BackgroundType.Solid;
+                sty.SetBorder(BorderType.TopBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                sty.SetBorder(BorderType.RightBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                sty.SetBorder(BorderType.BottomBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+                sty.SetBorder(BorderType.LeftBorder, CellBorderType.Thin, System.Drawing.Color.Black);
+            }
+            cell.SetStyle(sty);
         }
 
         /// <summary>
@@ -308,12 +473,12 @@ namespace ApiForFCTKB.Controllers
         [HttpGet]
         public List<SlotPlan> GetSystemByType(string type)
         {
-            string sqlplan = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE = '" + type + "' AND ShippingDate is null ORDER BY PD, PlanShipDate, Slot";
+            string sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE = '" + type + "' AND ShippingDate is null ORDER BY PD, PlanShipDate, Slot";
             if (type == "IF")
             {
-                sqlplan = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE IN ( 'IF', 'MF') AND ShippingDate is null ORDER BY PD, PlanShipDate, Slot";
+                sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE IN ( 'IF', 'MF') AND ShippingDate is null ORDER BY PD, PlanShipDate, Slot";
             }
-            List<SlotPlan> list = conn.Query<SlotPlan>(sqlplan).ToList();
+            List<SlotPlan> list = conn.Query<SlotPlan>(sqlplan1).ToList();
             string sqlConfig = "SELECT * FROM KANBAN_SLOTCONFIG";
             List<SlotConfig> listConfig = conn.Query<SlotConfig>(sqlConfig).ToList();
             string sqlShortage = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE IsReceived = 0";
@@ -349,7 +514,52 @@ namespace ApiForFCTKB.Controllers
             }
             return list;
         }
-        
+
+        [HttpGet]
+        public List<SlotPlan> GetShippedSystemByType(string type)
+        {
+            string sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE = '" + type + "' AND ShippingDate is not null ORDER BY PD, Slot";
+            if (type == "IF")
+            {
+                sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE IN ( 'IF', 'MF') AND ShippingDate is not null ORDER BY PD, Slot";
+            }
+            List<SlotPlan> list = conn.Query<SlotPlan>(sqlplan1).ToList();
+            string sqlConfig = "SELECT * FROM KANBAN_SLOTCONFIG";
+            List<SlotConfig> listConfig = conn.Query<SlotConfig>(sqlConfig).ToList();
+            string sqlShortage = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE IsReceived = 0";
+            List<SlotShortage> listShortage = conn.Query<SlotShortage>(sqlShortage).ToList();
+            string sqlEIssue = "SELECT * FROM KANBAN_SLOTEISSUE WHERE Status <> 'Close'";
+            List<SlotEIssue> listEIssue = conn.Query<SlotEIssue>(sqlEIssue).ToList();
+            foreach (SlotPlan slotplan in list)
+            {
+                slotplan.ConfigList = new List<SlotConfig>();
+                slotplan.ShortageList = new List<SlotShortage>();
+                slotplan.EIssueList = new List<SlotEIssue>();
+                foreach (SlotConfig item in listConfig)
+                {
+                    if (item.Slot == slotplan.Slot)
+                    {
+                        slotplan.ConfigList.Add(item);
+                    }
+                }
+                foreach (SlotShortage item in listShortage)
+                {
+                    if (item.Slot == slotplan.Slot)
+                    {
+                        slotplan.ShortageList.Add(item);
+                    }
+                }
+                foreach (SlotEIssue item in listEIssue)
+                {
+                    if (item.Slot == slotplan.Slot)
+                    {
+                        slotplan.EIssueList.Add(item);
+                    }
+                }
+            }
+            return list;
+        }
+
 
 
 
@@ -723,13 +933,13 @@ namespace ApiForFCTKB.Controllers
                 "TDN-974-230-00",
                 "TDN-974-232-00",
                 "TDN-630-036-30",
-                "TDN-631-938-02",
-                "TDN-632-627-01",
-                "TDN-632-629-01",
-                "TDN-633-246-00",
-                "TDN-636-752-01",
+                //"TDN-631-938-02",
+                //"TDN-632-627-01",
+                //"TDN-632-629-01",
+                //"TDN-633-246-00",
+                //"TDN-636-752-01",
                 "TDN-636-860-21",
-                "TDN-639-210-01",
+                //"TDN-639-210-01",
                 "TDN-974-296-30",
                 "TDN-632-859-21",
                 "TDN-633-675-03",
@@ -835,7 +1045,7 @@ namespace ApiForFCTKB.Controllers
                 }
             }
         }
-
+        
         /// <summary>
         /// 更新Station Status
         /// </summary>
@@ -843,17 +1053,29 @@ namespace ApiForFCTKB.Controllers
         public void UpdateSlotStatus()
         {
             string query = "SELECT * FROM KANBAN_SLOTPLAN WHERE ShippingDate is null";
-            List<SlotPlan> slotplan = conn.Query<SlotPlan>(query).ToList().Where(x => GetValidate(x.MRP, 2) && x.Type == "UF").ToList();
+            List<SlotPlan> slotplan = conn.Query<SlotPlan>(query).ToList().Where(x => x.Type == "UF").ToList();
+            // Slot集合查询数据
+            string strSlotList = "";
+            foreach (SlotPlan slot in slotplan)
+            {
+                strSlotList = strSlotList + "'" + slot.Slot + "',";
+            }
+            strSlotList = strSlotList.Substring(0, strSlotList.Length - 1);
+            string sql24slot = "select a.SystemId, b.systemName, a.Date, a.ListBy, a.CheckItemDescription from [SC3_test].[dbo].[Check_SC3] a join [SC3_test].[dbo].[SystemProperties] b on a.SystemId = b.systemId where b.systemName in (" + strSlotList + ")";
+            string sql12slot = "select a.SystemId, b.systemName, a.Date, a.ListBy, a.CheckItemDescription from [SC3_test].[dbo].[Check_12Slot] a join [SC3_test].[dbo].[SystemProperties] b on a.SystemId = b.systemId where b.systemName in (" + strSlotList + ")";
+
+            List<CheckListItem> list24 = conn.Query<CheckListItem>(sql24slot).ToList();
+            List<CheckListItem> list12 = conn.Query<CheckListItem>(sql12slot).ToList();
             foreach (SlotPlan item in slotplan)
             {
                 SlotStatus status = new SlotStatus();
                 if (item.Model.IndexOf("24") > -1)
                 {
-                    status = GetUF24Status(item.Slot);
+                    status = GetUF24Status(item.Slot, list24);
                 }
                 if (item.Model.IndexOf("12") > -1)
                 {
-                    status = GetUF12Status(item.Slot);
+                    status = GetUF12Status(item.Slot, list12);
                 }
                 item.CoreBU = status.CorBU;
                 item.PV = status.PV;
@@ -863,9 +1085,9 @@ namespace ApiForFCTKB.Controllers
                 item.QFAA = status.QFAA;
                 item.BU = status.BU;
                 item.Pack = status.Pack;
-                string update = "UPDATE KANBAN_SLOTPLAN SET CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack WHERE ID = @ID";
-                conn.Execute(update, item);
             }
+            string update = "UPDATE KANBAN_SLOTPLAN SET CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack WHERE ID = @ID";
+            conn.Execute(update, slotplan);
         }
 
         /// <summary>
@@ -928,6 +1150,34 @@ namespace ApiForFCTKB.Controllers
             }
         }
 
+        public int GetConfigQty(string pn)
+        {
+            int qty = 0;
+            List<SlotConfig> list = new List<SlotConfig>();
+            string path = @"\\10.194.51.14\TER\FCT E-KANBAN Database\E-Slot";
+            DirectoryInfo dir = new DirectoryInfo(path);
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                if (file.FullName.Contains("Slot"))
+                {
+                    path = file.FullName;
+                    break;
+                }
+            }
+            Workbook wb = new Workbook(path);
+            Cells cells = wb.Worksheets["Slot"].Cells;
+            DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+            foreach (DataRow item in dt.Rows)
+            {
+                if ((item["Slot"].ToString() == "FCT burning 24sl" || item["Slot"].ToString() == "FCT burning SC3.0" || item["Slot"].ToString() == "FCT verify 12sl") && item["Component"].ToString() == pn)
+                {
+                    qty += int.Parse(item["Extended Qty"].ToString());
+                }
+            }
+            return qty;
+        }
+
         /// <summary>
         /// 更新PSB SSB在系统中的数量
         /// </summary>
@@ -951,22 +1201,45 @@ namespace ApiForFCTKB.Controllers
         /// <param name="slot"></param>
         /// <param name="station"></param>
         /// <returns></returns>
-        public string GetStatusByItem(string slot, string item, string station, string tableName)
+        public string GetStatusByItem(string slot, string item, string station, List<CheckListItem> list)
         {
-            string sql = @"SELECT TOP 1 SUBSTRING(CONVERT(varchar, DATENAME(YEAR,Date)),3,2) + " +
-                         "RIGHT('00' + CAST(DATENAME(WEEK, a.Date) AS nvarchar(50)), 2) + '.' + " +
-                         "case when convert(varchar(50), datepart(dw, A.Date) - 1) = '0' then '7' else convert(varchar(50), datepart(dw, A.Date) - 1) end as WeekNum, b.systemName as Slot " +
-                         "FROM [SC3_test].[dbo].[" + tableName + "] a " +
-                         "join [SC3_test].[dbo].[SystemProperties] b " +
-                         "on a.systemId = b.systemId " +
-                         "where b.systemName = '" + slot + "' and a.CheckItemDescription like '%" + item + "%'" + " and a.ListBy like '%" + station + "%' " +
-                         "order by a.Date";
-            List<SingleStatus> list = conn.Query<SingleStatus>(sql).ToList();
-            if (list.Count >= 1)
+            CheckListItem checkListItem = list.Where(x => x.SystemName == slot && x.CheckItemDescription.Contains(item) && x.ListBy == station).SingleOrDefault();
+            if (checkListItem != null && checkListItem.Date.Year > 2015)
             {
-                return list[0].WeekNum;
+                int day = -1;
+                switch (checkListItem.Date.DayOfWeek)
+                {
+                    case DayOfWeek.Sunday:
+                        day = 7;
+                        break;
+                    case DayOfWeek.Monday:
+                        day = 1;
+                        break;
+                    case DayOfWeek.Tuesday:
+                        day = 2;
+                        break;
+                    case DayOfWeek.Wednesday:
+                        day = 3;
+                        break;
+                    case DayOfWeek.Thursday:
+                        day = 4;
+                        break;
+                    case DayOfWeek.Friday:
+                        day = 5;
+                        break;
+                    case DayOfWeek.Saturday:
+                        day = 6;
+                        break;
+                    default:
+                        day = -1;
+                        break;
+                }
+                return checkListItem.Date.Year.ToString().Substring(2, 2) + Tool.WeekOfYear(checkListItem.Date).ToString() + "." + day.ToString();
             }
-            return "";
+            else
+            {
+                return "";
+            }
         }
 
         /// <summary>
@@ -974,19 +1247,19 @@ namespace ApiForFCTKB.Controllers
         /// </summary>
         /// <param name="slot"></param>
         /// <returns></returns>
-        public SlotStatus GetUF24Status(string slot)
+        public SlotStatus GetUF24Status(string slot, List<CheckListItem> list)
         {
             SlotStatus status = new SlotStatus();
             status.Slot = slot;
-            status.Launch = GetStatusByItem(slot, "1.1 Please set IP address according to the tag on the desk", "Ultraflex SC3 Core Bring Up Station Checklist", "Check_SC3");
-            status.CorBU = GetStatusByItem(slot, "1.1 Please set IP address according to the tag on the desk", "Ultraflex SC3 Core Bring Up Station Checklist", "Check_SC3");
-            status.PV = GetStatusByItem(slot, "1. QDC Latch(inside test head)", "Ultraflex SC3 Core Bring Up Station Checklist", "Check_SC3");
-            status.OI = GetStatusByItem(slot, "33. Clamp(To heat exchange)", "Ultraflex SC3 Core Bring Up Station Checklist", "Check_SC3");
-            status.TestBU = GetStatusByItem(slot, @"1.1 Verify latest PO and CORC.Save CORC and Slot Locator in below path: \\ Agate\UltraFlex Project\Sync data\Shipped\CORC Tracking", "Ultraflex SC3 Test Bring Up Station Checklist", "Check_SC3");
-            status.CSW = GetStatusByItem(slot, "Verify limit table and firmware updated before CSW", "Ultraflex SC3 Test Bring Up Station Checklist", "Check_SC3");
-            status.QFAA = GetStatusByItem(slot, "1.1 Record HFE Level", "Ultraflex SC3 Final Station Checklist", "Check_SC3");
-            status.BU = GetStatusByItem(slot, "1.1打开Test Head 的门,确认门两侧各有2个Danger 标签且无缺损脏污.", "Ultraflex SC3 Assembly Button up Checklist", "Check_SC3");
-            status.Pack = GetStatusByItem(slot, "1. 木箱检查：检查没有多余文字或者图，没有大面积划伤（图1）；检查没有多余的毛刺毛边杂物，如果有需要清理干净（图2,3,4）。检查木箱所有钉子已经钉好，没有外漏，如果有需要拔出来重新钉（图5,6,7）。", "Ultraflex SC3 Packing Checklist", "Check_SC3");
+            status.Launch = GetStatusByItem(slot, "1.1 Please set IP address according to the tag on the desk", "Ultraflex SC3 Core Bring Up Station Checklist", list);
+            status.CorBU = GetStatusByItem(slot, "1.1 Please set IP address according to the tag on the desk", "Ultraflex SC3 Core Bring Up Station Checklist", list);
+            status.PV = GetStatusByItem(slot, "1. QDC Latch(inside test head)", "Ultraflex SC3 Core Bring Up Station Checklist", list);
+            status.OI = GetStatusByItem(slot, "33. Clamp(To heat exchange)", "Ultraflex SC3 Core Bring Up Station Checklist", list);
+            status.TestBU = GetStatusByItem(slot, @"1.1 Verify latest PO and CORC.Save CORC and Slot Locator in below path: \\ Agate\UltraFlex Project\Sync data\Shipped\CORC Tracking", "Ultraflex SC3 Test Bring Up Station Checklist", list);
+            status.CSW = GetStatusByItem(slot, "Verify limit table and firmware updated before CSW", "Ultraflex SC3 Test Bring Up Station Checklist", list);
+            status.QFAA = GetStatusByItem(slot, "1.1 Record HFE Level", "Ultraflex SC3 Final Station Checklist", list);
+            status.BU = GetStatusByItem(slot, "1.1打开Test Head 的门,确认门两侧各有2个Danger 标签且无缺损脏污.", "Ultraflex SC3 Assembly Button up Checklist", list);
+            status.Pack = GetStatusByItem(slot, "1. 木箱检查：检查没有多余文字或者图，没有大面积划伤（图1）；检查没有多余的毛刺毛边杂物，如果有需要清理干净（图2,3,4）。检查木箱所有钉子已经钉好，没有外漏，如果有需要拔出来重新钉（图5,6,7）。", "Ultraflex SC3 Packing Checklist", list);
             return status;
         }
 
@@ -995,19 +1268,19 @@ namespace ApiForFCTKB.Controllers
         /// </summary>
         /// <param name="slot"></param>
         /// <returns></returns>
-        public SlotStatus GetUF12Status(string slot)
+        public SlotStatus GetUF12Status(string slot, List<CheckListItem> list)
         {
             SlotStatus status = new SlotStatus();
             status.Slot = slot;
-            status.Launch = GetStatusByItem(slot, "1.1 Please set IP address according to the tag on the desk", "Ultraflex 12Slot Core Bring Up Verification Station Checklist", "Check_12Slot");
-            status.CorBU = GetStatusByItem(slot, "1.1 Please set IP address according to the tag on the desk", "Ultraflex 12Slot Core Bring Up Verification Station Checklist", "Check_12Slot");
-            status.PV = GetStatusByItem(slot, "1. QDC Latch(inside test head)", "Ultraflex 12Slot Core Bring Up Verification Station Checklist", "Check_12Slot");
-            status.OI = GetStatusByItem(slot, "25. TH pipe drain QD(left)", "Ultraflex 12Slot Core Bring Up Verification Station Checklist", "Check_12Slot");
-            status.TestBU = GetStatusByItem(slot, @"1.2 Verify latest PO and CorC. Save CORC and Slot Locator in below path: \\ Agate\UltraFlex Project\Sync data\Shipped\CORC Tracking", "Ultraflex 12Slot Test Bring Up Station Checklist", "Check_12Slot");
-            status.CSW = GetStatusByItem(slot, "1.29 Verify limit table and firmware updated before CSW", "Ultraflex 12Slot Test Bring Up Station Checklist", "Check_12Slot");
-            status.QFAA = GetStatusByItem(slot, "1.1 Record HFE Level", "UltraFlex 12Slot Final Station Checklist", "Check_12Slot");
-            status.BU = GetStatusByItem(slot, "1.1打开Test Head 的门,确认门侧有2个Dangerous 标签且无缺损脏污", "Ultraflex 12Slot Assembly Button up Checklist", "Check_12Slot");
-            status.Pack = GetStatusByItem(slot, "1. 木箱检查：检查没有多余文字或者图，没有大面积划伤（图1）；检查没有多余的毛刺毛边杂物，如果有需要清理干净（图2,3,4）。检查木箱所有钉子已经钉好，没有外漏，如果有需要拔出来重新钉（图5,6,7）。", "Ultraflex 12Slot Packing Checklist", "Check_12Slot");
+            status.Launch = GetStatusByItem(slot, "1.1 Please set IP address according to the tag on the desk", "Ultraflex 12Slot Core Bring Up Verification Station Checklist", list);
+            status.CorBU = GetStatusByItem(slot, "1.1 Please set IP address according to the tag on the desk", "Ultraflex 12Slot Core Bring Up Verification Station Checklist", list);
+            status.PV = GetStatusByItem(slot, "1. QDC Latch(inside test head)", "Ultraflex 12Slot Core Bring Up Verification Station Checklist", list);
+            status.OI = GetStatusByItem(slot, "25. TH pipe drain QD(left)", "Ultraflex 12Slot Core Bring Up Verification Station Checklist", list);
+            status.TestBU = GetStatusByItem(slot, @"1.2 Verify latest PO and CorC. Save CORC and Slot Locator in below path: \\ Agate\UltraFlex Project\Sync data\Shipped\CORC Tracking", "Ultraflex 12Slot Test Bring Up Station Checklist", list);
+            status.CSW = GetStatusByItem(slot, "1.29 Verify limit table and firmware updated before CSW", "Ultraflex 12Slot Test Bring Up Station Checklist", list);
+            status.QFAA = GetStatusByItem(slot, "1.1 Record HFE Level", "UltraFlex 12Slot Final Station Checklist", list);
+            status.BU = GetStatusByItem(slot, "1.1打开Test Head 的门,确认门侧有2个Dangerous 标签且无缺损脏污", "Ultraflex 12Slot Assembly Button up Checklist", list);
+            status.Pack = GetStatusByItem(slot, "1. 木箱检查：检查没有多余文字或者图，没有大面积划伤（图1）；检查没有多余的毛刺毛边杂物，如果有需要清理干净（图2,3,4）。检查木箱所有钉子已经钉好，没有外漏，如果有需要拔出来重新钉（图5,6,7）。", "Ultraflex 12Slot Packing Checklist", list);
             return status;
         }
 
@@ -1042,34 +1315,6 @@ namespace ApiForFCTKB.Controllers
                 IsRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
             }
             return IsRange;
-        }
-
-        public int GetConfigQty(string pn)
-        {
-            int qty = 0;
-            List<SlotConfig> list = new List<SlotConfig>();
-            string path = @"\\10.194.51.14\TER\FCT E-KANBAN Database\E-Slot";
-            DirectoryInfo dir = new DirectoryInfo(path);
-            FileInfo[] files = dir.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                if (file.FullName.Contains("Slot"))
-                {
-                    path = file.FullName;
-                    break;
-                }
-            }
-            Workbook wb = new Workbook(path);
-            Cells cells = wb.Worksheets["Slot"].Cells;
-            DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
-            foreach (DataRow item in dt.Rows)
-            {
-                if ((item["Slot"].ToString() == "FCT burning 24sl" || item["Slot"].ToString() == "FCT burning SC3.0" || item["Slot"].ToString() == "FCT verify 12sl") && item["Component"].ToString() == pn)
-                {
-                    qty += int.Parse(item["Extended Qty"].ToString());
-                }
-            }
-            return qty;
         }
     }
 }

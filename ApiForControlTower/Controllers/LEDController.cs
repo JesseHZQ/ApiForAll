@@ -16,17 +16,45 @@ namespace ApiForControlTower.Controllers
     {
         public IDbConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ControlTower"].ConnectionString);
         public IDbConnection connEM = new SqlConnection(ConfigurationManager.ConnectionStrings["EMLED"].ConnectionString);
+        public IDbConnection connMinione = new SqlConnection(ConfigurationManager.ConnectionStrings["Minione"].ConnectionString);
+        public IDbConnection connSlot = new SqlConnection(ConfigurationManager.ConnectionStrings["SlotKB"].ConnectionString);
 
         [HttpGet]
         public List<LED> GetLEDList()
         {
+            string sqlLED = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[LED]";
+            List<OLDLED> list = conn.Query<OLDLED>(sqlLED).ToList();
+            string sqlUpdate = "Update CT_LEDMaster SET SystemName = @System, Station = @Station, ShippingTime = @Ship WHERE BayName = @BayNO";
+            int result = conn.Execute(sqlUpdate, list);
             string sql = "SELECT * FROM CT_LEDMaster A " +
                          "LEFT JOIN [SlotKB].[dbo].[KANBAN_SLOTPLAN] B " +
                          "ON A.SystemName = B.Slot " +
                          "LEFT JOIN CT_User C " +
                          "ON A.OwnerId = C.UserId " +
                          "ORDER BY A.Item";
-            return conn.Query<LED>(sql).ToList();
+            List<LED> l = conn.Query<LED>(sql).ToList();
+            string sqlEIssue = "SELECT * FROM KANBAN_SLOTEISSUE WHERE Status <> 'Close'";
+            List<EIssue> listEIssue = connSlot.Query<EIssue>(sqlEIssue).ToList();
+            foreach (LED led in l)
+            {
+                led.EIssueList = new List<EIssue>();
+                
+                foreach (EIssue item in listEIssue)
+                {
+                    if (item.Slot == led.Slot)
+                    {
+                        led.EIssueList.Add(item);
+                    }
+                }
+            }
+            return l;
+        }
+
+        [HttpGet]
+        public List<LEDDetail> GetLEDDetailBySlot(string slot)
+        {
+            string sql = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[BigData] WHERE SN = '" + slot + "' ORDER BY BeginTime";
+            return conn.Query<LEDDetail>(sql).ToList();
         }
 
         [HttpGet]
@@ -109,8 +137,22 @@ namespace ApiForControlTower.Controllers
         [HttpGet]
         public List<PCBAShortage> GetShortageList()
         {
-            string sql = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTSHORTAGE]";
+            string sql = "SELECT a.* FROM [SlotKB].[dbo].[KANBAN_SLOTSHORTAGE] a join [SlotKB].[dbo].[KANBAN_SLOTPLAN] b on a.Slot = b.Slot where a.IsReceived = 0 and b.ShippingDate is null";
             return conn.Query<PCBAShortage>(sql).ToList();
+        }
+
+        [HttpGet]
+        public List<EIssue> GetEIssueList()
+        {
+            string sql = "SELECT a.* FROM [SlotKB].[dbo].[KANBAN_SLOTEISSUE] a join [SlotKB].[dbo].[KANBAN_SLOTPLAN] b on a.Slot = b.Slot where a.Status = 'Open' and b.ShippingDate is null";
+            return conn.Query<EIssue>(sql).ToList();
+        }
+
+        [HttpGet]
+        public TempHumid GetRealTimeTHData()
+        {
+            string sql = "SELECT TOP 1 * FROM [FF_EDW].[dbo].[EDW_TEMPERATURE_HUMIDITY] where Location = 'FCT' ORDER BY CreationTime DESC";
+            return connMinione.Query<TempHumid>(sql).SingleOrDefault();
         }
     }
 }

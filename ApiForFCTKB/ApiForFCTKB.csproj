@@ -197,7 +197,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AMLController.cs" />
     <Compile Include="Controllers\CALController.cs" />
+    <Compile Include="Job\MailWithFile.cs" />
+    <Compile Include="Models\AmlDiffPe.cs" />
+    <Compile Include="Models\CheckListItem.cs" />
     <Compile Include="Controllers\SlotPlanController.cs" />
     <Compile Include="Models\EIssue.cs" />
     <Compile Include="Controllers\EIssueController.cs" />

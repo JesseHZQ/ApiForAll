@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApiForControlTower.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,5 +18,6 @@ namespace ApiForControlTower.Models
         public DateTime LastUpdatedTime { get; set; }
         public int OwnerId { get; set; }
         public string UserName { get; set; }
+        public List<EIssue> EIssueList { get; set; }
     }
 }

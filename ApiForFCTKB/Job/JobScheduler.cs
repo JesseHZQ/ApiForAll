@@ -21,11 +21,15 @@ namespace ApiForFCTKB.Job
             //创建任务
             IJobDetail jobRefresh = JobBuilder.Create<Refresh>().Build();
             IJobDetail jobMail = JobBuilder.Create<Mail>().Build();
+            IJobDetail jobShiftReport = JobBuilder.Create<MailWithFile>().Build();
             //创建触发器
-            ITrigger triggerRefresh = TriggerBuilder.Create().WithIdentity("TimeTriggerRefresh", "TimeGroupRefresh").WithCronSchedule("0 0/30 8-17 * * ?").Build();
+            ITrigger triggerRefresh = TriggerBuilder.Create().WithIdentity("TimeTriggerRefresh", "TimeGroupRefresh").WithCronSchedule("0 0/5 * * * ?").Build();
             ITrigger triggerMail = TriggerBuilder.Create().WithIdentity("TimeTriggerMail", "TimeGroupMail").WithCronSchedule("0 0 13 ? * MON-FRI").Build();
-            scheduler.ScheduleJob(jobRefresh, triggerRefresh);
+            ITrigger triggerShiftReport = TriggerBuilder.Create().WithIdentity("TimeTriggerShiftReport", "TimeGroupShiftReport").WithCronSchedule("0 0 0/1 * * ?").Build();
+            //ITrigger triggerShiftReport = TriggerBuilder.Create().WithIdentity("TimeTriggerShiftReport", "TimeGroupShiftReport").WithCronSchedule("0 0 13 ? * MON-SAT").Build();
+             scheduler.ScheduleJob(jobRefresh, triggerRefresh);
             scheduler.ScheduleJob(jobMail, triggerMail);
+            scheduler.ScheduleJob(jobShiftReport, triggerShiftReport);
             /*-------------计划任务代码实现------------------*/
 
             //启动

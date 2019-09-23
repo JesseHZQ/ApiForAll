@@ -31,50 +31,68 @@ namespace ApiForFCTKB
                   <th width='40' style='border-style: solid; border-width: 1px'>PD</th>
                   <th width='230' style='border-style: solid; border-width: 1px'>CORC Issue</th>
                   <th width='230' style='border-style: solid; border-width: 1px'>Engineering Issue</th>
+                  <th width='230' style='border-style: solid; border-width: 1px'>Shortage</th>
                 </tr>";
-            string sql = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTPLAN] WHERE ShippingDate is null ORDER BY PD";
-            List<SlotPlan> spList = conn.Query<SlotPlan>(sql).ToList().Where(x => GetValidate(x.MRP) == true && ((x.CORC_Issue != "" && x.CORC_Issue != null) || (x.Engineering_Issue != "" && x.Engineering_Issue != "[]" && x.Engineering_Issue != null))).ToList();
+
+            string sql = "SELECT * FROM KANBAN_SLOTPLAN WHERE ShippingDate is null ORDER BY PD";
+            List<SlotPlan> list = conn.Query<SlotPlan>(sql).ToList();
+            string sqlConfig = "SELECT * FROM KANBAN_SLOTCONFIG";
+            List<SlotConfig> listConfig = conn.Query<SlotConfig>(sqlConfig).ToList();
+            string sqlShortage = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE IsReceived = 0";
+            List<SlotShortage> listShortage = conn.Query<SlotShortage>(sqlShortage).ToList();
+            string sqlEIssue = "SELECT * FROM KANBAN_SLOTEISSUE WHERE Status <> 'Close'";
+            List<SlotEIssue> listEIssue = conn.Query<SlotEIssue>(sqlEIssue).ToList();
+            foreach (SlotPlan slotplan in list)
+            {
+                slotplan.ConfigList = new List<SlotConfig>();
+                slotplan.ShortageList = new List<SlotShortage>();
+                slotplan.EIssueList = new List<SlotEIssue>();
+                foreach (SlotConfig item in listConfig)
+                {
+                    if (item.Slot == slotplan.Slot)
+                    {
+                        slotplan.ConfigList.Add(item);
+                    }
+                }
+                foreach (SlotShortage item in listShortage)
+                {
+                    if (item.Slot == slotplan.Slot)
+                    {
+                        slotplan.ShortageList.Add(item);
+                    }
+                }
+                foreach (SlotEIssue item in listEIssue)
+                {
+                    if (item.Slot == slotplan.Slot)
+                    {
+                        slotplan.EIssueList.Add(item);
+                    }
+                }
+            }
+            List<SlotPlan> spList = list.Where(x => (x.CORC_Issue != "" && x.CORC_Issue != null) || (x.ShortageList.Count > 0) || (x.EIssueList.Count > 0)).ToList();
             foreach (SlotPlan sp in spList)
             {
-                if (sp.Engineering_Issue != "" && sp.Engineering_Issue != null)
+                string EIssue = "";
+                foreach (SlotEIssue item in sp.EIssueList)
                 {
-                    JArray jArray = (JArray)JsonConvert.DeserializeObject(sp.Engineering_Issue);
-                    string E_Issue = "";
-                    if (jArray.Count > 0)
-                    {
-                        foreach (var item in jArray)
-                        {
-                            if (((JObject)item)["Status"].ToString() == "Open")
-                            {
-                                string a = ((JObject)item)["Item"].ToString();
-                                E_Issue += a;
-                            }
-                        }
-                    }
-                    string single = string.Format(@"<tr style='line-height: 20px;'>
-                        <td style='border-style: solid; border-width: 1px'>{0}</td>
-                        <td style='border-style: solid; border-width: 1px'>{1}</td>
-                        <td style='border-style: solid; border-width: 1px'>{2}</td>
-                        <td style='border-style: solid; border-width: 1px'>{3}</td>
-                        <td style='border-style: solid; border-width: 1px'>{4}</td>
-                        <td style='border-style: solid; border-width: 1px; text-align: left;'>{5}</td>
-                        <td style='border-style: solid; border-width: 1px; text-align: left;'>{6}</td>
-                      </tr>", sp.PlanShipDate, sp.Type == "D" ? "Dragon" : sp.Type, sp.Slot, sp.Customer, sp.PD, sp.CORC_Issue, E_Issue);
-                    content += single;
+                    EIssue += item.Item;
                 }
-                else
+                string Shortage = "";
+                foreach (SlotShortage item in sp.ShortageList)
                 {
-                    string single = string.Format(@"<tr style='line-height: 20px;'>
-                        <td style='border-style: solid; border-width: 1px'>{0}</td>
-                        <td style='border-style: solid; border-width: 1px'>{1}</td>
-                        <td style='border-style: solid; border-width: 1px'>{2}</td>
-                        <td style='border-style: solid; border-width: 1px'>{3}</td>
-                        <td style='border-style: solid; border-width: 1px'>{4}</td>
-                        <td style='border-style: solid; border-width: 1px; text-align: left;'>{5}</td>
-                        <td style='border-style: solid; border-width: 1px; text-align: left;'>{6}</td>
-                      </tr>", sp.PlanShipDate, sp.Type == "D" ? "Dragon" : sp.Type, sp.Slot, sp.Customer, sp.PD, sp.CORC_Issue, sp.Engineering_Issue);
-                    content += single;
+                    Shortage = Shortage + item.PN + "," + item.QTY + ";";
                 }
+                string single = string.Format(@"<tr style='line-height: 20px;'>
+                    <td style='border-style: solid; border-width: 1px'>{0}</td>
+                    <td style='border-style: solid; border-width: 1px'>{1}</td>
+                    <td style='border-style: solid; border-width: 1px'>{2}</td>
+                    <td style='border-style: solid; border-width: 1px'>{3}</td>
+                    <td style='border-style: solid; border-width: 1px'>{4}</td>
+                    <td style='border-style: solid; border-width: 1px; text-align: left;'>{5}</td>
+                    <td style='border-style: solid; border-width: 1px; text-align: left;'>{6}</td>
+                    <td style='border-style: solid; border-width: 1px; text-align: left;'>{7}</td>
+                    </tr>", sp.PlanShipDate, sp.Type == "D" ? "Dragon" : sp.Type, sp.Slot, sp.Customer, sp.PD, sp.CORC_Issue, EIssue, Shortage);
+                content += single;
             }
             content += "</table>";
             return content;

@@ -233,6 +233,10 @@
     <Compile Include="Auth\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Auth\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Auth\Startup.cs" />
+    <Compile Include="Models\LEDDetail.cs" />
+    <Compile Include="Models\OLDLED.cs" />
+    <Compile Include="Models\EIssue.cs" />
+    <Compile Include="Models\TempHumid.cs" />
     <Compile Include="Controllers\WorkAssignController.cs" />
     <Compile Include="Controllers\WorkController.cs" />
     <Compile Include="Job\AutoAssignS.cs" />

@@ -16,10 +16,6 @@ namespace ApiForControlTower.Controllers
     {
         public IDbConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ControlTower"].ConnectionString);
 
-        /// <summary>
-        /// 获取所有User
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public List<Station> GetStationList()
         {

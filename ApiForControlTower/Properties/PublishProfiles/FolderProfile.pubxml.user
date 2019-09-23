@@ -82,10 +82,10 @@
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiForControlTower.dll">
-      <publishTime>09/03/2019 16:12:57</publishTime>
+      <publishTime>09/20/2019 15:28:30</publishTime>
     </File>
     <File Include="bin/ApiForControlTower.pdb">
-      <publishTime>09/03/2019 16:12:57</publishTime>
+      <publishTime>09/20/2019 15:28:30</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>07/22/2019 11:18:08</publishTime>
@@ -475,7 +475,7 @@
       <publishTime>07/22/2019 11:17:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/02/2019 09:30:24</publishTime>
+      <publishTime>09/20/2019 15:28:31</publishTime>
     </File>
   </ItemGroup>
 </Project>

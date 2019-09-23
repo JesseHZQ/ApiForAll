@@ -25,7 +25,7 @@ namespace ApiForFCTKB.Controllers
         [HttpPost]
         public int InsertEIssue(SlotEIssue eIssue)
         {
-            string insert = "INSERT INTO KANBAN_SLOTEISSUE VALUES (@Item, @Date, @Status)";
+            string insert = "INSERT INTO KANBAN_SLOTEISSUE VALUES (@Slot, @Item, @Date, @Status)";
             return conn.Execute(insert, eIssue);
         }
 
