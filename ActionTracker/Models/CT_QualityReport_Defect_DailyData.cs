@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ActionTracker.Controllers;
+using System;
 using System.Collections.Generic;
 
 namespace ActionTracker
 {
-    public partial class CT_QualityReport_Defect_DailyData
+    public partial class CT_QualityReport_Defect_DailyData: PageClass
     {
         public int ID { get; set; }
         public string Date { get; set; }

@@ -206,3 +206,5 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\obj\Debug\ActionTracker.c
 C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\obj\Debug\ActionTracker.csproj.CopyComplete
 C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\obj\Debug\ActionTracker.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\obj\Debug\ActionTracker.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Aspose.Cells.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Aspose.Cells.xml
