@@ -76,10 +76,10 @@
       <publishTime>09/17/2019 15:38:34</publishTime>
     </File>
     <File Include="bin/ActionTracker.dll">
-      <publishTime>09/25/2019 15:53:20</publishTime>
+      <publishTime>10/10/2019 15:29:37</publishTime>
     </File>
     <File Include="bin/ActionTracker.pdb">
-      <publishTime>09/25/2019 15:53:20</publishTime>
+      <publishTime>10/10/2019 15:29:37</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>09/10/2013 16:29:20</publishTime>
@@ -92,6 +92,18 @@
     </File>
     <File Include="bin/Aspose.Cells.dll">
       <publishTime>05/15/2019 22:27:58</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.Core.dll">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.Core.pdb">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.dll">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.pdb">
+      <publishTime>11/14/2015 13:35:30</publishTime>
     </File>
     <File Include="bin/Dapper.dll">
       <publishTime>08/29/2019 13:18:20</publishTime>
@@ -134,6 +146,12 @@
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>02/18/2018 09:44:54</publishTime>
+    </File>
+    <File Include="bin/Quartz.dll">
+      <publishTime>02/18/2017 09:28:06</publishTime>
+    </File>
+    <File Include="bin/Quartz.pdb">
+      <publishTime>02/18/2017 09:28:06</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 13:38:22</publishTime>
@@ -718,7 +736,7 @@
       <publishTime>09/17/2019 15:38:34</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/25/2019 08:37:41</publishTime>
+      <publishTime>10/08/2019 16:56:36</publishTime>
     </File>
   </ItemGroup>
 </Project>

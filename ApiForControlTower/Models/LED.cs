@@ -18,6 +18,7 @@ namespace ApiForControlTower.Models
         public DateTime LastUpdatedTime { get; set; }
         public int OwnerId { get; set; }
         public string UserName { get; set; }
+        public string WeChatName { get; set; }
         public List<EIssue> EIssueList { get; set; }
     }
 }

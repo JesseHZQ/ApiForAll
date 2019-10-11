@@ -43,7 +43,7 @@ namespace ApiForControlTower.Controllers
             string sqlQuery = "SELECT * FROM [CT_User] WHERE UserId = @UserId";
             if (conn.QueryFirstOrDefault<User>(sqlQuery, user) == null)
             {
-                string sql = "INSERT INTO [CT_User] (UserId, UserName, Password, Department, LevelNum, Shift, IsLeave, IsLock, Skills, Phone, Email, BackUpId, IsDel) VALUES (@UserId, @UserName, @Password, @Department, @LevelNum, @Shift, @IsLeave, @IsLock, @Skills, @Phone, @Email, @BackUpId, @IsDel)";
+                string sql = "INSERT INTO [CT_User] (UserId, UserName, Password, Department, LevelNum, Shift, IsLeave, IsLock, Skills, Phone, Email, BackUpId, IsDel, WeChatName) VALUES (@UserId, @UserName, @Password, @Department, @LevelNum, @Shift, @IsLeave, @IsLock, @Skills, @Phone, @Email, @BackUpId, @IsDel, @WeChatName)";
                 return conn.Execute(sql, user);
             }
             return 0;
@@ -60,7 +60,7 @@ namespace ApiForControlTower.Controllers
         [HttpPost]
         public int UpdateUser(User user)
         {
-            string sql = "UPDATE [CT_User] SET UserName = @UserName, Password= @Password, Department = @Department, LevelNum = @LevelNum, Shift = @Shift, IsLeave = @IsLeave, IsLock = @IsLock, Skills = @Skills, Phone = @Phone, Email = @Email, BackUpId = @BackUpId WHERE UserId = @UserId";
+            string sql = "UPDATE [CT_User] SET UserName = @UserName, Password= @Password, Department = @Department, LevelNum = @LevelNum, Shift = @Shift, IsLeave = @IsLeave, IsLock = @IsLock, Skills = @Skills, Phone = @Phone, Email = @Email, BackUpId = @BackUpId, WeChatName = @WeChatName WHERE UserId = @UserId";
             return conn.Execute(sql, user);
         }
     }

@@ -35,8 +35,18 @@ namespace ActionTracker.Controllers
         {
             int start = (data.Index - 1) * data.Size;
             int length = data.Size;
-            string sql = "select * from CT_QualityReport_Defect_DailyData where WO like ('%" + data.WO + "%') and LLAPN like ('%" + data.LLAPN + "%') and Component like ('%" + data.Component + "%') order by ID OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY";
-            string sqlTotal = "select count(*) as total from CT_QualityReport_Defect_DailyData where WO like ('%" + data.WO + "%') and LLAPN like ('%" + data.LLAPN + "%') and Component like ('%" + data.Component + "%')";
+            string sql, sqlTotal;
+            if (data.ActionOwner == "" || data.ActionOwner == null)
+            {
+                sql = "select * from CT_QualityReport_Defect_DailyData where QEOwner like ('%" + data.QEOwner + "%') and WO like ('%" + data.WO + "%') and LLAPN like ('%" + data.LLAPN + "%') and Component like ('%" + data.Component + "%') order by TIMEBEGIN DESC OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY";
+                sqlTotal = "select count(*) as total from CT_QualityReport_Defect_DailyData where QEOwner like ('%" + data.QEOwner + "%') and WO like ('%" + data.WO + "%') and LLAPN like ('%" + data.LLAPN + "%') and Component like ('%" + data.Component + "%')";
+
+            }
+            else
+            {
+                sql = "select * from CT_QualityReport_Defect_DailyData where (Owner1 like ('%" + data.ActionOwner + "%') or Owner2 like ('%" + data.ActionOwner + "%')) and QEOwner like ('%" + data.QEOwner + "%') and WO like ('%" + data.WO + "%') and LLAPN like ('%" + data.LLAPN + "%') and Component like ('%" + data.Component + "%') order by TIMEBEGIN DESC OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY";
+                sqlTotal = "select count(*) as total from CT_QualityReport_Defect_DailyData where (Owner1 like ('%" + data.ActionOwner + "%') or Owner2 like ('%" + data.ActionOwner + "%')) and QEOwner like ('%" + data.QEOwner + "%') and WO like ('%" + data.WO + "%') and LLAPN like ('%" + data.LLAPN + "%') and Component like ('%" + data.Component + "%')";
+            }
             Resp resp = new Resp();
             resp.list = conn.Query<CT_QualityReport_Defect_DailyData>(sql).ToList();
             resp.total = conn.Query<int>(sqlTotal).SingleOrDefault();
@@ -61,6 +71,12 @@ namespace ActionTracker.Controllers
         {
             string sql = "select distinct LLAPN from CT_QualityReport_Defect_DailyData where LLAPN like '%" + LLAPN + "%'";
             return conn.Query<string>(sql).ToList();
+        }
+        [HttpGet]
+        public List<User> GetUserNameList(string Name)
+        {
+            string sql = "select * from EDW_CleanUser where BU = 'BU7' and Role in ('PE', 'EE', 'Production-PTH') and Name like '%" + Name + "%'";
+            return connEDW.Query<User>(sql).ToList();
         }
         [HttpGet]
         public List<string> GetComponentList(string Component)
@@ -114,7 +130,7 @@ namespace ActionTracker.Controllers
         [HttpGet]
         public List<User> GetUserList()
         {
-            string sql = "select * from EDW_CleanUser where BU = 'BU7' and Role in ('PE', 'EE')";
+            string sql = "select * from EDW_CleanUser where BU = 'BU7' and Role in ('PE', 'EE', 'Production-PTH')";
             return connEDW.Query<User>(sql).ToList();
         }
 
@@ -136,7 +152,8 @@ namespace ActionTracker.Controllers
             }
             if (data.Type.Trim() == "3")
             {
-                sql = "select * from SF_FF_Repair_Result_O where TimeBegin = @TimeBegin and TestStation = @Station and Defect = @Defect and ProductionOrderNumber = @WO";
+                //sql = "select * from SF_FF_Repair_Result_O where TimeBegin = @TimeBegin and TestStation = @Station and Defect = @Defect and ProductionOrderNumber = @WO";
+                sql = "select * from SF_FF_Repair_Result_O where Id = @ReportID";
             }
             return connBI.Query<SF_QualityReport_Defect_Daily>(sql, data).ToList();
         }

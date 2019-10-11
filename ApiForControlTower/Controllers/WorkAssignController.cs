@@ -1,4 +1,5 @@
 ﻿using ApiForControlTower.Models;
+using ApiForWechat.Controllers;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,10 @@ namespace ApiForControlTower.Controllers
             conn.Execute(sqlRemoveWork, list);
             string sqlAddWork = "insert into CT_Work (BayName, SystemName, Station, Date, OwnerId) values (@BayName, @SystemName, @Station, @Date, @OwnerId)";
             string sqlAssignWork = "update CT_LEDMaster set OwnerId = @OwnerId where Id = @Id";
-            return conn.Execute(sqlAssignWork, list) + conn.Execute(sqlAddWork, list);
+            conn.Execute(sqlAssignWork, list);
+            conn.Execute(sqlAddWork, list);
+            new SendAssignWorkMessageController().SendAssignWorkMessage();
+            return 1;
         }
 
 

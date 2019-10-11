@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ActionTracker.Job;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,6 +15,7 @@ namespace ActionTracker
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            JobScheduler.Start();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

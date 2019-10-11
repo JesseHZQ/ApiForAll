@@ -208,3 +208,12 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\obj\Debug\ActionTracker.d
 C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\obj\Debug\ActionTracker.pdb
 C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Aspose.Cells.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Aspose.Cells.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Common.Logging.Core.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Common.Logging.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Quartz.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Common.Logging.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Common.Logging.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Common.Logging.Core.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Common.Logging.Core.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Quartz.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ActionTracker\bin\Quartz.xml

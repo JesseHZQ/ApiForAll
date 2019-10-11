@@ -20,5 +20,6 @@ namespace ApiForControlTower.Models
         public string Email { get; set; }
         public int BackUpId { get; set; }
         public int IsDel { get; set; }
+        public string WeChatName { get; set; }
     }
 }

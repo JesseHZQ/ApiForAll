@@ -478,7 +478,7 @@ namespace ApiForFCTKB.Controllers
             {
                 sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE IN ( 'IF', 'MF') AND ShippingDate is null ORDER BY PD, PlanShipDate, Slot";
             }
-            List<SlotPlan> list = conn.Query<SlotPlan>(sqlplan1).ToList();
+            List<SlotPlan> list = conn.Query<SlotPlan>(sqlplan1).ToList().Where(x => GetSlotPlanValidate(x.MRP) == true).ToList();
             string sqlConfig = "SELECT * FROM KANBAN_SLOTCONFIG";
             List<SlotConfig> listConfig = conn.Query<SlotConfig>(sqlConfig).ToList();
             string sqlShortage = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE IsReceived = 0";
@@ -674,6 +674,111 @@ namespace ApiForFCTKB.Controllers
             }
             return list;
         }
+        public List<SlotPlan> GetSlotPlanAll()
+        {
+            List<SlotPlan> list = new List<SlotPlan>();
+            string dirPath = @"\\10.194.51.14\TER\FCT E-KANBAN Database\Slot Plan";
+            DirectoryInfo dir = new DirectoryInfo(dirPath);
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string filePath = "";
+                string sheetName = "";
+                string slotType = "";
+                // 过滤临时文件
+                if (file.FullName.Contains("~"))
+                {
+                    continue;
+                }
+                if (file.FullName.Contains("UFLEX"))
+                {
+                    filePath = file.FullName;
+                    sheetName = "Current Week";
+                    slotType = "UF";
+                }
+                if (file.FullName.Contains("IFLEX"))
+                {
+                    filePath = file.FullName;
+                }
+                if (file.FullName.Contains("Dragon"))
+                {
+                    filePath = file.FullName;
+                    sheetName = "Dragon";
+                    slotType = "D";
+                }
+                if (filePath != "")
+                {
+                    // IF MF 混在一起 所以只能单独考虑
+                    if (file.FullName.Contains("IFLEX"))
+                    {
+                        Workbook wb = new Workbook(filePath);
+                        Cells cells = wb.Worksheets["IFLEX"].Cells;
+                        slotType = "IF";
+                        DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+                        foreach (DataRow item in dt.Rows)
+                        {
+                            if (item[dt.Columns.IndexOf("TST")].ToString() == "STS")
+                            {
+                                SlotPlan info = new SlotPlan();
+                                info.Slot = item[dt.Columns.IndexOf("Slot #")].ToString();
+                                info.Type = slotType;
+                                info.Model = item[dt.Columns.IndexOf("Product Model")].ToString();
+                                info.Customer = item[dt.Columns.IndexOf("Customer")].ToString();
+                                info.SO = item[dt.Columns.IndexOf("S/O #")].ToString();
+                                info.MRP = item[dt.Columns.IndexOf("MRP")].ToString();
+                                info.PD = item[dt.Columns.IndexOf("PD")].ToString();
+                                info.LastUpdatedTime = DateTime.Now;
+                                list.Add(info);
+                            }
+                        }
+
+                        wb = new Workbook(filePath);
+                        cells = wb.Worksheets["MFLEX"].Cells;
+                        slotType = "MF";
+                        dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+                        foreach (DataRow item in dt.Rows)
+                        {
+                            if (item[dt.Columns.IndexOf("TST")].ToString() == "STS")
+                            {
+                                SlotPlan info = new SlotPlan();
+                                info.Slot = item[dt.Columns.IndexOf("Slot #")].ToString();
+                                info.Type = slotType;
+                                info.Model = item[dt.Columns.IndexOf("Product Model")].ToString();
+                                info.Customer = item[dt.Columns.IndexOf("Customer")].ToString();
+                                info.SO = item[dt.Columns.IndexOf("S/O #")].ToString();
+                                info.MRP = item[dt.Columns.IndexOf("MRP")].ToString();
+                                info.PD = item[dt.Columns.IndexOf("PD")].ToString();
+                                info.LastUpdatedTime = DateTime.Now;
+                                list.Add(info);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Workbook wb = new Workbook(filePath);
+                        Cells cells = wb.Worksheets[sheetName].Cells;
+                        DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+                        foreach (DataRow item in dt.Rows)
+                        {
+                            if (item[dt.Columns.IndexOf("TST")].ToString() == "STS")
+                            {
+                                SlotPlan info = new SlotPlan();
+                                info.Slot = item[dt.Columns.IndexOf("Slot #")].ToString();
+                                info.Type = slotType;
+                                info.Model = item[dt.Columns.IndexOf("Product Model")].ToString();
+                                info.Customer = item[dt.Columns.IndexOf("Customer")].ToString();
+                                info.SO = item[dt.Columns.IndexOf("S/O #")].ToString();
+                                info.MRP = item[dt.Columns.IndexOf("MRP")].ToString();
+                                info.PD = item[dt.Columns.IndexOf("PD")].ToString();
+                                info.LastUpdatedTime = DateTime.Now;
+                                list.Add(info);
+                            }
+                        }
+                    }
+                }
+            }
+            return list;
+        }
 
         /// <summary>
         /// 插入或更新Slot Plan
@@ -696,6 +801,20 @@ namespace ApiForFCTKB.Controllers
                 {
                     string insert = "INSERT INTO KANBAN_SLOTPLAN (SLOT, TYPE, MODEL, CUSTOMER, SO, MRP, PD, LastUpdatedTime) VALUES (@SLOT, @TYPE, @MODEL, @CUSTOMER, @SO, @MRP, @PD, @LastUpdatedTime)";
                     conn.Execute(insert, item);
+                }
+            }
+
+            // 修复了push out 的问题
+            List<SlotPlan> slotplanall = GetSlotPlanAll();
+            foreach (SlotPlan item in slotplanall)
+            {
+                string query = "SELECT * FROM KANBAN_SLOTPLAN";
+                List<SlotPlan> slotlist = conn.Query<SlotPlan>(query).ToList();
+                SlotPlan sp = slotlist.Where(x => x.Slot == item.Slot).SingleOrDefault();
+                if (sp != null)
+                {
+                    string update = "UPDATE KANBAN_SLOTPLAN SET TYPE = @TYPE, MODEL = @MODEL, CUSTOMER = @CUSTOMER, SO = @SO, MRP = @MRP, PD = @PD, LastUpdatedTime = @LastUpdatedTime WHERE Slot = @Slot";
+                    conn.Execute(update, item);
                 }
             }
         }
@@ -868,8 +987,12 @@ namespace ApiForFCTKB.Controllers
             {
                 int week = Tool.WeekOfYear(DateTime.Now); // 获取当前周别
                 // Type = P  Shortage != 0  Slot not contain Misc
+                //bool flag1 = item[dt.Columns.IndexOf("Type")].ToString() == "P";
+                //bool flag2 = item[dt.Columns.IndexOf("Shortage")].ToString() != "0";
+                //bool flag3 = item[dt.Columns.IndexOf("Slot")].ToString().IndexOf("Misc") == -1;
+                //bool flag4 = (item[dt.Columns.IndexOf("WK")].ToString() == "WK" + week || item[dt.Columns.IndexOf("WK")].ToString() == "WK" + (week + 1));
                 if (item[dt.Columns.IndexOf("Type")].ToString() == "P"
-                    && item[dt.Columns.IndexOf("Shortage")].ToString() != "0"
+                    && item[dt.Columns.IndexOf("Shortage")].ToString().Trim() != "0"
                     && item[dt.Columns.IndexOf("Slot")].ToString().IndexOf("Misc") == -1
                     && (item[dt.Columns.IndexOf("WK")].ToString() == "WK" + week || item[dt.Columns.IndexOf("WK")].ToString() == "WK" + (week + 1)))
                 {
@@ -877,7 +1000,7 @@ namespace ApiForFCTKB.Controllers
                     info.Slot = item[dt.Columns.IndexOf("Slot")].ToString();
                     info.PN = item[dt.Columns.IndexOf("Component")].ToString();
                     info.Description = item[dt.Columns.IndexOf("CompDescription")].ToString();
-                    info.QTY = item[dt.Columns.IndexOf("ExtendedQty")].ToString();
+                    info.QTY = item[dt.Columns.IndexOf("Shortage")].ToString();
                     info.ETA = item[dt.Columns.IndexOf("ConfirmedDate")].ToString();
                     info.IsReceived = false;
                     info.LastUpdatedTime = DateTime.Now;
@@ -1289,6 +1412,23 @@ namespace ApiForFCTKB.Controllers
             int week = Tool.WeekOfYear(DateTime.Now); // 获取当周周别
             float mrp = float.Parse(mrpStr); // 获取MRP
             int range = 5; // 抓取的周范围 后期改成可修改
+            bool IsRange = true; // 定义周范围的Bool
+            if (week + range <= 54) // 年底之前逻辑简单
+            {
+                IsRange = (mrp >= week && mrp <= week + range);
+            }
+            else // 年底的时候周别逻辑
+            {
+                IsRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
+            }
+            return IsRange;
+        }
+
+        public bool GetSlotPlanValidate(string mrpStr)
+        {
+            int week = Tool.WeekOfYear(DateTime.Now.AddDays(-7)); // 获取当周周别
+            float mrp = float.Parse(mrpStr); // 获取MRP
+            int range = 6; // 抓取的周范围 后期改成可修改
             bool IsRange = true; // 定义周范围的Bool
             if (week + range <= 54) // 年底之前逻辑简单
             {

@@ -73,6 +73,7 @@ namespace ApiForFCTKB.Job
             mess.CC.Add("jane.sha@flex.com");
             mess.CC.Add("justin.mu@flex.com");
             mess.CC.Add("jacqueline.ge@flex.com");
+            mess.CC.Add("lisa.mou@flex.com");
             Attachment uf = new Attachment(@UFPath);
             uf.Name = "UFlex Shift Report.xlsx";
             Attachment mf = new Attachment(@IFPath);

@@ -138,3 +138,6 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Common.Logging.C
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Common.Logging.Core.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Quartz.pdb
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\Quartz.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\ApiForWechat.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\ApiForWechat.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForControlTower\bin\ApiForWechat.dll.config

@@ -30,6 +30,8 @@ namespace ActionTracker
         public DateTime? INSERTTIME { get; set; }
         public DateTime TimeBegin { get; set; }
         public string Type { get; set; }
+        public int ReportID { get; set; }
+        public string ActionOwner { get; set; }
     }
 
 }
