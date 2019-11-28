@@ -82,10 +82,10 @@
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiForRackManage.dll">
-      <publishTime>08/06/2019 12:33:02</publishTime>
+      <publishTime>11/19/2019 16:39:35</publishTime>
     </File>
     <File Include="bin/ApiForRackManage.pdb">
-      <publishTime>08/06/2019 12:33:02</publishTime>
+      <publishTime>11/19/2019 16:39:35</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>09/10/2018 10:59:47</publishTime>

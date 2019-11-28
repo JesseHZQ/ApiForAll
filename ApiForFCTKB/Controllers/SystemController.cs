@@ -51,7 +51,7 @@ namespace ApiForFCTKB.Controllers
         [HttpGet]
         public List<SlotPlan> GetAllSystem()
         {
-            string sql = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTPLAN] WHERE ISNULL(ShippingDate, 0) = '0' ORDER BY PD";
+            string sql = "SELECT * FROM [SlotKB].[dbo].[KANBAN_SLOTPLAN] WHERE ISNULL(ShippingDate, 0) = '0' ORDER BY MRP";
             return conn.Query<SlotPlan>(sql).ToList().Where(x => GetValidate(x.MRP) == true).ToList();
         }
 
@@ -473,10 +473,10 @@ namespace ApiForFCTKB.Controllers
         [HttpGet]
         public List<SlotPlan> GetSystemByType(string type)
         {
-            string sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE = '" + type + "' AND ShippingDate is null ORDER BY PD, PlanShipDate, Slot";
+            string sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE = '" + type + "' AND ShippingDate is null ORDER BY MRP, PlanShipDate, Slot";
             if (type == "IF")
             {
-                sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE IN ( 'IF', 'MF') AND ShippingDate is null ORDER BY PD, PlanShipDate, Slot";
+                sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE IN ( 'IF', 'MF') AND ShippingDate is null ORDER BY MRP, PlanShipDate, Slot";
             }
             List<SlotPlan> list = conn.Query<SlotPlan>(sqlplan1).ToList().Where(x => GetSlotPlanValidate(x.MRP) == true).ToList();
             string sqlConfig = "SELECT * FROM KANBAN_SLOTCONFIG";
@@ -803,7 +803,7 @@ namespace ApiForFCTKB.Controllers
                     conn.Execute(insert, item);
                 }
             }
-
+            // todo: 池子里有 Excel里没有的 如何处理
             // 修复了push out 的问题
             List<SlotPlan> slotplanall = GetSlotPlanAll();
             foreach (SlotPlan item in slotplanall)
@@ -994,13 +994,16 @@ namespace ApiForFCTKB.Controllers
                 if (item[dt.Columns.IndexOf("Type")].ToString() == "P"
                     && item[dt.Columns.IndexOf("Shortage")].ToString().Trim() != "0"
                     && item[dt.Columns.IndexOf("Slot")].ToString().IndexOf("Misc") == -1
-                    && (item[dt.Columns.IndexOf("WK")].ToString() == "WK" + week || item[dt.Columns.IndexOf("WK")].ToString() == "WK" + (week + 1)))
+                    && (item[dt.Columns.IndexOf("WK")].ToString() == "WK" + week || item[dt.Columns.IndexOf("WK")].ToString() == "WK" + (week + 1))
+                    )
                 {
                     SlotShortage info = new SlotShortage();
                     info.Slot = item[dt.Columns.IndexOf("Slot")].ToString();
                     info.PN = item[dt.Columns.IndexOf("Component")].ToString();
                     info.Description = item[dt.Columns.IndexOf("CompDescription")].ToString();
-                    info.QTY = item[dt.Columns.IndexOf("Shortage")].ToString();
+                    info.SupplierName = item[dt.Columns.IndexOf("SupplierName")].ToString();
+                    info.Buyer = item[dt.Columns.IndexOf("Buyer")].ToString();
+                    info.QTY = item[dt.Columns.IndexOf("ExtendedQty")].ToString();
                     info.ETA = item[dt.Columns.IndexOf("ConfirmedDate")].ToString();
                     info.IsReceived = false;
                     info.LastUpdatedTime = DateTime.Now;
@@ -1023,12 +1026,12 @@ namespace ApiForFCTKB.Controllers
                 List<SlotShortage> list = conn.Query<SlotShortage>(query, item).ToList();
                 if (list.Count > 0)
                 {
-                    string update = "UPDATE KANBAN_SLOTSHORTAGE SET QTY = @QTY, LastUpdatedTime = @LastUpdatedTime WHERE SLOT = @SLOT AND PN = @PN";
+                    string update = "UPDATE KANBAN_SLOTSHORTAGE SET Buyer = @Buyer, SupplierName = @SupplierName, QTY = @QTY, LastUpdatedTime = @LastUpdatedTime WHERE SLOT = @SLOT AND PN = @PN";
                     conn.Execute(update, item);
                 }
                 else
                 {
-                    string insert = "INSERT INTO KANBAN_SLOTSHORTAGE VALUES (@SLOT, @PN, @Description, @QTY, @ETA, @IsReceived, @LastUpdatedTime)";
+                    string insert = "INSERT INTO KANBAN_SLOTSHORTAGE VALUES (@SLOT, @PN, @Description, @SupplierName, @QTY, @Buyer, @ETA, @IsReceived, @LastUpdatedTime)";
                     conn.Execute(insert, item);
                 }
             }
@@ -1047,6 +1050,7 @@ namespace ApiForFCTKB.Controllers
                 "TDN-604-356-01",
                 "TDN-604-356-03",
                 "TDN-604-356-04",
+                "TDN-805-052-02",
                 "TDN-805-052-05",
                 "TDN-974-294-30",
                 "TDN-604-375-02",
@@ -1056,15 +1060,9 @@ namespace ApiForFCTKB.Controllers
                 "TDN-974-230-00",
                 "TDN-974-232-00",
                 "TDN-630-036-30",
-                //"TDN-631-938-02",
-                //"TDN-632-627-01",
-                //"TDN-632-629-01",
-                //"TDN-633-246-00",
-                //"TDN-636-752-01",
                 "TDN-636-860-21",
-                //"TDN-639-210-01",
                 "TDN-974-296-30",
-                "TDN-632-859-21",
+                "TDN-632-860-21",
                 "TDN-633-675-03",
                 "TDN-630-035-40",
                 "TDN-617-743-00",
@@ -1074,10 +1072,6 @@ namespace ApiForFCTKB.Controllers
                 "TDN-625-393-51",
                 "TDN-639-209-02",
                 "TDN-654-990-00",
-                //"TDN-202-000-01",
-                //"TDN-866-999-02",
-                //"TDN-866-911-10",
-                //"TDN-866-653-00",
                 "TDN-805-002-60",
                 "TDN-805-003-11",
                 "TDN-805-003-50",
@@ -1088,6 +1082,16 @@ namespace ApiForFCTKB.Controllers
                 "TDN-805-386-01",
                 "TDN-805-740-50",
                 "TDN-949-974-50"
+                //"TDN-202-000-01",
+                //"TDN-866-999-02",
+                //"TDN-866-911-10",
+                //"TDN-866-653-00",
+                //"TDN-631-938-02",
+                //"TDN-632-627-01",
+                //"TDN-632-629-01",
+                //"TDN-633-246-00",
+                //"TDN-636-752-01",
+                //"TDN-639-210-01",
             };
             string[] ZeroPin_List = new string[] {
                 // UF 24
@@ -1155,7 +1159,7 @@ namespace ApiForFCTKB.Controllers
             foreach (SlotConfig item in slotconfig)
             {
                 string query = "SELECT * FROM KANBAN_SLOTCONFIG WHERE SLOT = @SLOT AND PN = @PN";
-                List<SlotShortage> list = conn.Query<SlotShortage>(query, item).ToList();
+                List<SlotConfig> list = conn.Query<SlotConfig>(query, item).ToList();
                 if (list.Count > 0)
                 {
                     string update = "UPDATE KANBAN_SLOTCONFIG SET QTY = @QTY, LastUpdatedTime = @LastUpdatedTime WHERE SLOT = @SLOT AND PN = @PN";
@@ -1165,6 +1169,25 @@ namespace ApiForFCTKB.Controllers
                 {
                     string insert = "INSERT INTO KANBAN_SLOTCONFIG VALUES (@SLOT, @PN, @Description, @QTY, @DelayTips, @IsReady, @LastUpdatedTime)";
                     conn.Execute(insert, item);
+                }
+            }
+
+            string sql = "SELECT a.* FROM [SlotKB].[dbo].[KANBAN_SLOTCONFIG] a join [SlotKB].[dbo].[KANBAN_SLOTPLAN] b on a.Slot = b.Slot where b.ShippingDate is null";
+            List<SlotConfig> SlotConfigList = conn.Query<SlotConfig>(sql).ToList();
+            foreach (SlotConfig item in SlotConfigList)
+            {
+                bool flag = true;
+                foreach (SlotConfig i in slotconfig)
+                {
+                    if (item.Slot == i.Slot && item.PN == i.PN)
+                    {
+                        flag = false;
+                    }
+                }
+                if (flag)
+                {
+                    string delSql = "DELETE KANBAN_SLOTCONFIG WHERE SLOT = @SLOT AND PN = @PN";
+                    conn.Execute(delSql, item);
                 }
             }
         }
@@ -1326,7 +1349,16 @@ namespace ApiForFCTKB.Controllers
         /// <returns></returns>
         public string GetStatusByItem(string slot, string item, string station, List<CheckListItem> list)
         {
-            CheckListItem checkListItem = list.Where(x => x.SystemName == slot && x.CheckItemDescription.Contains(item) && x.ListBy == station).SingleOrDefault();
+            List<CheckListItem> checkListItemList = list.Where(x => x.SystemName == slot && x.CheckItemDescription.Contains(item) && x.ListBy == station).ToList();
+            CheckListItem checkListItem = new CheckListItem();
+            if (checkListItemList.Count == 0)
+            {
+                checkListItem = null;
+            }
+            else
+            {
+                checkListItem = checkListItemList[0];
+            }
             if (checkListItem != null && checkListItem.Date.Year > 2015)
             {
                 int day = -1;
@@ -1411,7 +1443,7 @@ namespace ApiForFCTKB.Controllers
         {
             int week = Tool.WeekOfYear(DateTime.Now); // 获取当周周别
             float mrp = float.Parse(mrpStr); // 获取MRP
-            int range = 5; // 抓取的周范围 后期改成可修改
+            int range = 6; // 抓取的周范围 后期改成可修改
             bool IsRange = true; // 定义周范围的Bool
             if (week + range <= 54) // 年底之前逻辑简单
             {
@@ -1428,7 +1460,7 @@ namespace ApiForFCTKB.Controllers
         {
             int week = Tool.WeekOfYear(DateTime.Now.AddDays(-7)); // 获取当周周别
             float mrp = float.Parse(mrpStr); // 获取MRP
-            int range = 6; // 抓取的周范围 后期改成可修改
+            int range = 7; // 抓取的周范围 后期改成可修改
             bool IsRange = true; // 定义周范围的Bool
             if (week + range <= 54) // 年底之前逻辑简单
             {

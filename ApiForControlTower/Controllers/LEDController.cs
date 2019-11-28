@@ -22,10 +22,10 @@ namespace ApiForControlTower.Controllers
         [HttpGet]
         public List<LED> GetLEDList()
         {
-            string sqlLED = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[LED]";
-            List<OLDLED> list = conn.Query<OLDLED>(sqlLED).ToList();
-            string sqlUpdate = "Update CT_LEDMaster SET SystemName = @System, Station = @Station, ShippingTime = @Ship WHERE BayName = @BayNO";
-            int result = conn.Execute(sqlUpdate, list);
+            //string sqlLED = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[LED]";
+            //List<OLDLED> list = conn.Query<OLDLED>(sqlLED).ToList();
+            //string sqlUpdate = "Update CT_LEDMaster SET SystemName = @System, Station = @Station, ShippingTime = @Ship WHERE BayName = @BayNO";
+            //int result = conn.Execute(sqlUpdate, list);
             string sql = "SELECT * FROM CT_LEDMaster A " +
                          "LEFT JOIN [SlotKB].[dbo].[KANBAN_SLOTPLAN] B " +
                          "ON A.SystemName = B.Slot " +
@@ -53,7 +53,7 @@ namespace ApiForControlTower.Controllers
         [HttpGet]
         public List<LEDDetail> GetLEDDetailBySlot(string slot)
         {
-            string sql = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[BigData] WHERE SN = '" + slot + "' ORDER BY BeginTime";
+            string sql = "SELECT * FROM [ControlTower].[dbo].[CT_LEDHistory] WHERE SystemName = '" + slot + "' ORDER BY FinishTime DESC";
             return conn.Query<LEDDetail>(sql).ToList();
         }
 
@@ -88,7 +88,7 @@ namespace ApiForControlTower.Controllers
         [HttpGet]
         public List<EMLEDSteps> GetEMLEDStepsByLogID(int LogID)
         {
-            string sql = "SELECT * FROM Steplog WHERE Aslog = " + LogID + " and EndTime is not null";
+            string sql = "SELECT t2.EngAssyStep,t1.EndTime FROM Steplog t1,AssemblyStep t2 WHERE Aslog = " + LogID + " and EndTime is not null AND t1.StepID=t2.ID";
             return connEM.Query<EMLEDSteps>(sql).ToList();
         }
 
@@ -102,8 +102,25 @@ namespace ApiForControlTower.Controllers
         [HttpGet]
         public List<Config> GetConfigBySystemName(string SystemName)
         {
-            string sql = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[Boards] WHERE TesterID = '" + SystemName + "' ORDER BY Slot";
+            string SystemLong = SystemName;
+            if (SystemName.Contains('F') && SystemName.StartsWith("1"))
+            {
+                SystemName = SystemName.Substring(1, 3) + SystemName.Substring(5, 3);
+            }
+            string sql = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[Boards] WHERE TesterID in ('" + SystemName + "', '" + SystemLong + "') AND Slot is not null ORDER BY Slot";
             return conn.Query<Config>(sql).ToList();
+        }
+
+        [HttpGet]
+        public List<FailBoard> GetFailureBySystemName(string SystemName)
+        {
+            string SystemLong = SystemName;
+            if (SystemName.Contains('F') && SystemName.StartsWith("1"))
+            {
+                SystemName = SystemName.Substring(1, 3) + SystemName.Substring(5, 3);
+            }
+            string sql = "SELECT * FROM [192.168.163.1].[PCBA].[dbo].[Failuar] WHERE TesterID in ('" + SystemName + "', '" + SystemLong + "') AND NextLocation = 'Verifying'";
+            return conn.Query<FailBoard>(sql).ToList();
         }
 
         [HttpGet]
@@ -130,15 +147,15 @@ namespace ApiForControlTower.Controllers
         [HttpGet]
         public List<FA> GetFAList()
         {
-            string sql = "SELECT * FROM [192.168.163.1].[FCT_Test].[dbo].[IKW_FA_MaterialTracking]";
+            string sql = "SELECT * FROM [ControlTower].[dbo].[FA_Process_Part] where (FASN <> 'PCBA' or FASN is null) order by FASN desc";
             return conn.Query<FA>(sql).ToList();
         }
 
         [HttpGet]
         public List<PCBAShortage> GetShortageList()
         {
-            string sql = "SELECT a.* FROM [SlotKB].[dbo].[KANBAN_SLOTSHORTAGE] a join [SlotKB].[dbo].[KANBAN_SLOTPLAN] b on a.Slot = b.Slot where a.IsReceived = 0 and b.ShippingDate is null";
-            return conn.Query<PCBAShortage>(sql).ToList();
+            string sql = "SELECT a.*, b.MRP FROM [SlotKB].[dbo].[KANBAN_SLOTSHORTAGE] a join [SlotKB].[dbo].[KANBAN_SLOTPLAN] b on a.Slot = b.Slot where a.IsReceived = 0 and b.ShippingDate is null and a.SupplierName is not null and a.SupplierName <> ''";
+            return conn.Query<PCBAShortage>(sql).ToList().Where(x => GetValidate(x.MRP)).ToList();
         }
 
         [HttpGet]
@@ -153,6 +170,61 @@ namespace ApiForControlTower.Controllers
         {
             string sql = "SELECT TOP 1 * FROM [FF_EDW].[dbo].[EDW_TEMPERATURE_HUMIDITY] where Location = 'FCT' ORDER BY CreationTime DESC";
             return connMinione.Query<TempHumid>(sql).SingleOrDefault();
+        }
+
+        [HttpGet]
+        public List<TempHumid> GetRealTimeTHDatas()
+        {
+            string sql = "SELECT TOP 1000 * FROM [FF_EDW].[dbo].[EDW_TEMPERATURE_HUMIDITY] where Location = 'FCT' ORDER BY CreationTime DESC";
+            return connMinione.Query<TempHumid>(sql).ToList();
+        }
+
+        public bool GetValidate(string mrpStr)
+        {
+            int week = WeekOfYear(DateTime.Now); // 获取当周周别
+            float mrp = float.Parse(mrpStr); // 获取MRP
+            int range = 2; // 抓取的周范围 后期改成可修改
+            bool IsRange = true; // 定义周范围的Bool
+            if (week + range <= 54) // 年底之前逻辑简单
+            {
+                IsRange = (mrp >= week && mrp <= week + range);
+            }
+            else // 年底的时候周别逻辑
+            {
+                IsRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
+            }
+            return IsRange;
+        }
+
+        public static int WeekOfYear(DateTime dtime)
+        {
+            try
+            {
+                //确定此时间在一年中的位置
+                int dayOfYear = dtime.DayOfYear;
+                //当年第一天
+                DateTime tempDate = new DateTime(dtime.Year, 1, 1);
+                //确定当年第一天
+                int tempDayOfWeek = (int)tempDate.DayOfWeek;
+                tempDayOfWeek = tempDayOfWeek == 0 ? 7 : tempDayOfWeek;
+                ////确定星期几
+                int index = (int)dtime.DayOfWeek;
+                index = index == 0 ? 7 : index;
+                //当前周的范围
+                DateTime retStartDay = dtime.AddDays(-(index - 1));
+                DateTime retEndDay = dtime.AddDays(6 - index);
+                //确定当前是第几周
+                int weekIndex = (int)Math.Ceiling(((double)dayOfYear + tempDayOfWeek - 1) / 7);
+                if (retStartDay.Year < retEndDay.Year)
+                {
+                    weekIndex = 1;
+                }
+                return weekIndex;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

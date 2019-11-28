@@ -50,9 +50,9 @@ namespace ApiForRackManage.Controllers
         [System.Web.Http.HttpGet]
         public RespBI getBurnIn()
         {
-            string sql = "SELECT PN, SN FROM[172.21.194.214].[PCBA].[dbo].[Boards] where(type = 'Ultra' and location in ('supermarket', 'leanprocess', 'verifying')) or (type = 'flex' and location in ('supermarket', 'preburnin', 'verifying'))";
+            string sql = "SELECT PN, SN FROM [192.168.163.1].[PCBA].[dbo].[Boards] where(type = 'Ultra' and location in ('supermarket', 'leanprocess', 'verifying')) or (type = 'flex' and location in ('supermarket', 'preburnin', 'verifying'))";
             RespBI resp = new RespBI();
-            List<BI> list = conn.Query<BI>(sql).ToList();
+            List<BI> list = connPNINOUT.Query<BI>(sql).ToList();
             resp.List = list;
             resp.Message = "success";
             return resp;

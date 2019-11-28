@@ -15,6 +15,7 @@ namespace ApiForControlTower.Models
         public string Station { get; set; }
         public string ShippingTime { get; set; }
         public string IP { get; set; }
+        public string VNCIP { get; set; }
         public DateTime LastUpdatedTime { get; set; }
         public int OwnerId { get; set; }
         public string UserName { get; set; }

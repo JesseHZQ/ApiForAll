@@ -64,7 +64,7 @@ namespace ApiForControlTower.Controllers
                 userAssigns.Sort((a, b) => a.WorkAmount - b.WorkAmount);
                 foreach (UserAssign user in userAssigns)
                 {
-                    if (user.Skills.Contains(led.Station))
+                    if (user.Skills != null && user.Skills.ToUpper().Contains(led.Station.ToUpper()))
                     {
                         user.WorkAmount++;
                         WorkAssign wa = new WorkAssign();

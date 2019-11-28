@@ -26,5 +26,12 @@ namespace ApiForFCTKB.Controllers
             string sql = "UPDATE KANBAN_SLOTPLAN SET PlanShipDate = @PlanShipDate, ShippingType = @ShippingType, ShippingDate = @ShippingDate, Launch = @Launch, Remark=@Remark, GroupNum = @GroupNum WHERE Slot = @Slot";
             return conn.Execute(sql, slotplan);
         }
+
+        [HttpPost]
+        public int DeleteSlotPlan(SlotPlan slotplan)
+        {
+            string sql = "DELETE KANBAN_SLOTPLAN WHERE ID = @ID";
+            return conn.Execute(sql, slotplan);
+        }
     }
 }
