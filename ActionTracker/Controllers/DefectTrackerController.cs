@@ -142,18 +142,20 @@ namespace ActionTracker.Controllers
             {
                 sql = @"select * from [suznt060\sqlff6].FF_BI.[dbo].SF_QualityReport_Defect_Daily
                         where reportstation in (select  distinct(reportstation)  from [suznt060\sqlff6].FF_BI.[dbo].SF_QualityReport_Defect_Daily)
-                        and project = 'TDN'and Component = @Component and FFStation = @Station and ProductionOrderNumber = @WO and TimeBegin = @TimeBegin and DefectDesc = @Defect";
+                        and project = 'TDN' and Component = @Component and TimeBegin = @TimeBegin and DefectDesc = @Defect";
             }
             if (data.Type.Trim() == "2")
             {
                 sql = @"select * from [suznt060\sqlff6].FF_BI.[dbo].SF_QualityReport_Defect_Daily
-                        where reportstation in (select  distinct(reportstation)  from [suznt060\sqlff6].FF_BI.[dbo].SF_QualityReport_Defect_Daily)
-                        and project = 'TDN'and Component = @Component and FFStation = @Station and ProductionOrderNumber = @WO and TimeBegin = @TimeBegin";
+                        where project = 'TDN' and Component = @Component and TimeBegin = @TimeBegin";
             }
             if (data.Type.Trim() == "3")
             {
                 //sql = "select * from SF_FF_Repair_Result_O where TimeBegin = @TimeBegin and TestStation = @Station and Defect = @Defect and ProductionOrderNumber = @WO";
-                sql = "select * from SF_FF_Repair_Result_O where Id = @ReportID";
+                //sql = "select * from SF_FF_Repair_Result_O where Id = @ReportID";
+                sql = @"select * from [suznt060\sqlff6].FF_BI.dbo.SF_FF_Repair_Result_O   so
+                        where  so.TimeBegin between (select convert(datetime,convert(varchar(10),'2019-11-12',120))) and (select convert(datetime,convert(varchar(10),getdate()-1,120)))
+                        and so.PartNumber = @LLAPN and so.ComponentPart = @Component and so.Defect = @Defect and so.teststation = @Station";
             }
             return connBI.Query<SF_QualityReport_Defect_Daily>(sql, data).ToList();
         }

@@ -42,5 +42,44 @@ namespace ApiForFCTKB.Models
                 throw new Exception(ex.Message);
             }
         }
+        public static string GetFormatDateWithDay(DateTime dt)
+        {
+            string year = dt.Year.ToString().Substring(2);
+            string week = WeekOfYear(dt).ToString();
+            string day = GetDay(dt).ToString();
+            return year + week + "." + day;
+        }
+        public static int GetDay(DateTime dt)
+        {
+            int week;
+            switch (dt.DayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    week = 7;
+                    break;
+                case DayOfWeek.Monday:
+                    week = 1;
+                    break;
+                case DayOfWeek.Tuesday:
+                    week = 2;
+                    break;
+                case DayOfWeek.Wednesday:
+                    week = 3;
+                    break;
+                case DayOfWeek.Thursday:
+                    week = 4;
+                    break;
+                case DayOfWeek.Friday:
+                    week = 5;
+                    break;
+                case DayOfWeek.Saturday:
+                    week = 6;
+                    break;
+                default:
+                    week = 0;
+                    break;
+            }
+            return week;
+        }
     }
 }

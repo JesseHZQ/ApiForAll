@@ -82,13 +82,25 @@
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiForRackManage.dll">
-      <publishTime>11/19/2019 16:39:35</publishTime>
+      <publishTime>12/12/2019 12:51:14</publishTime>
     </File>
     <File Include="bin/ApiForRackManage.pdb">
-      <publishTime>11/19/2019 16:39:35</publishTime>
+      <publishTime>12/12/2019 12:51:14</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>09/10/2018 10:59:47</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.Core.dll">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.Core.pdb">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.dll">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.pdb">
+      <publishTime>11/14/2015 13:35:30</publishTime>
     </File>
     <File Include="bin/Dapper.dll">
       <publishTime>03/30/2019 17:21:38</publishTime>
@@ -125,6 +137,12 @@
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>02/18/2018 09:44:54</publishTime>
+    </File>
+    <File Include="bin/Quartz.dll">
+      <publishTime>02/18/2017 09:28:06</publishTime>
+    </File>
+    <File Include="bin/Quartz.pdb">
+      <publishTime>02/18/2017 09:28:06</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 13:38:22</publishTime>
@@ -424,7 +442,7 @@
       <publishTime>09/10/2018 10:59:31</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/06/2019 11:26:20</publishTime>
+      <publishTime>12/12/2019 12:51:15</publishTime>
     </File>
   </ItemGroup>
 </Project>

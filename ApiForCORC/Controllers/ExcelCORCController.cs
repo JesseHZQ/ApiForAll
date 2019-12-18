@@ -27,6 +27,8 @@ namespace ApiForCORC.Controllers
             string sqlQuery = "select * from KANBAN_SLOTPLAN";
             List<SlotPlan> SlotPlanList = conn.Query<SlotPlan>(sqlQuery).ToList();
             string path = @"\\10.194.51.14\TER\FCT E-KANBAN Database\SO&CORC Issue Report";
+            string flexPath = "";
+            string JPath = "";
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
@@ -37,12 +39,17 @@ namespace ApiForCORC.Controllers
                 }
                 if (file.FullName.Contains("SO&CORC"))
                 {
-                    path = file.FullName;
-                    break;
+                    flexPath = file.FullName;
+                }
+                if (file.FullName.Contains("J750"))
+                {
+                    JPath = file.FullName;
                 }
             }
+
+            // Flex
             List<ExcelCORC> list = new List<ExcelCORC>();
-            Workbook wb = new Workbook(path);
+            Workbook wb = new Workbook(flexPath);
             foreach (Worksheet ws in wb.Worksheets)
             {
                 if (ws.Name.IndexOf("Open issue") > -1)
@@ -54,6 +61,35 @@ namespace ApiForCORC.Controllers
                         ExcelCORC info = new ExcelCORC();
                         info.CORCStatus = item["CORC status"].ToString();
                         if (info.CORCStatus != "A")
+                        {
+                            SlotPlan slotplan = SlotPlanList.Where(x => x.Slot == item["Slot"].ToString()).SingleOrDefault();
+                            if (slotplan != null)
+                            {
+                                info.Slot = item["Slot"].ToString();
+                                info.SO = slotplan.SO;
+                                string mrp = slotplan.MRP.Split('.')[0];
+                                info.Week = mrp.Length > 1 ? mrp : "0" + mrp;
+                                list.Add(info);
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            // J750
+            wb = new Workbook(JPath);
+            foreach (Worksheet ws in wb.Worksheets)
+            {
+                if (ws.Name.IndexOf("Oline System") > -1)
+                {
+                    Cells cells = ws.Cells;
+                    DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        ExcelCORC info = new ExcelCORC();
+                        info.CORCStatus = item["CORC Status"].ToString();
+                        if (!info.CORCStatus.Contains("Approved"))
                         {
                             SlotPlan slotplan = SlotPlanList.Where(x => x.Slot == item["Slot"].ToString()).SingleOrDefault();
                             if (slotplan != null)
@@ -86,7 +122,7 @@ namespace ApiForCORC.Controllers
                 {
                     item.IsShow = true;
                     item.MRPWeek = nowDate + ".5";
-                    if (item.CORCStatus == "R")
+                    if (item.CORCStatus == "R" || item.CORCStatus.ToUpper().Contains("IN REVIEW"))
                     {
                         item.CORCDueDateToBeFixed = "WK" + prev1Date + ".5";
                         item.RemainFixedDay = "Over Due";
@@ -111,7 +147,7 @@ namespace ApiForCORC.Controllers
                 {
                     item.IsShow = true;
                     item.MRPWeek = next1Date + ".5";
-                    if (item.CORCStatus == "R")
+                    if (item.CORCStatus == "R" || item.CORCStatus.ToUpper().Contains("IN REVIEW"))
                     {
                         item.CORCDueDateToBeFixed = "WK" + nowDate + ".5";
                         if (now == 5)
@@ -140,7 +176,7 @@ namespace ApiForCORC.Controllers
                 }
                 if (next2Date.Substring(2, 2) == item.Week)
                 {
-                    if (item.CORCStatus != "R")
+                    if (item.CORCStatus != "R" && !item.CORCStatus.ToUpper().Contains("IN REVIEW"))
                     {
                         item.IsShow = true;
                         item.MRPWeek = next2Date + ".5";
@@ -156,11 +192,11 @@ namespace ApiForCORC.Controllers
             foreach (ExcelCORC item in list)
             {
                 item.InsertTime = DateTime.Now;
-                if (item.CORCStatus == "" || item.CORCStatus == null)
+                if (item.CORCStatus == "" || item.CORCStatus == null || item.CORCStatus.Contains("NO"))
                 {
                     item.CORCStatus = "No CORC";
                 }
-                else if (item.CORCStatus == "R")
+                else if (item.CORCStatus == "R" || item.CORCStatus.ToUpper().Contains("IN REVIEW"))
                 {
                     item.CORCStatus = "In Review";
                 }
@@ -172,25 +208,25 @@ namespace ApiForCORC.Controllers
             string date = DateTime.Now.ToString("dddd, MMM d", DateTimeFormatInfo.InvariantInfo);
             ms.Subject = string.Format("CORC Alert on {0}", date);
             ms.From = "CORC Alert CORC-Alert@flex.com";
-            ms.ToList = new string[] {
-                    "amanda_niu@notes.teradyne.com",
-                    "veda_ma@notes.teradyne.com",
-                    "ruby_wang@notes.teradyne.com",
-                    "napo_zhang@notes.teradyne.com",
-                    "napo.zhang@flex.com",
-                    "robert.yu@flex.com",
-                    "aivin.shao@flex.com",
-                    "jane.sha@flex.com",
-                    "luna.wang@flex.com",
-                    "jesse.he@flex.com"
-                };
-            ms.CCList = new string[] { };
-            ms.FilePathList = new string[] { generateExcel(list) };
+            ms.ToList = new List<string>();
+            ms.ToList.Add("amanda_niu@notes.teradyne.com");
+            ms.ToList.Add("veda_ma@notes.teradyne.com");
+            ms.ToList.Add("ruby_wang@notes.teradyne.com");
+            ms.ToList.Add("napo_zhang@notes.teradyne.com");
+            ms.ToList.Add("napo.zhang@flex.com");
+            ms.ToList.Add("robert.yu@flex.com");
+            ms.ToList.Add("aivin.shao@flex.com");
+            ms.ToList.Add("jane.sha@flex.com");
+            ms.ToList.Add("luna.wang@flex.com");
+            ms.ToList.Add("jesse.he@flex.com");
+            ms.CCList = new List<string>();
+            ms.FilePathList = new List<string>();
+            ms.FilePathList.Add(GenerateExcel(list));
             ms.Content = GetMailContent(list);
             return SendMail(ms);
         }
 
-        public string generateExcel(List<ExcelCORC> l)
+        public string GenerateExcel(List<ExcelCORC> l)
         {
             // 注册Aspose License
             Aspose.Cells.License license = new Aspose.Cells.License();
@@ -342,11 +378,10 @@ namespace ApiForCORC.Controllers
         {
             public string Subject { get; set; }
             public string From { get; set; }
-            public string[] ToList { get; set; }
-            public string[] CCList { get; set; }
-            public string[] FilePathList { get; set; }
+            public List<string> ToList { get; set; }
+            public List<string> CCList { get; set; }
+            public List<string> FilePathList { get; set; }
             public string Content { get; set; }
-
         }
     }
 }

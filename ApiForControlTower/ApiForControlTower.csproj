@@ -234,6 +234,8 @@
     <Compile Include="Auth\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Auth\Startup.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
+    <Compile Include="Models\CORC.cs" />
+    <Compile Include="Controllers\CORCController.cs" />
     <Compile Include="Models\BoardLocation.cs" />
     <Compile Include="Models\FailBoard.cs" />
     <Compile Include="Models\LEDDetail.cs" />

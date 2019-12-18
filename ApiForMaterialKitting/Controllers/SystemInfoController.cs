@@ -32,7 +32,7 @@ namespace ApiForMaterialKitting.Controllers
             else
             {
                 dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from" +
-                    "(SELECT Slot, Model, Customer, PO, SO, PD, PlanShipDate FROM KANBAN_SLOTPLAN where ShippingDate is null and (PD <= " + wk + " or PD >= " + wknow + ") " +
+                    "(SELECT Slot, Model, Customer, PO, SO, PD, PlanShipDate FROM KANBAN_SLOTPLAN where ShippingDate is null and (PD <= " + wk + " or PD >= " + wknow + ")) " +
                     "a left join " +
                     "(select * from MaterialKitting where IsDel = 0)b " +
                     "on a.Slot = b.Slot " +

@@ -25,14 +25,16 @@ namespace ApiForFCTKB.Controllers
         [HttpPost]
         public int InsertEIssue(SlotEIssue eIssue)
         {
-            string insert = "INSERT INTO KANBAN_SLOTEISSUE VALUES (@Slot, @Item, @Date, @Status)";
+            eIssue.Date = DateTime.Now;
+            string insert = "INSERT INTO KANBAN_SLOTEISSUE (Slot, Item, Date, Status) VALUES (@Slot, @Item, @Date, @Status)";
             return conn.Execute(insert, eIssue);
         }
 
         [HttpPost]
         public int UpdateEIssue(SlotEIssue eIssue)
         {
-            string update = "UPDATE KANBAN_SLOTEISSUE SET Item = @Item, Date = @Date, Status = @Status WHERE ID = @ID";
+            eIssue.LastUpdatedDate = DateTime.Now;
+            string update = "UPDATE KANBAN_SLOTEISSUE SET Item = @Item, Date = @Date, Status = @Status, LastUpdatedDate = @LastUpdatedDate WHERE ID = @ID";
             return conn.Execute(update, eIssue);
         }
 

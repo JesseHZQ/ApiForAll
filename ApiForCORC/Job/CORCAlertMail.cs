@@ -14,6 +14,9 @@ namespace ApiForCORC.Job
             //具体的方法
             ExcelCORCController ec = new ExcelCORCController();
             ec.GetExcelCORC();
+
+            ExcelSOController es = new ExcelSOController();
+            es.GetExcelSO();
         }
     }
 }

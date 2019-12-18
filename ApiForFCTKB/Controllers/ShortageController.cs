@@ -25,7 +25,8 @@ namespace ApiForFCTKB.Controllers
         [HttpPost]
         public int UpdateShortage(SlotShortage shortage)
         {
-            string update = "UPDATE KANBAN_SLOTSHORTAGE SET IsReceived = @IsReceived, ETA = @ETA WHERE ID = @ID";
+            shortage.ReceivedTime = DateTime.Now;
+            string update = "UPDATE KANBAN_SLOTSHORTAGE SET IsReceived = @IsReceived, ETA = @ETA, ReceivedTime = @ReceivedTime WHERE ID = @ID";
             return conn.Execute(update, shortage);
         }
     }

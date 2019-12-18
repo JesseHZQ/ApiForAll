@@ -205,6 +205,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ExcelCORCController.cs" />
+    <Compile Include="Controllers\ExcelSOController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReaderController.cs" />
     <Compile Include="Controllers\ReadRecordController.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Models\CORCFilePath.cs" />
     <Compile Include="Models\CORCInfo.cs" />
     <Compile Include="Models\ExcelCORC.cs" />
+    <Compile Include="Models\ExcelSO.cs" />
     <Compile Include="Models\SlotPlan.cs" />
     <Compile Include="Models\SOInfo.cs" />
     <Compile Include="Models\SOLine.cs" />

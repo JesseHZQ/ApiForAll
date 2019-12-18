@@ -28,14 +28,14 @@ namespace ApiForFCTKB
                   <th width='60' style='border-style: solid; border-width: 1px'>Type</th>
                   <th width='80' style='border-style: solid; border-width: 1px'>Slot</th>
                   <th width='120' style='border-style: solid; border-width: 1px'>Customer</th>
-                  <th width='40' style='border-style: solid; border-width: 1px'>PD</th>
+                  <th width='80' style='border-style: solid; border-width: 1px'>MRP Week</th>
                   <th width='230' style='border-style: solid; border-width: 1px'>CORC Issue</th>
                   <th width='230' style='border-style: solid; border-width: 1px'>Engineering Issue</th>
                   <th width='230' style='border-style: solid; border-width: 1px'>Shortage</th>
                 </tr>";
 
-            string sql = "SELECT * FROM KANBAN_SLOTPLAN WHERE ShippingDate is null ORDER BY PD";
-            List<SlotPlan> list = conn.Query<SlotPlan>(sql).ToList();
+            string sql = "SELECT * FROM KANBAN_SLOTPLAN WHERE ShippingDate is null ORDER BY MRP";
+            List<SlotPlan> list = conn.Query<SlotPlan>(sql).ToList().Where(x => GetSlotPlanValidate(x.MRP) == true).ToList();
             string sqlConfig = "SELECT * FROM KANBAN_SLOTCONFIG";
             List<SlotConfig> listConfig = conn.Query<SlotConfig>(sqlConfig).ToList();
             string sqlShortage = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE IsReceived = 0";
@@ -91,7 +91,7 @@ namespace ApiForFCTKB
                     <td style='border-style: solid; border-width: 1px; text-align: left;'>{5}</td>
                     <td style='border-style: solid; border-width: 1px; text-align: left;'>{6}</td>
                     <td style='border-style: solid; border-width: 1px; text-align: left;'>{7}</td>
-                    </tr>", sp.PlanShipDate, sp.Type == "D" ? "Dragon" : sp.Type, sp.Slot, sp.Customer, sp.PD, sp.CORC_Issue, EIssue, Shortage);
+                    </tr>", sp.PlanShipDate, sp.Type == "D" ? "Dragon" : sp.Type, sp.Slot, sp.Customer, sp.MRP, sp.CORC_Issue, EIssue, Shortage);
                 content += single;
             }
             content += "</table>";
@@ -141,6 +141,23 @@ namespace ApiForFCTKB
             int week = Tool.WeekOfYear(DateTime.Now); // 获取上周周别
             float mrp = float.Parse(mrpStr); // 获取MRP
             int range = 5; // 抓取的周范围 后期改成可修改
+            bool IsRange = true; // 定义周范围的Bool
+            if (week + range <= 54) // 年底之前逻辑简单
+            {
+                IsRange = (mrp >= week && mrp <= week + range);
+            }
+            else // 年底的时候周别逻辑
+            {
+                IsRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
+            }
+            return IsRange;
+        }
+
+        public bool GetSlotPlanValidate(string mrpStr)
+        {
+            int week = Tool.WeekOfYear(DateTime.Now.AddDays(-7)); // 获取当周周别
+            float mrp = float.Parse(mrpStr); // 获取MRP
+            int range = 7; // 抓取的周范围 后期改成可修改
             bool IsRange = true; // 定义周范围的Bool
             if (week + range <= 54) // 年底之前逻辑简单
             {

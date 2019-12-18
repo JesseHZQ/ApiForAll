@@ -107,3 +107,12 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\obj\Release\ApiForRack
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\obj\Release\ApiForRackManage.pdb
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Dapper.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Dapper.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.Core.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Quartz.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.Core.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.Core.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Quartz.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Quartz.xml

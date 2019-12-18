@@ -13,6 +13,8 @@ namespace ApiForFCTKB.Controllers
         public string Buyer { get; set; }
         public string ETA { get; set; }
         public bool IsReceived { get; set; }
+        public DateTime InsertTime { get; set; }
         public DateTime LastUpdatedTime { get; set; }
+        public DateTime ReceivedTime { get; set; }
     }
 }

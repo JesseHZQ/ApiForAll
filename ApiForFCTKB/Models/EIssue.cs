@@ -9,5 +9,6 @@ namespace ApiForFCTKB.Controllers
         public string Item { get; set; }
         public DateTime Date { get; set; }
         public string Status { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
     }
 }

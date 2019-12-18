@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using ApiForRackManage.Job;
 
 namespace ApiForRackManage
 {
@@ -14,6 +15,7 @@ namespace ApiForRackManage
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            JobScheduler.Start();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

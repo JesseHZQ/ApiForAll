@@ -47,6 +47,7 @@ namespace ApiForCORC.Models
         {
             string year = dt.Year.ToString().Substring(2);
             string week = WeekOfYear(dt).ToString();
+            week = week.Length == 2 ? week : "0" + week;
             return year + week;
         }
 

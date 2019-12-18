@@ -199,6 +199,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AMLController.cs" />
     <Compile Include="Controllers\CALController.cs" />
+    <Compile Include="Models\POStatus.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Job\MailWithFile.cs" />
     <Compile Include="Models\AmlDiffPe.cs" />
@@ -225,7 +226,7 @@
     <Compile Include="Models\SingleStatus.cs" />
     <Compile Include="Models\Resp.cs" />
     <Compile Include="Models\SlotConfig.cs" />
-    <Compile Include="Models\SlotCORCIssue.cs" />
+    <Compile Include="Models\SlotCORC.cs" />
     <Compile Include="Models\SlotPlan.cs" />
     <Compile Include="Models\SlotPO.cs" />
     <Compile Include="Models\SlotShortage.cs" />
