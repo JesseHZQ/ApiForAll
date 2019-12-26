@@ -234,6 +234,7 @@
     <Compile Include="Auth\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Auth\Startup.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
+    <Compile Include="Job\CorcRemind.cs" />
     <Compile Include="Models\CORC.cs" />
     <Compile Include="Controllers\CORCController.cs" />
     <Compile Include="Models\BoardLocation.cs" />
@@ -273,6 +274,7 @@
     <Compile Include="Models\SlotPlan.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="Models\TaskWork.cs" />
+    <Compile Include="Models\Tool.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Work.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

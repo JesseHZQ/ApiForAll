@@ -26,8 +26,8 @@ namespace ApiForFCTKB.Controllers
         [HttpGet]
         public string Refresh()
         {
-            try
-            {
+            //try
+            //{
                 // 注册Aspose License
                 Aspose.Cells.License license = new Aspose.Cells.License();
                 license.SetLicense("Aspose.Cells.lic");
@@ -44,22 +44,22 @@ namespace ApiForFCTKB.Controllers
                 UpdateSlotStatus();
 
                 return "OK";
-            }
-            catch (Exception ex)
-            {
-                MailMessage mess = new MailMessage();
-                mess.From = new MailAddress("FCT System Status E-KanBan@flex.com");
-                mess.Subject = "FCT System Status E-KanBan Refresh Fail";
-                mess.IsBodyHtml = true;
-                mess.BodyEncoding = System.Text.Encoding.UTF8;
-                SmtpClient client = new SmtpClient();
-                client.Host = "10.194.51.14";
-                client.Credentials = new System.Net.NetworkCredential("SMTPUser", "User_001");
-                mess.To.Add("jesse.he@flex.com");
-                mess.Body = ex.Message;
-                client.Send(mess);
-                return "Fail";
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MailMessage mess = new MailMessage();
+            //    mess.From = new MailAddress("FCT System Status E-KanBan@flex.com");
+            //    mess.Subject = "FCT System Status E-KanBan Refresh Fail";
+            //    mess.IsBodyHtml = true;
+            //    mess.BodyEncoding = System.Text.Encoding.UTF8;
+            //    SmtpClient client = new SmtpClient();
+            //    client.Host = "10.194.51.14";
+            //    client.Credentials = new System.Net.NetworkCredential("SMTPUser", "User_001");
+            //    mess.To.Add("jesse.he@flex.com");
+            //    mess.Body = ex.Message;
+            //    client.Send(mess);
+            //    return "Fail";
+            //}
 
         }
 
@@ -621,7 +621,7 @@ namespace ApiForFCTKB.Controllers
                 if (file.FullName.Contains("Dragon"))
                 {
                     filePath = file.FullName;
-                    sheetName = "Dragon";
+                    //sheetName = "Dragon";
                     slotType = "D";
                 }
                 if (file.FullName.Contains("J750"))
@@ -682,7 +682,15 @@ namespace ApiForFCTKB.Controllers
                     else
                     {
                         Workbook wb = new Workbook(filePath);
-                        Cells cells = wb.Worksheets[sheetName].Cells;
+                        Cells cells = null;
+                        if (sheetName == "")
+                        {
+                            cells = wb.Worksheets[0].Cells; // sheetName的不稳定性 所以用索引
+                        }
+                        else
+                        {
+                            cells = wb.Worksheets[sheetName].Cells;
+                        }
                         DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
                         foreach (DataRow item in dt.Rows)
                         {
@@ -736,7 +744,7 @@ namespace ApiForFCTKB.Controllers
                 if (file.FullName.Contains("Dragon"))
                 {
                     filePath = file.FullName;
-                    sheetName = "Dragon";
+                    //sheetName = "Dragon";
                     slotType = "D";
                 }
                 if (file.FullName.Contains("J750"))
@@ -795,7 +803,15 @@ namespace ApiForFCTKB.Controllers
                     else
                     {
                         Workbook wb = new Workbook(filePath);
-                        Cells cells = wb.Worksheets[sheetName].Cells;
+                        Cells cells = null;
+                        if (sheetName == "")
+                        {
+                            cells = wb.Worksheets[0].Cells; // sheetName的不稳定性 所以用索引
+                        }
+                        else
+                        {
+                            cells = wb.Worksheets[sheetName].Cells;
+                        }
                         DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
                         foreach (DataRow item in dt.Rows)
                         {
@@ -1003,31 +1019,45 @@ namespace ApiForFCTKB.Controllers
             }
 
             // 更新kanban_slotcorc表
-            string q = "SELECT * FROM KANBAN_SLOTCORC";
+            // 遍历数据库closetime为空的数据， 如果excel中查不到，就默认closetime为当前时间
+            string q = "SELECT * FROM KANBAN_SLOTCORC WHERE CloseTime is null";
             List<SlotCORC> list = conn.Query<SlotCORC>(q).ToList();
+
+            foreach (SlotCORC item in list)
+            {
+                SlotCORC sp = slotCORC.Where(x => x.Slot == item.Slot).SingleOrDefault();
+                if (sp == null)
+                {
+                    item.CloseTime = DateTime.Now;
+                    string update = "UPDATE KANBAN_SLOTCORC SET CORC_Issue = @CORC_Issue, CloseTime = @CloseTime WHERE Slot = @Slot";
+                    conn.Execute(update, item);
+                }
+            }
+
+            list = conn.Query<SlotCORC>(q).ToList();
+
             foreach (SlotCORC item in slotCORC)
             {
                 SlotCORC sp = list.Where(x => x.Slot == item.Slot).SingleOrDefault();
                 // 有记录 CORC 不为空
                 if (sp != null && item.CORC_Issue != "" && item.CORC_Issue != null)
                 {
-                    item.LastUpdateTime = DateTime.Now;
-                    string update = "UPDATE KANBAN_SLOTCORC SET CORC_Issue = @CORC_Issue, LastUpdateTime = @LastUpdateTime WHERE Slot = @Slot";
-                    conn.Execute(update, item);
+                    if (sp.CORC_Issue != item.CORC_Issue)
+                    {
+                        item.LastUpdateTime = DateTime.Now;
+                        string update = "UPDATE KANBAN_SLOTCORC SET CORC_Issue = @CORC_Issue, LastUpdateTime = @LastUpdateTime WHERE Slot = @Slot";
+                        conn.Execute(update, item);
+                    }
                 }
-                // 有记录 CORC为空 没有Close
-                else if (sp != null && !(item.CORC_Issue != "" && item.CORC_Issue != null) && item.CloseTime == null)
+                // 有记录 CORC 为空
+                else if (sp != null && !(item.CORC_Issue != "" && item.CORC_Issue != null))
                 {
                     item.CloseTime = DateTime.Now;
+                    item.LastUpdateTime = DateTime.Now;
                     string update = "UPDATE KANBAN_SLOTCORC SET LastUpdateTime = @LastUpdateTime, CloseTime = @CloseTime WHERE Slot = @Slot";
                     conn.Execute(update, item);
                 }
-                // 有记录 CORC为空 已Close
-                else if (sp != null && !(item.CORC_Issue != "" && item.CORC_Issue != null) && item.CloseTime != null)
-                {
-                    // Nothing to do
-                }
-                // 无记录 CORC不为空
+                // 无记录 CORC 不为空
                 else if (sp == null && item.CORC_Issue != "" && item.CORC_Issue != null)
                 {
                     item.InsertTime = DateTime.Now;
@@ -1097,8 +1127,8 @@ namespace ApiForFCTKB.Controllers
             List<SlotShortage> list = conn.Query<SlotShortage>(query).ToList();
             foreach (SlotShortage item in slotshortage)
             {
-                SlotShortage ss = list.Where(x => x.Slot == item.Slot && x.PN == item.PN).SingleOrDefault();
-                if (ss != null)
+                List<SlotShortage> ss = list.Where(x => x.Slot == item.Slot && x.PN == item.PN).ToList();
+                if (ss.Count > 0)
                 {
                     item.LastUpdatedTime = DateTime.Now;
                     string update = "UPDATE KANBAN_SLOTSHORTAGE SET Buyer = @Buyer, SupplierName = @SupplierName, QTY = @QTY, LastUpdatedTime = @LastUpdatedTime WHERE SLOT = @SLOT AND PN = @PN";
@@ -1324,6 +1354,13 @@ namespace ApiForFCTKB.Controllers
             List<SlotPlan> slotplan = conn.Query<SlotPlan>(query).ToList();
             foreach (SlotPlan item in slotplan)
             {
+                // 截取数字部分 2019/12/20 修改
+                if (item.Slot.IndexOf("D") > -1)
+                {
+                    string num = item.Slot.IndexOf("B") > -1 ? item.Slot.Substring(1, item.Slot.Length - 2) : item.Slot.Substring(1, item.Slot.Length - 1);
+                    num = num.Length == 2 ? "00" + num : (num.Length == 3 ? "0" + num : num);
+                    item.Slot = item.Slot.IndexOf("B") > -1 ? "D" + num + "B" : "D" + num + "A";
+                }
                 string sql = "SELECT * FROM [172.21.194.214].[PCBA].[dbo].[Boards] WHERE TESTERID = @TESTERID";
                 MinioneConfig mc = new MinioneConfig();
                 mc.TesterID = item.Slot;

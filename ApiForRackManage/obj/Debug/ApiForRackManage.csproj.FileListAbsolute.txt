@@ -1,3 +1,4 @@
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\ApplicationInsights.config
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\ApiForRackManage.dll.config
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\ApiForRackManage.dll
@@ -49,6 +50,8 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\roslyn\vbc.rsp
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\roslyn\VBCSCompiler.exe
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Antlr3.Runtime.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.Core.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Dapper.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Microsoft.AI.DependencyCollector.dll
@@ -61,9 +64,12 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Microsoft.AspNet.T
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Newtonsoft.Json.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Quartz.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Diagnostics.DiagnosticSource.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Net.Http.Formatting.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Cors.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Helpers.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.Cors.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.WebHost.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Mvc.dll
@@ -73,11 +79,17 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.WebPage
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.WebPages.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.WebPages.Razor.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\WebGrease.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.Core.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.Core.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Dapper.xml
-C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Newtonsoft.Json.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Quartz.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Quartz.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Net.Http.Formatting.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.Cors.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Newtonsoft.Json.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Helpers.xml
-C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.WebHost.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Mvc.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Optimization.xml
@@ -93,8 +105,8 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Microsoft.AI.Windo
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Microsoft.AI.Web.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
-C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\zh-Hans\System.Web.Helpers.resources.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\zh-Hans\System.Web.Http.resources.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\zh-Hans\System.Web.Helpers.resources.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\zh-Hans\System.Web.Http.WebHost.resources.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\zh-Hans\System.Web.Mvc.resources.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\zh-Hans\System.Web.Optimization.resources.dll

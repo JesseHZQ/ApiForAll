@@ -158,7 +158,7 @@ namespace ApiForRackManage.Controllers
                 }
 
                 // DIB 抓取Baan J11203 库位
-                else if (i.DES != null && i.DES.ToUpper().Contains("DIB"))
+                else if (i.DES != null && (i.DES.ToUpper().Contains("DIB") || i.DES.ToUpper().Contains("DB")))
                 {
                     foreach (TdnOh t in data)
                     {

@@ -116,3 +116,6 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.Cor
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Common.Logging.Core.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Quartz.pdb
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Quartz.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Cors.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.Cors.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.Cors.xml
