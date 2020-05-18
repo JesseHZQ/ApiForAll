@@ -89,10 +89,11 @@ namespace ApiForFCTKB.Controllers
                 cal.GX_5 = Math.Round(GX * 0.95, 2) + "-" + Math.Round(GX * 1.05, 2);
                 cal.GX_10 = Math.Round(GX * 0.9, 2) + "-" + Math.Round(GX * 1.1, 2);
                 cal.EquipCode = cells[7, 0].Value.ToString().Substring(cells[6, 0].Value.ToString().LastIndexOf(' ') + 1);
-                cal.X1 = cells[32, 1].Value == null ? "0" : cells[32, 1].Value.ToString();
-                cal.X2 = cells[33, 1].Value == null ? "0" : cells[33, 1].Value.ToString();
-                cal.X3 = cells[34, 1].Value == null ? "0" : cells[34, 1].Value.ToString();
-                cal.X4 = cells[35, 1].Value == null ? "0" : cells[35, 1].Value.ToString();
+                
+                cal.X1 = cells[cells.MaxRow - 3, 1].Value == null ? "0" : cells[cells.MaxRow - 3, 1].Value.ToString();
+                cal.X2 = cells[cells.MaxRow - 2, 1].Value == null ? "0" : cells[cells.MaxRow - 2, 1].Value.ToString();
+                cal.X3 = cells[cells.MaxRow - 1, 1].Value == null ? "0" : cells[cells.MaxRow - 1, 1].Value.ToString();
+                cal.X4 = cells[cells.MaxRow, 1].Value == null ? "0" : cells[cells.MaxRow, 1].Value.ToString();
                 cal.Average = decimal.Round((decimal.Parse(cal.X2) + decimal.Parse(cal.X3) + decimal.Parse(cal.X4)) / 3, 2).ToString();
                 cal.N1 = "N/A";
                 cal.N2 = "N/A";

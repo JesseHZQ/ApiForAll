@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=19.5.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Cells.19.5.0\lib\net40\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
@@ -202,6 +205,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BoardCheckController.cs" />
+    <Compile Include="Controllers\RefurbishController.cs" />
+    <Compile Include="Models\Rack.cs" />
+    <Compile Include="Controllers\SupermarketController.cs" />
     <Compile Include="Job\JobScheduler.cs" />
     <Compile Include="Job\Refresh.cs" />
     <Compile Include="Models\BI.cs" />
@@ -210,11 +216,12 @@
     <Compile Include="Models\Ins.cs" />
     <Compile Include="Models\RackCar.cs" />
     <Compile Include="Controllers\RackController.cs" />
+    <Compile Include="Models\Refurbish.cs" />
     <Compile Include="Models\Resp.cs" />
     <Compile Include="Models\RespBI.cs" />
     <Compile Include="Models\Sys.cs" />
     <Compile Include="Models\SysList.cs" />
-    <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Controllers\SysController.cs" />
     <Compile Include="Models\TdnOh.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -338,6 +345,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApiForFCTKB\ApiForFCTKB.csproj">
+      <Project>{8290EB5A-D074-4723-9EA6-4DC133F0F4D8}</Project>
+      <Name>ApiForFCTKB</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

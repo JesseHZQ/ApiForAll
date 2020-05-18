@@ -118,3 +118,6 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Common.Logging.Core.pdb
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Common.Logging.Core.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Quartz.pdb
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\Quartz.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\System.Web.Cors.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\System.Web.Http.Cors.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForFCTKB\bin\System.Web.Http.Cors.xml

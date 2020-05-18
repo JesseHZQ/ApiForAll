@@ -8,11 +8,15 @@ namespace ApiForFCTKB.Controllers
         public int ID { get; set; }
         public string PlanShipDate { get; set; }
         public string ShippingDate { get; set; }
+        public DateTime ShippingTime { get; set; }
         public string ShippingType { get; set; }
         public string Slot { get; set; }
         public string Type { get; set; }
         public string Model { get; set; }
         public string Customer { get; set; }
+        public int FCCPStatus { get; set; }
+        public int TypeStatus { get; set; }
+        public string IBFStatus { get; set; }
         public string PO { get; set; }
         public string SO { get; set; }
         public string MRP { get; set; }
@@ -37,5 +41,20 @@ namespace ApiForFCTKB.Controllers
         public List<SlotConfig> ConfigList { get; set; }
         public List<SlotShortage> ShortageList { get; set; }
         public List<SlotEIssue> EIssueList { get; set; }
+
+        //J750
+        public string WO { get; set; }
+        public string J_Launch { get; set; }
+        public string J_Assy { get; set; }
+        public string J_SST { get; set; }
+        public string J_OutGoing { get; set; }
+        public string J_KanBan { get; set; }
+        public string J_BringUp { get; set; }
+        public string J_Heat { get; set; }
+        public string J_Cold { get; set; }
+        public string J_CSW { get; set; }
+        public string J_QFAA { get; set; }
+        public string J_ButtonUp { get; set; }
+        public string J_Packing { get; set; }
     }
 }

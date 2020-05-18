@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiForWechat", "ApiForWecha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiForCORC", "ApiForCORC\ApiForCORC.csproj", "{705341BC-02C5-4D39-9359-DCF4AC140C0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiForFCTKBNew", "ApiForFCTKBNew\ApiForFCTKBNew.csproj", "{DFAC5EBA-1BAD-4CB9-9BD1-01F8B197A947}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{705341BC-02C5-4D39-9359-DCF4AC140C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{705341BC-02C5-4D39-9359-DCF4AC140C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{705341BC-02C5-4D39-9359-DCF4AC140C0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFAC5EBA-1BAD-4CB9-9BD1-01F8B197A947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFAC5EBA-1BAD-4CB9-9BD1-01F8B197A947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFAC5EBA-1BAD-4CB9-9BD1-01F8B197A947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFAC5EBA-1BAD-4CB9-9BD1-01F8B197A947}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

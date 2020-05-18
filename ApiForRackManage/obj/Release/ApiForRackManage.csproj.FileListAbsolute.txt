@@ -119,3 +119,8 @@ C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Quartz.xml
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Cors.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.Cors.dll
 C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\System.Web.Http.Cors.xml
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\ApiForFCTKB.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Aspose.Cells.dll
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\ApiForFCTKB.pdb
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\ApiForFCTKB.dll.config
+C:\Users\suzjeshe\source\repos\ApiForAll\ApiForRackManage\bin\Aspose.Cells.xml

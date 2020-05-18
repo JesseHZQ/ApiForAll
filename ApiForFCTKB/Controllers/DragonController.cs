@@ -19,7 +19,7 @@ namespace ApiForFCTKB.Controllers
         [HttpGet]
         public List<Dragon> GetDragons()
         {
-            string sql = "SELECT * FROM KANBAN_SLOTPLAN WHERE ShippingDate IS NULL AND TYPE = 'D'";
+            string sql = "SELECT * FROM KANBAN_SLOTPLAN WHERE ShippingDate IS NULL ORDER BY Slot";
             return conn.Query<Dragon>(sql).ToList();
         }
 

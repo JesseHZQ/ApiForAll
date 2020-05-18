@@ -24,7 +24,7 @@ namespace ApiForFCTKB.Job
             IJobDetail jobShiftReport = JobBuilder.Create<MailWithFile>().Build();
             IJobDetail jobOnHandCheck = JobBuilder.Create<OnHandCheck>().Build();
             //创建触发器
-            ITrigger triggerRefresh = TriggerBuilder.Create().WithIdentity("TimeTriggerRefresh", "TimeGroupRefresh").WithCronSchedule("0 0/5 * * * ?").Build();
+            ITrigger triggerRefresh = TriggerBuilder.Create().WithIdentity("TimeTriggerRefresh", "TimeGroupRefresh").WithCronSchedule("0 0/10 * * * ?").Build();
             ITrigger triggerMail = TriggerBuilder.Create().WithIdentity("TimeTriggerMail", "TimeGroupMail").WithCronSchedule("0 0 13 ? * MON-FRI").Build();
             ITrigger triggerShiftReport = TriggerBuilder.Create().WithIdentity("TimeTriggerShiftReport", "TimeGroupShiftReport").WithCronSchedule("0 50 22 ? * MON-FRI").Build();
             ITrigger triggerOnHandCheck = TriggerBuilder.Create().WithIdentity("TimeTriggerOnHandCheck", "TimeGroupOnHandCheck").WithCronSchedule("0 0 8 ? * MON-FRI").Build();

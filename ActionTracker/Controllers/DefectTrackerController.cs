@@ -147,7 +147,7 @@ namespace ActionTracker.Controllers
             if (data.Type.Trim() == "2")
             {
                 sql = @"select * from [suznt060\sqlff6].FF_BI.[dbo].SF_QualityReport_Defect_Daily
-                        where project = 'TDN' and Component = @Component and TimeBegin = @TimeBegin";
+                        where project = 'TDN' and Component = @Component and PartNumber = @LLAPN and TimeBegin = @TimeBegin";
             }
             if (data.Type.Trim() == "3")
             {

@@ -1,10 +1,14 @@
 ﻿using ApiForRackManage.DataContext;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Dapper;
 
 namespace ApiForRackManage.Controllers
 {
@@ -12,11 +16,8 @@ namespace ApiForRackManage.Controllers
     {
         RackDataContext dc = new RackDataContext();
 
-        /// <summary>
-        /// 获取首页报告 date传0时,获取所有记录  传具体年月时,获取对应的记录
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
+        public IDbConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["PNINOUT"].ConnectionString);
+
         [System.Web.Http.HttpGet]
         public Resp getList(string PN)
         {
@@ -76,11 +77,27 @@ namespace ApiForRackManage.Controllers
             return resp;
         }
 
-        /// <summary>
-        /// 添加或者修改VOP记录
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+
+        [HttpGet]
+        public List<Rac> getRaList()
+        {
+            Resp resp = new Resp();
+            string sql = "select * from Supermarket_Rack";
+            return conn.Query<Rac>(sql).ToList();
+        }
+        public class Rac
+        {
+            public int RackId { get; set; }
+            public string RackName { get; set; }
+            public int RackSize { get; set; }
+            public int TypeId { get; set; }
+            public string PN { get; set; }
+            public string PNList { get; set; }
+            public string SNList { get; set; }
+            public string SlotList { get; set; }
+            public string DateList { get; set; }
+        }
+
         [System.Web.Http.HttpPost]
         public Resp Update(Rack model)
         {
@@ -93,6 +110,7 @@ namespace ApiForRackManage.Controllers
             item.SNView = model.SNView;
             item.SlotView = model.SlotView;
             item.TimeView = model.TimeView;
+            item.Command = model.Command;
             dc.SubmitChanges();
             resp.Code = 200;
             resp.Data = null;

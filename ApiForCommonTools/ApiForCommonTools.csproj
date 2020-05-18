@@ -191,6 +191,7 @@
     <Compile Include="Controllers\ExcelController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\MailController.cs" />
+    <Compile Include="Controllers\THController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -109,6 +109,18 @@ namespace ApiForMinioneMiscShipping.Controllers
             return resp;
         }
 
+        [System.Web.Http.HttpGet]
+        public Resp GetFTStatus()
+        {
+            DataTable dt = new DataTable();
+            dt = sqlkb.ExecuteDataTable("select * from FTTesterStatus");
+            Resp resp = new Resp();
+            resp.Code = 200;
+            resp.Data = dt;
+            resp.Message = "查询成功";
+            return resp;
+        }
+
 
         [System.Web.Http.HttpGet]
         public string getBaiduToken()

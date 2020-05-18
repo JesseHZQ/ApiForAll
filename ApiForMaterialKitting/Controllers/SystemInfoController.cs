@@ -247,9 +247,8 @@ namespace ApiForMaterialKitting.Controllers
                 };
                 string[] cclist = new string[]
                 {
-                    "robert.yu@flex.com",
+                    //"robert.yu@flex.com",
                     "napo.zhang@flex.com",
-                    "gary.huang@flex.com",
                     "yu.you@flex.com",
                     "hongliang.xu1@flex.com",
                     "yan.yu@flex.com",
@@ -263,9 +262,10 @@ namespace ApiForMaterialKitting.Controllers
                     "chris.liu1@flex.com",
                     "eric.lin2@flex.com",
                     "lisa.qian@flex.com",
+                    "youjing.shen1@flex.com",
                     "Jesse.He@flex.com"
                 };
-                int result = SendMail("Material-Kitting@flex.com", model.Slot.Substring(0, 2) + " system 增料", list, cclist, str);
+                int result = SendMail("Material-Kitting@flex.com", model.Slot.StartsWith("D") ? "Dragon" : model.Slot.Substring(0, 2) + " system 增料", list, cclist, str);
                 if (result == 1)
                 {
                     resp.Code = 200;

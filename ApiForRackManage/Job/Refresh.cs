@@ -12,9 +12,9 @@ namespace ApiForRackManage.Job
         public void Execute(IJobExecutionContext context)
         {
             //具体的方法
-            SystemController system = new SystemController();
+            SysController system = new SysController();
             system.RefreshQTY();
-            system.JRefreshQTY();
+            //system.JRefreshQTY();
         }
     }
 }

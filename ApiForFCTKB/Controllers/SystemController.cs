@@ -26,8 +26,8 @@ namespace ApiForFCTKB.Controllers
         [HttpGet]
         public string Refresh()
         {
-            //try
-            //{
+            try
+            {
                 // 注册Aspose License
                 Aspose.Cells.License license = new Aspose.Cells.License();
                 license.SetLicense("Aspose.Cells.lic");
@@ -42,25 +42,53 @@ namespace ApiForFCTKB.Controllers
                 InsertOrUpdateSlotConfig();
                 UpdateSlotMinioneStatus();
                 UpdateSlotStatus();
+                GetFCCPList();
 
                 return "OK";
-            //}
-            //catch (Exception ex)
-            //{
-            //    MailMessage mess = new MailMessage();
-            //    mess.From = new MailAddress("FCT System Status E-KanBan@flex.com");
-            //    mess.Subject = "FCT System Status E-KanBan Refresh Fail";
-            //    mess.IsBodyHtml = true;
-            //    mess.BodyEncoding = System.Text.Encoding.UTF8;
-            //    SmtpClient client = new SmtpClient();
-            //    client.Host = "10.194.51.14";
-            //    client.Credentials = new System.Net.NetworkCredential("SMTPUser", "User_001");
-            //    mess.To.Add("jesse.he@flex.com");
-            //    mess.Body = ex.Message;
-            //    client.Send(mess);
-            //    return "Fail";
-            //}
+            }
+            catch (Exception ex)
+            {
+                MailMessage mess = new MailMessage();
+                mess.From = new MailAddress("FCT System Status E-KanBan@flex.com");
+                mess.Subject = "FCT System Status E-KanBan Refresh Fail";
+                mess.IsBodyHtml = true;
+                mess.BodyEncoding = System.Text.Encoding.UTF8;
+                SmtpClient client = new SmtpClient();
+                client.Host = "10.194.51.14";
+                client.Credentials = new System.Net.NetworkCredential("SMTPUser", "User_001");
+                mess.To.Add("jesse.he@flex.com");
+                mess.Body = ex.Message;
+                client.Send(mess);
+                return "Fail";
+            }
+        }
 
+        [HttpGet]
+        public string RefreshTest()
+        {
+            Aspose.Cells.License license = new Aspose.Cells.License();
+            license.SetLicense("Aspose.Cells.lic");
+
+            // 不超过一分钟
+            string msg = "1";
+            //UpdateShippingStatus();
+            msg = "2";
+            //UpdatePSBSSBQty(); // 获取最早更新时间
+            msg = "3";
+            InsertOrUpdateSlotPlan();
+            msg = "4";
+            UpdateSlotPO();
+            msg = "5";
+            UpdateSlotCORC();
+            msg = "6";
+            InsertOrUpdateSlotShortage();
+            msg = "7";
+            InsertOrUpdateSlotConfig();
+            msg = "8";
+            UpdateSlotMinioneStatus();
+            msg = "9";
+            UpdateSlotStatus();
+            return msg;
         }
 
         [HttpGet]
@@ -89,7 +117,7 @@ namespace ApiForFCTKB.Controllers
             Workbook wb = new Workbook(@"\\suznt004\Backup\Jesse\FrontAll\FCT KANBAN\files\UFlex System Status.xls");
             Cells cells = wb.Worksheets[0].Cells;
             int y = 2;
-            List<SlotPlan> list = GetSystemByType(type);
+            List<SlotPlan> list = GetSystemByType1(type);
             foreach (SlotPlan s in list)
             {
                 for (int i = 0; i < 18; i++)
@@ -500,6 +528,63 @@ namespace ApiForFCTKB.Controllers
             {
                 sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE IN ( 'IF', 'MF') AND ShippingDate is null ORDER BY MRP, PlanShipDate, Slot";
             }
+            if (type == "J750")
+            {
+                sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN A LEFT JOIN KANBAN_SLOTPLAN_J750 B ON A.SLOT = B.SLOT WHERE A.TYPE = 'J750' AND A.ShippingDate is null ORDER BY A.MRP, A.PlanShipDate, A.Slot";
+            }
+            //List<SlotPlan> list1 = conn.Query<SlotPlan>(sqlplan1).ToList().Where(x => float.Parse(x.MRP) > 40).ToList();
+            //List<SlotPlan> list2 = conn.Query<SlotPlan>(sqlplan1).ToList().Where(x => float.Parse(x.MRP) <= 40).ToList();
+            //List<SlotPlan> list = list1.Concat(list2).ToList();
+            List<SlotPlan> list = conn.Query<SlotPlan>(sqlplan1).ToList();
+            list = list.Where(x => GetSlotPlanValidate(x.MRP) == true).ToList();
+            string sqlConfig = "SELECT * FROM KANBAN_SLOTCONFIG";
+            List<SlotConfig> listConfig = conn.Query<SlotConfig>(sqlConfig).ToList();
+            string sqlShortage = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE IsReceived = 0";
+            List<SlotShortage> listShortage = conn.Query<SlotShortage>(sqlShortage).ToList();
+            string sqlEIssue = "SELECT * FROM KANBAN_SLOTEISSUE WHERE Status <> 'Close'";
+            List<SlotEIssue> listEIssue = conn.Query<SlotEIssue>(sqlEIssue).ToList();
+            foreach (SlotPlan slotplan in list)
+            {
+                slotplan.ConfigList = new List<SlotConfig>();
+                slotplan.ShortageList = new List<SlotShortage>();
+                slotplan.EIssueList = new List<SlotEIssue>();
+                foreach (SlotConfig item in listConfig)
+                {
+                    if (item.Slot == slotplan.Slot)
+                    {
+                        slotplan.ConfigList.Add(item);
+                    }
+                }
+                foreach (SlotShortage item in listShortage)
+                {
+                    if (item.Slot == slotplan.Slot)
+                    {
+                        slotplan.ShortageList.Add(item);
+                    }
+                }
+                foreach (SlotEIssue item in listEIssue)
+                {
+                    if (item.Slot == slotplan.Slot)
+                    {
+                        slotplan.EIssueList.Add(item);
+                    }
+                }
+            }
+            return list;
+        }
+
+        [HttpGet]
+        public List<SlotPlan> GetSystemByType1(string type)
+        {
+            string sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE = '" + type + "' AND ShippingDate is null ORDER BY ShippingTime, MRP, PlanShipDate, Slot";
+            if (type == "IF")
+            {
+                sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN WHERE TYPE IN ( 'IF', 'MF') AND ShippingDate is null ORDER BY ShippingTime, MRP, PlanShipDate, Slot";
+            }
+            if (type == "J750")
+            {
+                sqlplan1 = "SELECT * FROM KANBAN_SLOTPLAN A LEFT JOIN KANBAN_SLOTPLAN_J750 B ON A.SLOT = B.SLOT WHERE A.TYPE = 'J750' AND A.ShippingDate is null ORDER BY A.MRP, A.PlanShipDate, A.Slot";
+            }
             List<SlotPlan> list1 = conn.Query<SlotPlan>(sqlplan1).ToList().Where(x => float.Parse(x.MRP) > 40).ToList();
             List<SlotPlan> list2 = conn.Query<SlotPlan>(sqlplan1).ToList().Where(x => float.Parse(x.MRP) <= 40).ToList();
             List<SlotPlan> list = list1.Concat(list2).ToList();
@@ -694,7 +779,7 @@ namespace ApiForFCTKB.Controllers
                         DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
                         foreach (DataRow item in dt.Rows)
                         {
-                            bool wkRange = GetValidate(item[dt.Columns.IndexOf("MRP")].ToString());
+                            bool wkRange = item[dt.Columns.IndexOf("MRP")].ToString() == "" ? false : GetValidate(item[dt.Columns.IndexOf("MRP")].ToString());
                             string tst = slotType == "J750" ? item[dt.Columns.IndexOf("Site")].ToString() : item[dt.Columns.IndexOf("TST")].ToString();
                             if (wkRange && tst == "STS")
                             {
@@ -884,17 +969,68 @@ namespace ApiForFCTKB.Controllers
             string path = @"\\10.194.51.14\TER\FCT E-KANBAN Database\Open_PO";
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles();
+            string flexPath = "";
+            string J750Pth = "";
             foreach (FileInfo file in files)
             {
                 if (file.FullName.Contains("Open_PO"))
                 {
-                    path = file.FullName;
-                    break;
+                    flexPath = file.FullName;
+                }
+                if (file.FullName.Contains("J750"))
+                {
+                    J750Pth = file.FullName;
                 }
             }
 
+            // UF
             List<SlotPO> list = new List<SlotPO>();
-            Workbook wb = new Workbook(path);
+            Workbook wb = new Workbook(flexPath);
+            foreach (Worksheet ws in wb.Worksheets)
+            {
+                Cells cells = ws.Cells;
+                DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+                Dictionary<string, List<string>> dic = new Dictionary<string, List<string>>();
+                foreach (DataRow item in dt.Rows)
+                {
+                    string slot = item[dt.Columns.IndexOf("Slot Number\\Misc Order")].ToString();
+                    string po = item[dt.Columns.IndexOf("PO#")].ToString();
+                    bool isSysOrder = item[dt.Columns.IndexOf("Supplier note")].ToString().IndexOf("System Order") > -1;
+                    if (slot != "" && isSysOrder)
+                    {
+                        if (dic.Keys.Contains(slot))
+                        {
+                            dic[slot].Add(po);
+                        }
+                        else
+                        {
+                            List<string> polist = new List<string>();
+                            polist.Add(po);
+                            dic.Add(slot, polist);
+                        }
+                    }
+                }
+                foreach (var item in dic)
+                {
+                    SlotPO slotPO = new SlotPO();
+                    slotPO.Slot = item.Key;
+                    item.Value.Distinct().ToList().ForEach(i =>
+                    {
+                        if (slotPO.PO == "" || slotPO.PO == null)
+                        {
+                            slotPO.PO = i;
+                        }
+                        else
+                        {
+                            slotPO.PO = slotPO.PO + "," + i;
+                        }
+                    });
+                    list.Add(slotPO);
+                }
+            }
+
+            //J750
+            wb = new Workbook(J750Pth);
             foreach (Worksheet ws in wb.Worksheets)
             {
                 Cells cells = ws.Cells;
@@ -965,6 +1101,8 @@ namespace ApiForFCTKB.Controllers
         public List<SlotCORC> GetSlotCORC()
         {
             string path = @"\\10.194.51.14\TER\FCT E-KANBAN Database\SO&CORC Issue Report";
+            string flexPath = "";
+            string JPath = "";
             DirectoryInfo dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
@@ -975,11 +1113,15 @@ namespace ApiForFCTKB.Controllers
                 }
                 if (file.FullName.Contains("SO&CORC"))
                 {
-                    path = file.FullName;
+                    flexPath = file.FullName;
+                }
+                if (file.FullName.Contains("J750"))
+                {
+                    JPath = file.FullName;
                 }
             }
             List<SlotCORC> list = new List<SlotCORC>();
-            Workbook wb = new Workbook(path);
+            Workbook wb = new Workbook(flexPath);
             foreach (Worksheet ws in wb.Worksheets)
             {
                 if (ws.Name.IndexOf("Open issue") > -1)
@@ -993,6 +1135,41 @@ namespace ApiForFCTKB.Controllers
                         info.CORC = item[dt.Columns.IndexOf("CORC status")].ToString();
                         info.CORC_Issue = item[dt.Columns.IndexOf("SO or CORC open issue")].ToString();
                         list.Add(info);
+                    }
+                }
+            }
+
+            // J750
+            if (JPath != "")
+            {
+                wb = new Workbook(JPath);
+                foreach (Worksheet ws in wb.Worksheets)
+                {
+                    if (ws.Name.IndexOf("Oline System") > -1)
+                    {
+                        Cells cells = ws.Cells;
+                        DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
+                        foreach (DataRow item in dt.Rows)
+                        {
+                            SlotCORC info = new SlotCORC();
+                            info.Slot = item[dt.Columns.IndexOf("SLOT")].ToString();
+                            string status = item[dt.Columns.IndexOf("CORC Status")].ToString();
+                            info.CORC_Issue = item[dt.Columns.IndexOf("SO or CORC issue")].ToString();
+                            if (status == "IN REVIEW")
+                            {
+                                info.CORC = "R";
+                            }
+                            else if (status == "NO SO&CORC")
+                            {
+                                info.CORC = "";
+                                info.CORC_Issue = "NO SO&CORC";
+                            }
+                            else if (status.Contains("Approved"))
+                            {
+                                info.CORC = "A";
+                            }
+                            list.Add(info);
+                        }
                     }
                 }
             }
@@ -1020,7 +1197,7 @@ namespace ApiForFCTKB.Controllers
 
             // 更新kanban_slotcorc表
             // 遍历数据库closetime为空的数据， 如果excel中查不到，就默认closetime为当前时间
-            string q = "SELECT * FROM KANBAN_SLOTCORC WHERE CloseTime is null";
+            string q = "SELECT * FROM KANBAN_SLOTCORC WHERE CloseTime is null and Slot <> ''";
             List<SlotCORC> list = conn.Query<SlotCORC>(q).ToList();
 
             foreach (SlotCORC item in list)
@@ -1095,10 +1272,13 @@ namespace ApiForFCTKB.Controllers
             foreach (DataRow item in dt.Rows)
             {
                 int week = Tool.WeekOfYear(DateTime.Now); // 获取当前周别
+                int nextWeek = Tool.WeekOfYear(DateTime.Now.AddDays(7));
+                string nextWk = nextWeek.ToString().Length > 1 ? nextWeek.ToString() : ("0" + nextWeek.ToString());
+                string wk = week.ToString().Length > 1 ? week.ToString() : ("0" + week.ToString());
                 if (item[dt.Columns.IndexOf("Type")].ToString() == "P"
                     && item[dt.Columns.IndexOf("Shortage")].ToString().Trim() != "0"
                     && item[dt.Columns.IndexOf("Slot")].ToString().IndexOf("Misc") == -1
-                    && (item[dt.Columns.IndexOf("WK")].ToString() == "WK" + week || item[dt.Columns.IndexOf("WK")].ToString() == "WK" + (week + 1))
+                    && (item[dt.Columns.IndexOf("WK")].ToString() == "WK" + wk || item[dt.Columns.IndexOf("WK")].ToString() == "WK" + nextWk)
                     )
                 {
                     SlotShortage info = new SlotShortage();
@@ -1123,7 +1303,7 @@ namespace ApiForFCTKB.Controllers
         public void InsertOrUpdateSlotShortage()
         {
             List<SlotShortage> slotshortage = GetSlotShortage();
-            string query = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE IsReceived = 0";
+            string query = "SELECT * FROM KANBAN_SLOTSHORTAGE";// WHERE IsReceived = 0";
             List<SlotShortage> list = conn.Query<SlotShortage>(query).ToList();
             foreach (SlotShortage item in slotshortage)
             {
@@ -1187,7 +1367,7 @@ namespace ApiForFCTKB.Controllers
                 "TDN-805-333-50",
                 "TDN-805-386-01",
                 "TDN-805-740-50",
-                "TDN-949-974-50"
+                "TDN-949-974-50",
                 //"TDN-202-000-01",
                 //"TDN-866-999-02",
                 //"TDN-866-911-10",
@@ -1198,6 +1378,31 @@ namespace ApiForFCTKB.Controllers
                 //"TDN-633-246-00",
                 //"TDN-636-752-01",
                 //"TDN-639-210-01",
+
+                // J750
+                "TDN-615-988-01",
+                "TDN-614-889-01",
+                "TDN-805-025-04",
+                "TDN-239-701-00",
+                "TDN-239-016-06",
+                "TDN-314-445-51",
+                "TDN-239-029-02",
+                "TDN-616-451-01",
+                "TDN-517-440-00",
+                "TDN-314-446-03",
+                "TDN-239-046-93",
+                "TDN-623-717-00",
+                "TDN-617-084-01",
+                "TDN-239-004-03",
+                "TDN-239-052-03",
+                "TDN-517-456-00",
+                "TDN-624-102-01",
+
+                "TDN-239-046-93-P",
+                "TDN-239-052-03-M",
+                "TDN-617-084-01-M",
+                "TDN-624-102-01-M"
+
             };
             string[] ZeroPin_List = new string[] {
                 // UF 36 -- 2019/12/9
@@ -1227,7 +1432,7 @@ namespace ApiForFCTKB.Controllers
                 }
             }
             Workbook wb = new Workbook(path);
-            Cells cells = wb.Worksheets["Slot"].Cells;
+            Cells cells = wb.Worksheets[0].Cells;
             DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
             foreach (DataRow item in dt.Rows)
             {
@@ -1322,23 +1527,32 @@ namespace ApiForFCTKB.Controllers
             List<CheckListItem> list12 = conn.Query<CheckListItem>(sql12slot).ToList();
             foreach (SlotPlan item in slotplan)
             {
+                // 不能影响除12 24 之外的Model 
                 SlotStatus status = new SlotStatus();
                 if (item.Model.IndexOf("24") > -1)
                 {
                     status = GetUF24Status(item.Slot, list24);
+                    item.CoreBU = status.CorBU;
+                    item.PV = status.PV;
+                    item.OI = status.OI;
+                    item.TestBU = status.TestBU;
+                    item.CSW = status.CSW;
+                    item.QFAA = status.QFAA;
+                    item.BU = status.BU;
+                    item.Pack = status.Pack;
                 }
                 if (item.Model.IndexOf("12") > -1)
                 {
                     status = GetUF12Status(item.Slot, list12);
+                    item.CoreBU = status.CorBU;
+                    item.PV = status.PV;
+                    item.OI = status.OI;
+                    item.TestBU = status.TestBU;
+                    item.CSW = status.CSW;
+                    item.QFAA = status.QFAA;
+                    item.BU = status.BU;
+                    item.Pack = status.Pack;
                 }
-                item.CoreBU = status.CorBU;
-                item.PV = status.PV;
-                item.OI = status.OI;
-                item.TestBU = status.TestBU;
-                item.CSW = status.CSW;
-                item.QFAA = status.QFAA;
-                item.BU = status.BU;
-                item.Pack = status.Pack;
             }
             string update = "UPDATE KANBAN_SLOTPLAN SET CoreBU = @CoreBU, PV = @PV, OI = @OI, TestBU = @TestBU, CSW = @CSW, QFAA = @QFAA, BU = @BU, Pack = @Pack WHERE ID = @ID";
             conn.Execute(update, slotplan);
@@ -1378,7 +1592,7 @@ namespace ApiForFCTKB.Controllers
                 else
                 {
                     string sqlChecklist = "SELECT * FROM [SC3_test].[dbo].[SystemProperties] WHERE systemName = '" + item.Slot + "'";
-                    ChecklistSystemInfo checklistSystemInfo = conn.Query<ChecklistSystemInfo>(sqlChecklist).SingleOrDefault();
+                    ChecklistSystemInfo checklistSystemInfo = conn.Query<ChecklistSystemInfo>(sqlChecklist).FirstOrDefault();
                     if (checklistSystemInfo != null)
                     {
                         mc = new MinioneConfig();
@@ -1427,7 +1641,7 @@ namespace ApiForFCTKB.Controllers
                 }
             }
             Workbook wb = new Workbook(path);
-            Cells cells = wb.Worksheets["Slot"].Cells;
+            Cells cells = wb.Worksheets[0].Cells;
             DataTable dt = cells.ExportDataTableAsString(0, 0, cells.MaxDataRow + 1, cells.MaxDataColumn + 1, true);
             foreach (DataRow item in dt.Rows)
             {
@@ -1495,7 +1709,8 @@ namespace ApiForFCTKB.Controllers
         /// <returns></returns>
         public string GetStatusByItem(string slot, string item, string station, List<CheckListItem> list)
         {
-            List<CheckListItem> checkListItemList = list.Where(x => x.SystemName == slot && x.CheckItemDescription.Contains(item) && x.ListBy == station).ToList();
+            // x => x.SystemName.Contains(slot) 存在空格  不完全一样
+            List<CheckListItem> checkListItemList = list.Where(x => x.SystemName.Contains(slot) && x.CheckItemDescription.Contains(item) && x.ListBy == station).ToList();
             CheckListItem checkListItem = new CheckListItem();
             if (checkListItemList.Count == 0)
             {
@@ -1535,7 +1750,8 @@ namespace ApiForFCTKB.Controllers
                         day = -1;
                         break;
                 }
-                return checkListItem.Date.Year.ToString().Substring(2, 2) + Tool.WeekOfYear(checkListItem.Date).ToString() + "." + day.ToString();
+                string wk = Tool.WeekOfYear(checkListItem.Date).ToString();
+                return checkListItem.Date.Year.ToString().Substring(2, 2) + (wk.Length > 1 ? wk : ("0" + wk)) + "." + day.ToString();
             }
             else
             {
@@ -1633,6 +1849,61 @@ namespace ApiForFCTKB.Controllers
                 IsRange = (mrp >= week && mrp <= 54) || (mrp >= 1 && mrp <= week + range - 53);
             }
             return IsRange;
+        }
+
+        [HttpGet]
+        /// <summary>
+        /// 获取FCCP的数据
+        /// </summary>
+        /// <returns></returns>
+        public int GetFCCPList()
+        {
+            string sqlFCCP = "select * from openquery(FCCP, 'SELECT * FROM FCCP011.V_ITEM_PRODUCTION_011_SHIPMENT')";
+            List<FCCP> listFCCP = conn.Query<FCCP>(sqlFCCP).ToList();
+
+            string sqlSlotPlan = "SELECT * FROM KANBAN_SLOTPLAN WHERE ISNULL(ShippingDate, 0) = '0' ORDER BY MRP";
+            List<SlotPlan> listSlotPlan = conn.Query<SlotPlan>(sqlSlotPlan).ToList().Where(x => GetValidate(x.MRP) == true).ToList();
+
+            string sqlType = "select * from KANBAN_FCCP_PN2TYPE";
+            List<PN2TYPE> listType = conn.Query<PN2TYPE>(sqlType).ToList();
+
+            foreach (SlotPlan sp in listSlotPlan)
+            {
+                if (sp.Slot.Contains('D'))
+                {
+                    FCCP fccp = listFCCP.Where(x => x.CODE.Contains(sp.Slot)).FirstOrDefault();
+                    if (fccp == null)
+                    {
+                        sp.FCCPStatus = 0;
+                        sp.TypeStatus = 0;
+                        sp.IBFStatus = null;
+                    }
+                    else
+                    {
+                        sp.FCCPStatus = 1;
+                        sp.IBFStatus = fccp.OVER_FLAG;
+                        PN2TYPE type = listType.Where(x => x.SlotType == sp.Model).FirstOrDefault();
+                        if (type != null)
+                        {
+                            if (fccp.Model != null && fccp.Model.Contains(type.PN))
+                            {
+                                sp.TypeStatus = 1;
+                            }
+                            else
+                            {
+                                sp.TypeStatus = 0;
+                            }
+                        }
+                        else
+                        {
+                            sp.TypeStatus = 0;
+                        }
+                    }
+                }
+            }
+
+            string sql = "UPDATE KANBAN_SLOTPLAN SET FCCPStatus = @FCCPStatus, TypeStatus = @TypeStatus, IBFStatus = @IBFStatus WHERE Slot = @Slot";
+            return conn.Execute(sql, listSlotPlan);
         }
     }
 }
