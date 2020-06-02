@@ -45,6 +45,7 @@ namespace ApiForFCTKBNew.Controllers
         {
             string year = dt.Year.ToString().Substring(2);
             string week = WeekOfYear(dt).ToString();
+            week = (week.Length == 1 ? "0" + week : week);
             string day = GetDay(dt).ToString();
             return year + week + "." + day;
         }

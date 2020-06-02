@@ -36,7 +36,7 @@ namespace ApiForFCTKBNew.Controllers
                 foreach (SlotPlan item in slotplan)
                 {
                     // 截取数字部分 2019/12/20 修改
-                    if (item.Slot.IndexOf("D") > -1)
+                    if (item.Slot.IndexOf("D") > -1 && item.Slot.IndexOf("T") == -1 && item.Slot.IndexOf("A") == -1)
                     {
                         string num = item.Slot.IndexOf("B") > -1 ? item.Slot.Substring(1, item.Slot.Length - 2) : item.Slot.Substring(1, item.Slot.Length - 1);
                         num = num.Length == 2 ? "00" + num : (num.Length == 3 ? "0" + num : num);

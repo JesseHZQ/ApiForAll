@@ -203,6 +203,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\CalController.cs" />
+    <Compile Include="Controllers\DragonController.cs" />
+    <Compile Include="Controllers\EIssueController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SlotConfigController.cs" />
     <Compile Include="Controllers\FCCPController.cs" />
     <Compile Include="Controllers\MinioneController.cs" />
@@ -213,10 +217,16 @@
     <Compile Include="Controllers\SlotPOController.cs" />
     <Compile Include="Controllers\SlotShortageController.cs" />
     <Compile Include="Controllers\SlotStatusController.cs" />
+    <Compile Include="Controllers\SupermarketController.cs" />
     <Compile Include="Controllers\Tool.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Job\JobScheduler.cs" />
+    <Compile Include="Job\Mail.cs" />
+    <Compile Include="Job\MailWithFile.cs" />
+    <Compile Include="Job\Refresh.cs" />
     <Compile Include="Models\SlotConfig.cs" />
     <Compile Include="Models\SlotEIssue.cs" />
     <Compile Include="Models\SlotPlan.cs" />
@@ -259,6 +269,7 @@
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

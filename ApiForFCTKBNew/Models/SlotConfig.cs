@@ -8,9 +8,9 @@ namespace ApiForFCTKBNew.Models
         public string Slot { get; set; }
         public string PN { get; set; }
         public string Description { get; set; }
-        public string QTY { get; set; }
+        public int QTY { get; set; }
         public string DelayTips { get; set; }
-        public bool IsReady { get; set; }
+        public int IsReady { get; set; }
         public DateTime LastUpdatedTime { get; set; }
     }
 }

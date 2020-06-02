@@ -93,5 +93,20 @@ namespace ApiForFCTKBNew.Controllers
                 return "SlotShortage Failed! " + ex.Message;
             }
         }
+
+        [HttpGet]
+        public List<SlotShortage> GetShortageBySlot(string slot)
+        {
+            string sql = "SELECT * FROM KANBAN_SLOTSHORTAGE WHERE Slot = '" + slot + "'";
+            return conn.Query<SlotShortage>(sql).ToList();
+        }
+
+        [HttpPost]
+        public int UpdateShortage(SlotShortage shortage)
+        {
+            shortage.ReceivedTime = DateTime.Now;
+            string update = "UPDATE KANBAN_SLOTSHORTAGE SET IsReceived = @IsReceived, ETA = @ETA, ReceivedTime = @ReceivedTime WHERE ID = @ID";
+            return conn.Execute(update, shortage);
+        }
     }
 }

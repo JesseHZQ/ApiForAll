@@ -17,24 +17,28 @@ namespace ApiForFCTKBNew.Controllers
         public IDbConnection connKB = new SqlConnection(ConfigurationManager.ConnectionStrings["FCTKB"].ConnectionString);
         public IDbConnection connTER = new SqlConnection(ConfigurationManager.ConnectionStrings["TER"].ConnectionString);
 
+        [HttpGet]
         public string UpdateShippingStatus()
         {
             try
             {
                 // 获取所有未出货系统
-                string sql = "SELECT * FROM KANBAN_SLOTPLAN WHERE ShippingDate IS NULL";
+                string sql = "SELECT * FROM KANBAN_SLOTPLAN";
                 List<SlotPlan> slotPlans = connKB.Query<SlotPlan>(sql).ToList();
 
                 // 获取所有出货信息
-                string sqlPO = "select [PO NO.] as PO, Status from vFFPOStatus";
+                string sqlPO = "select [PO NO.] as PO, Status, [Planned Ship Date] as Date from vFFPOStatus";
                 List<POStatus> POs = connTER.Query<POStatus>(sqlPO).ToList();
 
                 foreach (SlotPlan sp in slotPlans)
                 {
                     POStatus ps = POs.Where(x => x.PO == sp.PO).FirstOrDefault();
-                    if (ps != null && ps.PO == "Shipped")
+                    if (ps != null)
                     {
-                        sp.ShippingDate = Tool.GetFormatDateWithDay(DateTime.Now); // 2020年第五周星期四 ==> 202005.4
+                        if (ps.Status == "Shipped")
+                        {
+                            sp.ShippingDate = Tool.GetFormatDateWithDay(ps.Date); // 2020年第五周星期四 ==> 202005.4
+                        }
                     }
                 }
 
@@ -53,6 +57,7 @@ namespace ApiForFCTKBNew.Controllers
         {
             public string PO { get; set; }
             public string Status { get; set; }
+            public DateTime Date { get; set; }
         }
     }
 }

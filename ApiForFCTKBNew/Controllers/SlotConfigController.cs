@@ -148,9 +148,9 @@ namespace ApiForFCTKBNew.Controllers
                         SlotConfig info = new SlotConfig();
                         info.Slot = item["Slot"].ToString();
                         info.PN = item["Component"].ToString().Substring(4);
-                        info.QTY = item["Extended Qty"].ToString();
+                        info.QTY = int.Parse(item["Extended Qty"].ToString());
                         info.DelayTips = "";
-                        info.IsReady = false;
+                        info.IsReady = 0;
                         info.LastUpdatedTime = DateTime.Now;
                         slotconfig.Add(info);
                     }
@@ -159,9 +159,9 @@ namespace ApiForFCTKBNew.Controllers
                         SlotConfig info = new SlotConfig();
                         info.Slot = item["Slot"].ToString();
                         info.PN = "0-Pin";
-                        info.QTY = item["Extended Qty"].ToString();
+                        info.QTY = int.Parse(item["Extended Qty"].ToString());
                         info.DelayTips = "";
-                        info.IsReady = false;
+                        info.IsReady = 0;
                         info.LastUpdatedTime = DateTime.Now;
                         slotconfig.Add(info);
                     }
@@ -224,6 +224,13 @@ namespace ApiForFCTKBNew.Controllers
             {
                 return "E-SLOT Failed! " + ex.Message;
             }
+        }
+
+        [HttpPost]
+        public int UpdateConfig(SlotConfig config)
+        {
+            string update = "UPDATE KANBAN_SLOTCONFIG SET DelayTips = @DelayTips, IsReady = @IsReady WHERE ID = @ID";
+            return conn.Execute(update, config);
         }
 
         private class PSBSSB

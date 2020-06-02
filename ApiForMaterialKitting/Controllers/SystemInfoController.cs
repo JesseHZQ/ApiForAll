@@ -19,7 +19,7 @@ namespace ApiForMaterialKitting.Controllers
         {
             DataTable dt = new DataTable();
             int wknow = GetWeekOfYear(DateTime.Now);
-            int wk = GetWeekOfYear(DateTime.Now.AddDays(21));
+            int wk = GetWeekOfYear(DateTime.Now.AddDays(42));
             if (wk > wknow)
             {
                 dt = SqlHelper.ExecuteDataTable("select a.*,b.*  from" +
