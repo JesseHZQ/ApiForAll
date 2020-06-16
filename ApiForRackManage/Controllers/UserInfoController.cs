@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace ApiForRackManage.Controllers
 {
-    public class UserController : ApiController
+    public class UserInfoController : ApiController
     {
         RackDataContext dc = new RackDataContext();
 

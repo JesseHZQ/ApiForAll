@@ -34,8 +34,8 @@ namespace ApiForFCTKBNew.Controllers
 
                 foreach (SlotPlan sp in listSlotPlan)
                 {
-                    if (sp.Slot.Contains('D'))
-                    {
+                    //if (sp.Slot.Contains('D'))
+                    //{
                         FCCP fccp = listFCCP.Where(x => x.CODE.Contains(sp.Slot)).FirstOrDefault();
                         if (fccp == null)
                         {
@@ -50,7 +50,7 @@ namespace ApiForFCTKBNew.Controllers
                             PN2TYPE type = listType.Where(x => x.SlotType == sp.Model).FirstOrDefault();
                             if (type != null)
                             {
-                                if (fccp.Model != null && fccp.Model.Contains(type.PN))
+                                if (fccp.REQ_MODEL != null && fccp.REQ_MODEL.Contains(type.PN))
                                 {
                                     sp.TypeStatus = 1;
                                 }
@@ -64,7 +64,7 @@ namespace ApiForFCTKBNew.Controllers
                                 sp.TypeStatus = 0;
                             }
                         }
-                    }
+                    //}
                 }
 
                 string sql = "UPDATE KANBAN_SLOTPLAN SET FCCPStatus = @FCCPStatus, TypeStatus = @TypeStatus, IBFStatus = @IBFStatus WHERE Slot = @Slot";
@@ -80,7 +80,7 @@ namespace ApiForFCTKBNew.Controllers
         private class FCCP
         {
             public string CODE { get; set; }
-            public string Model { get; set; }
+            public string REQ_MODEL { get; set; }
             public string OVER_FLAG { get; set; }
         }
 

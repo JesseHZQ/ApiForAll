@@ -223,7 +223,7 @@
     <Compile Include="Models\SysList.cs" />
     <Compile Include="Controllers\SysController.cs" />
     <Compile Include="Models\TdnOh.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataContext\Rack.designer.cs">
       <AutoGen>True</AutoGen>

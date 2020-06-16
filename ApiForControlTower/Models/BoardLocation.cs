@@ -39,7 +39,6 @@ namespace ApiForControlTower.Models
         public string PN { get; set; }
         public string SN { get; set; }
     }
-
     public class SupermarketBoard
     {
         public string PN { get; set; }
@@ -47,14 +46,15 @@ namespace ApiForControlTower.Models
         public string Location { get; set; }
     }
 
+
     public class RackDetail
     {
         public string PN { get; set; }
         public int ActualQTY { get; set; }
         public string RackName { get; set; }
-        public string SNView { get; set; }
-        public string SlotView { get; set; }
-        public string Command { get; set; }
+        public string PNList { get; set; }
+        public string SNList { get; set; }
+        public string SlotList { get; set; }
     }
 
     public class TestSystem

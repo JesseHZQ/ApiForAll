@@ -24,8 +24,9 @@ namespace ApiForControlTower.Controllers
             List<BoardLocation> BoardList = connMinione.Query<BoardLocation>(sql_Ins).ToList();
 
             // Supermarket
-            string sql_Rack = "select * from [PNINOUT].[dbo].[Rack]";
-            List<RackDetail> RackList = connSupermarket.Query<RackDetail>(sql_Rack).ToList();
+            //string sql_Rack = "select * from [PNINOUT].[dbo].[Supermarket_Rack]";
+            //List<RackDetail> RackList = connSupermarket.Query<RackDetail>(sql_Rack).ToList();
+            List<SupermarketBoard> supermarketBoards = GetAllBoards();
 
             // Test
             string sql_Test_System = "select * from [172.21.194.214].[PCBA].[dbo].[LED]";
@@ -60,38 +61,22 @@ namespace ApiForControlTower.Controllers
             foreach (BoardLocation boardLocation in BoardList)
             {
                 // Supermarket 统计
-                boardLocation.SupermarketList = new List<SupermarketBoard>();
-                foreach (RackDetail rack in RackList)
-                {
-                    if (rack.PN.Contains("Fixture") || rack.PN.Contains("Refurbish"))
-                    {
-                        for (int i = 0; i < rack.ActualQTY; i++)
-                        {
-                            SupermarketBoard sb = new SupermarketBoard();
-                            sb.PN = rack.Command.Split(',')[i].Trim().Substring(1, rack.Command.Split(',')[i].Trim().Length - 2);
-                            sb.SN = rack.SNView.Split(',')[i].Trim().Substring(1, rack.SNView.Split(',')[i].Trim().Length - 2);
-                            sb.Location = rack.SlotView.Split(',')[i].Trim().Substring(1, rack.SlotView.Split(',')[i].Trim().Length - 2);
-                            if (sb.PN == boardLocation.PN)
-                            {
-                                boardLocation.SupermarketList.Add(sb);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < rack.ActualQTY; i++)
-                        {
-                            SupermarketBoard sb = new SupermarketBoard();
-                            sb.PN = rack.PN;
-                            sb.SN = rack.SNView.Split(',')[i].Trim().Substring(1, rack.SNView.Split(',')[i].Trim().Length - 2);
-                            sb.Location = rack.SlotView.Split(',')[i].Trim().Substring(1, rack.SlotView.Split(',')[i].Trim().Length - 2);
-                            if (sb.PN == boardLocation.PN)
-                            {
-                                boardLocation.SupermarketList.Add(sb);
-                            }
-                        }
-                    }
-                }
+                boardLocation.SupermarketList = supermarketBoards.Where(x => x.PN == boardLocation.PN).ToList();
+                //foreach (RackDetail rack in RackList)
+                //{
+                //    for (int i = 0; i < rack.ActualQTY; i++)
+                //    {
+                //        SupermarketBoard sb = new SupermarketBoard();
+                //        sb.PN = rack.PNList.Split(',')[i].Trim().Substring(1, rack.PNList.Split(',')[i].Trim().Length - 2);
+                //        sb.SN = rack.SNList.Split(',')[i].Trim().Substring(1, rack.SNList.Split(',')[i].Trim().Length - 2);
+                //        sb.Location = rack.SlotList.Split(',')[i].Trim().Substring(1, rack.SlotList.Split(',')[i].Trim().Length - 2);
+                //        if (sb.PN == boardLocation.PN)
+                //        {
+                //            boardLocation.SupermarketList.Add(sb);
+                //        }
+                //    }
+                //}
+                
 
                 // Test 统计
                 boardLocation.TestList = new List<TestBoard>();
@@ -127,6 +112,30 @@ namespace ApiForControlTower.Controllers
                 boardLocation.TestListQTY = boardLocation.TestList.Count;
                 boardLocation.VerifyListQTY = boardLocation.VerifyList.Count;
                 boardLocation.BurnInListQTY = boardLocation.BurnInList.Count;
+            }
+            return BoardList;
+        }
+
+
+        public List<SupermarketBoard> GetAllBoards()
+        {
+            List<SupermarketBoard> BoardList = new List<SupermarketBoard>();
+            string sql = "select * from Supermarket_Rack";
+            List<RackDetail> RackList = connSupermarket.Query<RackDetail>(sql).ToList();
+
+            foreach (RackDetail rack in RackList)
+            {
+                List<string> PNList = rack.PNList.Split(new char[] { '"', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<string> SNList = rack.SNList.Split(new char[] { '"', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<string> SlotList = rack.SlotList.Split(new char[] { '"', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                for (int i = 0; i < PNList.Count; i++)
+                {
+                    SupermarketBoard board = new SupermarketBoard();
+                    board.PN = PNList[i];
+                    board.SN = SNList[i];
+                    board.Location = SlotList[i];
+                    BoardList.Add(board);
+                }
             }
             return BoardList;
         }

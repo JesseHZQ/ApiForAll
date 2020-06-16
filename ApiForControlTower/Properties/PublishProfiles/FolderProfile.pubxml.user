@@ -82,19 +82,19 @@
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ApiForControlTower.dll">
-      <publishTime>12/26/2019 14:54:37</publishTime>
+      <publishTime>06/09/2020 15:28:23</publishTime>
     </File>
     <File Include="bin/ApiForControlTower.pdb">
-      <publishTime>12/26/2019 14:54:37</publishTime>
+      <publishTime>06/09/2020 15:28:23</publishTime>
     </File>
     <File Include="bin/ApiForWechat.dll">
-      <publishTime>12/26/2019 14:54:37</publishTime>
+      <publishTime>06/09/2020 15:28:21</publishTime>
     </File>
     <File Include="bin/ApiForWechat.dll.config">
       <publishTime>10/11/2019 14:45:10</publishTime>
     </File>
     <File Include="bin/ApiForWechat.pdb">
-      <publishTime>12/26/2019 14:54:37</publishTime>
+      <publishTime>06/09/2020 15:28:21</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>10/11/2019 08:50:40</publishTime>

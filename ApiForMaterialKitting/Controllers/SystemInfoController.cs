@@ -203,6 +203,16 @@ namespace ApiForMaterialKitting.Controllers
         public Resp sendBeginEmail(KittingModel model)
         {
             Resp resp = new Resp();
+
+            string sql = "select * from MaterialKitting where slot = '" + model.Slot +"' and station = '" + model.Station + "'";
+            DataTable dd = SqlHelper.ExecuteDataTable(sql);
+            if (dd.Rows.Count > 0)
+            {
+                resp.Code = 10001;
+                resp.Message = "不能重复发送";
+                return resp;
+            }
+
             DataTable d = new DataTable();
             string requester = "Admin";
             d = SqlHelper.ExecuteDataTable("select Name from MaterialKittingUser where Emp = '" + model.RequestorId + "'" );
