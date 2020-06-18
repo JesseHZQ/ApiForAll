@@ -34,37 +34,34 @@ namespace ApiForFCTKBNew.Controllers
 
                 foreach (SlotPlan sp in listSlotPlan)
                 {
-                    //if (sp.Slot.Contains('D'))
-                    //{
-                        FCCP fccp = listFCCP.Where(x => x.CODE.Contains(sp.Slot)).FirstOrDefault();
-                        if (fccp == null)
+                    FCCP fccp = listFCCP.Where(x => x.CODE.Contains(sp.Slot)).FirstOrDefault();
+                    if (fccp == null)
+                    {
+                        sp.FCCPStatus = 0;
+                        sp.TypeStatus = 0;
+                        sp.IBFStatus = null;
+                    }
+                    else
+                    {
+                        sp.FCCPStatus = 1;
+                        sp.IBFStatus = fccp.OVER_FLAG;
+                        PN2TYPE type = listType.Where(x => x.SlotType == sp.Model).FirstOrDefault();
+                        if (type != null)
                         {
-                            sp.FCCPStatus = 0;
-                            sp.TypeStatus = 0;
-                            sp.IBFStatus = null;
-                        }
-                        else
-                        {
-                            sp.FCCPStatus = 1;
-                            sp.IBFStatus = fccp.OVER_FLAG;
-                            PN2TYPE type = listType.Where(x => x.SlotType == sp.Model).FirstOrDefault();
-                            if (type != null)
+                            if (fccp.REQ_MODEL != null && fccp.REQ_MODEL.Contains(type.PN))
                             {
-                                if (fccp.REQ_MODEL != null && fccp.REQ_MODEL.Contains(type.PN))
-                                {
-                                    sp.TypeStatus = 1;
-                                }
-                                else
-                                {
-                                    sp.TypeStatus = 0;
-                                }
+                                sp.TypeStatus = 1;
                             }
                             else
                             {
                                 sp.TypeStatus = 0;
                             }
                         }
-                    //}
+                        else
+                        {
+                            sp.TypeStatus = 0;
+                        }
+                    }
                 }
 
                 string sql = "UPDATE KANBAN_SLOTPLAN SET FCCPStatus = @FCCPStatus, TypeStatus = @TypeStatus, IBFStatus = @IBFStatus WHERE Slot = @Slot";

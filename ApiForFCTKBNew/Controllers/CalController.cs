@@ -11,10 +11,10 @@ namespace ApiForFCTKBNew.Controllers
 {
     public class CalController : ApiController
     {
+        // PM CAL一个工具外挂在这个页面
         [HttpGet]
         public string GenerateCSV()
         {
-            // 注册Aspose License
             Aspose.Cells.License license = new Aspose.Cells.License();
             license.SetLicense("Aspose.Cells.lic");
             List<CAL> list = GetCSVData();
@@ -66,7 +66,6 @@ namespace ApiForFCTKBNew.Controllers
             wb.Save(@"\\suznt004\TER\Mechanical PE\BU7校准数据转存\Cal数据转换------请勿删除\result.xlsx");
             return "OK";
         }
-
 
         public List<CAL> GetCSVData()
         {

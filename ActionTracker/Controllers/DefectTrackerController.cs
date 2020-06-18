@@ -75,7 +75,7 @@ namespace ActionTracker.Controllers
         [HttpGet]
         public List<User> GetUserNameList(string Name)
         {
-            string sql = "select * from EDW_CleanUser where BU = 'BU7' and Role in ('PE', 'EE', 'Production-PTH') and Name like '%" + Name + "%'";
+            string sql = "select * from EDW_CleanUser where BU = 'BU7' and Role in ('PE', 'EE', 'Production-PTH', 'Production-SMT') and Name like '%" + Name + "%'";
             return connEDW.Query<User>(sql).ToList();
         }
         [HttpGet]
@@ -130,7 +130,7 @@ namespace ActionTracker.Controllers
         [HttpGet]
         public List<User> GetUserList()
         {
-            string sql = "select * from EDW_CleanUser where BU = 'BU7' and Role in ('PE', 'EE', 'Production-PTH')";
+            string sql = "select * from EDW_CleanUser where BU = 'BU7' and Role in ('PE', 'EE', 'Production-PTH', 'Production-SMT')";
             return connEDW.Query<User>(sql).ToList();
         }
 
